@@ -4,7 +4,8 @@ import backgrounds, { Background } from "@/data/backgrounds";
 const bgVals = Object.values(backgrounds);
 
 const makeOption = (bg: Background): ChooserOption<Background> => ({
-  name: bg.name,
+  title: bg.name,
+  subtitle: `pg. ${bg.page}`,
   value: bg,
 });
 
@@ -21,6 +22,6 @@ const opts: ChooserOptions<Background> = {
 
 export default function Home() {
   return (
-    <Chooser options={opts}/>
+    <Chooser options={opts} title="Choose a background"/>
   )
 }
