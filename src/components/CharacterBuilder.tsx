@@ -35,19 +35,19 @@ const CharacterBuilder = () => {
 			title="Background"
 			dice={backgroundDice}
 			onRoll={setPreferredBackgroundRolls}
-			/>,
-			<Chooser
+		/>,
+		<Chooser
 			key={1}
 			options={backgroundOptions}
 			title="Background"
 			onSelectOption={setSelectedBackground}
 			selected={selectedBackground}
 			preferred={preferredBackgrounds}
-			/>
-		];
+		/>
+	];
 
-		if ( selectedBackground ) {
-			elements.push(
+	if ( selectedBackground ) {
+		elements.push(
 			<DicePool
 				key={elements.length}
 				title="Power Source"
