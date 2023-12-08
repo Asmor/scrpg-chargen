@@ -1,4 +1,4 @@
-export default [
+const powersAndQualities = [
 	{ type: "Power", category: "athletic", page: 115, name: "Agility" },
 	{ type: "Power", category: "athletic", page: 115, name: "Speed" },
 	{ type: "Power", category: "athletic", page: 115, name: "Strength" },
@@ -78,3 +78,5 @@ export default [
 	{ type: "Quality", category: "social", page: 120, name: "Leadership" },
 	{ type: "Quality", category: "social", page: 120, name: "Persuasion" },
 ];
+
+export default powersAndQualities;

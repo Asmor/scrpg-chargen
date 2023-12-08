@@ -7,3 +7,13 @@ export enum PrincipleCategory {
 	IDENTITY = "Identity",
 	RESPONSIBILITY = "Responsibility",
 }
+
+export interface Background {
+	name: string;
+	page: number;
+	roll: number;
+	assignableDice: Die[];
+	assignable: string[];
+	principleCategory: PrincipleCategory;
+	dice: Die[];
+};

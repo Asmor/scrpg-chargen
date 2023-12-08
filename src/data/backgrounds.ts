@@ -1,14 +1,4 @@
-import { Die, PrincipleCategory } from "@/types/common";
-
-export interface Background {
-	name: string;
-	page: number;
-	roll: number;
-	assignableDice: Die[];
-	assignable: string[];
-	principleCategory: PrincipleCategory;
-	dice: Die[];
-};
+import { Background, Die, PrincipleCategory } from "@/types/common";
 
 const backgrounds: { [key: string]: Background } = {
 	"background-gtg-core-upper_class": {

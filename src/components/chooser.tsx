@@ -1,5 +1,4 @@
-"use client";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 
 export interface ChooserOption<T> {
@@ -8,56 +7,123 @@ export interface ChooserOption<T> {
 	value: T;
 }
 
-export interface ChooserOptions<T> {
-	preferred: ChooserOption<T>[],
-	other: ChooserOption<T>[],
-}
-
 export interface ChooserProps<T> {
 	title: string;
-	options: ChooserOptions<T>
+	preferred?: number[];
+	options: ChooserOption<T>[];
+	selected?: T;
+	onSelectOption: (selected: T) => void;
 }
 
 const OptionList = styled.ul<{ $collapsed?: boolean }>`
-	// color: ${ p => p.$collapsed ? "red" : "blue" };
 	display: ${ p => p.$collapsed ? "none" : "block" };
 `;
 
-const OptionTitle = styled.li`
+const OptionButton = styled.button<{ $selected?: boolean }>`
 	font-weight: bold;
 	cursor: pointer;
 	padding: 5px;
 	margin: 5px;
-	border: 2px dashed transparent;
-
-	&:hover {
-		border-color: grey;
-	}
+	background-color: var(${
+		p => p.$selected ? "--accent-bg-emphasized" : "--accent-bg"
+	});
+	color: var(--foreground);
 `;
 
 const OptionSubtitle = styled.span`
 	font-size: 0.8em;
 	font-style: italic;
 	font-weight: normal;
-	color: yellow;
+	color: var(--supplemental);
 	margin-left: 5px;
 `;
 
-const makeOptionTitle = <T,>(option: ChooserOption<T>, index: number) => (<OptionTitle key={index}>
-	{ option.title }
-	{ option.subtitle && <OptionSubtitle>{option.subtitle}</OptionSubtitle> }
-</OptionTitle>);
+const SectionTitle = styled.h4`
+	color: grey;
+`;
 
-export default function Chooser<T>({ options, title }: ChooserProps<T>) {
+const ShowMore = styled(SectionTitle)`
+	cursor: pointer;
+`;
+
+const makeOptionButton = <T,>(
+	option: ChooserOption<T>,
+	onClick: () => void,
+	selected?: ChooserOption<T>
+) => (
+	<OptionButton onClick={onClick} $selected={option === selected}>
+		{ option.title }
+		{ option.subtitle && <OptionSubtitle>{option.subtitle}</OptionSubtitle> }
+	</OptionButton>
+);
+
+function Chooser<T>({ options, title, selected, preferred, onSelectOption }: ChooserProps<T>) {
 	const [othersCollapsed, setOthersCollapsed] = useState(true);
+
+	const selectedOption = useMemo<ChooserOption<T> | undefined>(() => {
+		return options.find(option => option?.value === selected)
+	}, [options, selected]);
+
+	const { preferredOptions, otherOptions } = useMemo(() => {
+		if ( !preferred?.length ) {
+			return {
+				preferredOptions: options.filter(option => option),
+				otherOptions: null,
+			};
+		}
+
+		const preferredOptions: ChooserOption<T>[] = [];
+		const otherOptions: ChooserOption<T>[] = [];
+
+		options.forEach((option, index) => {
+			if ( !option ) return;
+
+			if ( preferred.includes(index) ) {
+				preferredOptions.push(option);
+			} else {
+				otherOptions.push(option);
+			}
+		});
+
+		return { preferredOptions, otherOptions};
+	}, [preferred, options]);
+
+	const [editMode, setEditMode] = useState(false);
+
+	const handleSelect = useCallback((option: ChooserOption<T>) => {
+		setEditMode(false);
+		onSelectOption(option.value);
+	}, [onSelectOption]);
+
+	if ( selectedOption && !editMode ) {
+		return <div>{ title }: {
+			makeOptionButton(selectedOption, setEditMode.bind(null, true), selectedOption)
+		}</div>
+	}
+
 	return <div>
-		<h1>{title}</h1>
+		<h3>Choose {title}</h3>
+		<SectionTitle>Recommended</SectionTitle>
 		<OptionList>
-			{ options.preferred.map(makeOptionTitle) }
+			{preferredOptions.map( (option, index) =>
+				<li key={index}>
+					{ makeOptionButton(option, () => handleSelect(option), selectedOption) }
+				</li>
+			)}
 		</OptionList>
-		<button onClick={ () => setOthersCollapsed(!othersCollapsed) }>toggle</button>
-		<OptionList $collapsed={othersCollapsed}>
-			{options.other.map(makeOptionTitle)}
-		</OptionList>
+		{ otherOptions?.length && <>
+			<ShowMore onClick={ () => setOthersCollapsed(!othersCollapsed) }>
+				{ othersCollapsed ? "Show" : "Hide" } additional options
+			</ShowMore>
+			<OptionList $collapsed={othersCollapsed}>
+				{otherOptions.map((option, index) =>
+					<li key={index}>
+						{ makeOptionButton(option, () => handleSelect(option), selectedOption) }
+					</li>
+				)}
+			</OptionList>
+		</> }
 	</div>;
 }
+
+export default Chooser;

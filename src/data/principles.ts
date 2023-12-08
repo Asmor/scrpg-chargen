@@ -1,4 +1,4 @@
-export default {
+const principles = {
 	"principle-gtg-core-energy_element": { name: "Principle of [Energy/Element]", category: "Esoteric", id: "principle-gtg-core-energy_element", abilityId: "ability-gtg-core-principle_energy_element", page: 124, },
 	"principle-gtg-core-exorcism": { name: "Principle of Exorcism", category: "Esoteric", id: "principle-gtg-core-exorcism", abilityId: "ability-gtg-core-principle_exorcism", page: 124, },
 	"principle-gtg-core-fauna": { name: "Principle of Fauna", category: "Esoteric", id: "principle-gtg-core-fauna", abilityId: "ability-gtg-core-principle_fauna", page: 124, },
@@ -63,3 +63,5 @@ export default {
 	"principle-gtg-core-veteran": { name: "Principle of the Veteran", category: "Responsibility", id: "principle-gtg-core-veteran", abilityId: "ability-gtg-core-principle_veteran", page: 141, },
 	"principle-gtg-core-youth": { name: "Principle of Youth", category: "Responsibility", id: "principle-gtg-core-youth", abilityId: "ability-gtg-core-principle_youth", page: 141, },
 };
+
+export default principles;
