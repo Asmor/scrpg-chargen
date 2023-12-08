@@ -1,3 +1,4 @@
+import { Rollable } from "@/types/common";
 import { Container, SectionHeader, SubHeader } from "@/util/commonElements";
 import { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
@@ -55,7 +56,7 @@ const makeOptionButton = <T,>(
 	</OptionButton>
 );
 
-function Chooser<T>({ options, title, selected, preferred, onSelectOption }: ChooserProps<T>) {
+function Chooser<T extends Partial<Rollable>>({ options, title, selected, preferred, onSelectOption }: ChooserProps<T>) {
 	const [othersCollapsed, setOthersCollapsed] = useState(true);
 
 	const selectedOption = useMemo<ChooserOption<T> | undefined>(() => {
@@ -73,10 +74,10 @@ function Chooser<T>({ options, title, selected, preferred, onSelectOption }: Cho
 		const preferredOptions: ChooserOption<T>[] = [];
 		const otherOptions: ChooserOption<T>[] = [];
 
-		options.forEach((option, index) => {
+		options.forEach((option) => {
 			if ( !option ) return;
 
-			if ( preferred.includes(index) ) {
+			if ( preferred.includes(option.value?.roll || -1) ) {
 				preferredOptions.push(option);
 			} else {
 				otherOptions.push(option);

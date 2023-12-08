@@ -2,11 +2,12 @@
 
 import Chooser, { ChooserOption } from "@/components/Chooser";
 import backgrounds from "@/data/backgrounds";
-import { Background, Die } from "@/types/common";
+import { Die } from "@/types/common";
 import { useMemo, useState } from "react";
 import DicePool from "./DicePool";
 import { conjugateDicePoolOptions } from "@/util/dice";
 import { noop } from "@/util/util";
+import { Background } from "@/types/background";
 
 const makeOption = (bg: Background): ChooserOption<Background> => ({
 	title: bg.name,
@@ -14,14 +15,7 @@ const makeOption = (bg: Background): ChooserOption<Background> => ({
 	value: bg,
 });
 
-const backgroundOptions = Object.values(backgrounds)
-	.reduce((acc, bg) => {
-		acc[bg.roll] = bg;
-
-		return acc;
-	}, [] as Background[])
-	.map(makeOption)
-;
+const backgroundOptions = Object.values(backgrounds).map(makeOption);
 
 const CharacterBuilder = () => {
 	const backgroundDice: Die[] = useMemo<Die[]>(() => [10, 10], []);

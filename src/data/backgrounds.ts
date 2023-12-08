@@ -1,7 +1,11 @@
-import { Background, Die, PrincipleCategory } from "@/types/common";
+import { Background } from "@/types/background";
+import { Source } from "@/types/common";
+import { PrincipleCategory } from "@/types/principles";
 
-const backgrounds: { [key: string]: Background } = {
-	"background-gtg-core-upper_class": {
+const backgrounds: Background[] = [
+	{
+		id: "core.bg.upper_class",
+		source: Source.CORE,
 		name: "Upper Class",
 		page: 49,
 		roll: 1,
@@ -14,7 +18,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.RESPONSIBILITY,
 		dice: [8, 8, 10],
 	},
-	"background-gtg-core-blank_slate": {
+	{
+		id: "core.bg.blank_slate",
+		source: Source.CORE,
 		name: "Blank Slate",
 		page: 49,
 		roll: 2,
@@ -26,7 +32,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.IDENTITY,
 		dice: [8, 8, 10],
 	},
-	"background-gtg-core-struggling": {
+	{
+		id: "core.bg.struggling",
+		source: Source.CORE,
 		name: "Struggling",
 		page: 50,
 		roll: 3,
@@ -39,7 +47,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.RESPONSIBILITY,
 		dice: [6, 8, 8],
 	},
-	"background-gtg-core-adventurer": {
+	{
+		id: "core.bg.adventurer",
+		source: Source.CORE,
 		name: "Adventurer",
 		page: 50,
 		roll: 4,
@@ -52,7 +62,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.EXPERTISE,
 		dice: [8, 8, 8],
 	},
-	"background-gtg-core-unremarkable": {
+	{
+		id: "core.bg.unremarkable",
+		source: Source.CORE,
 		name: "Unremarkable",
 		page: 50,
 		roll: 5,
@@ -65,7 +77,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.IDENTITY,
 		dice: [6, 8, 10],
 	},
-	"background-gtg-core-law_enforcement": {
+	{
+		id: "core.bg.law_enforcement",
+		source: Source.CORE,
 		name: "Law Enforcement",
 		page: 50,
 		roll: 6,
@@ -80,7 +94,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.RESPONSIBILITY,
 		dice: [6, 8, 10],
 	},
-	"background-gtg-core-academic": {
+	{
+		id: "core.bg.academic",
+		source: Source.CORE,
 		name: "Academic",
 		page: 51,
 		roll: 7,
@@ -93,7 +109,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.EXPERTISE,
 		dice: [8, 12],
 	},
-	"background-gtg-core-tragic": {
+	{
+		id: "core.bg.tragic",
+		source: Source.CORE,
 		name: "Tragic",
 		page: 51,
 		roll: 8,
@@ -107,7 +125,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.IDEALS,
 		dice: [6, 10, 10],
 	},
-	"background-gtg-core-performer": {
+	{
+		id: "core.bg.performer",
+		source: Source.CORE,
 		name: "Performer",
 		page: 51,
 		roll: 9,
@@ -121,7 +141,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.RESPONSIBILITY,
 		dice: [6, 8, 10],
 	},
-	"background-gtg-core-military": {
+	{
+		id: "core.bg.military",
+		source: Source.CORE,
 		name: "Military",
 		page: 52,
 		roll: 10,
@@ -134,7 +156,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.IDEALS,
 		dice: [8, 8, 10],
 	},
-	"background-gtg-core-retired": {
+	{
+		id: "core.bg.retired",
+		source: Source.CORE,
 		name: "Retired",
 		page: 52,
 		roll: 11,
@@ -146,7 +170,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.IDENTITY,
 		dice: [6, 6, 12],
 	},
-	"background-gtg-core-criminal": {
+	{
+		id: "core.bg.criminal",
+		source: Source.CORE,
 		name: "Criminal",
 		page: 52,
 		roll: 12,
@@ -159,7 +185,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.EXPERTISE,
 		dice: [8, 8, 8],
 	},
-	"background-gtg-core-medical": {
+	{
+		id: "core.bg.medical",
+		source: Source.CORE,
 		name: "Medical",
 		page: 52,
 		roll: 13,
@@ -173,7 +201,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.EXPERTISE,
 		dice: [8, 8, 10],
 	},
-	"background-gtg-core-anachronistic": {
+	{
+		id: "core.bg.anachronistic",
+		source: Source.CORE,
 		name: "Anachronistic",
 		page: 53,
 		roll: 14,
@@ -187,7 +217,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.ESOTERIC,
 		dice: [6, 8, 10],
 	},
-	"background-gtg-core-exile": {
+	{
+		id: "core.bg.exile",
+		source: Source.CORE,
 		name: "Exile",
 		page: 53,
 		roll: 15,
@@ -200,7 +232,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.IDEALS,
 		dice: [8, 8, 8],
 	},
-	"background-gtg-core-former_villain": {
+	{
+		id: "core.bg.former_villain",
+		source: Source.CORE,
 		name: "Former Villain",
 		page: 53,
 		roll: 16,
@@ -213,7 +247,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.EXPERTISE,
 		dice: [8, 8, 10],
 	},
-	"background-gtg-core-interstellar": {
+	{
+		id: "core.bg.interstellar",
+		source: Source.CORE,
 		name: "Interstellar",
 		page: 53,
 		roll: 17,
@@ -225,7 +261,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.ESOTERIC,
 		dice: [6, 8, 10],
 	},
-	"background-gtg-core-dynasty": {
+	{
+		id: "core.bg.dynasty",
+		source: Source.CORE,
 		name: "Dynasty",
 		page: 54,
 		roll: 18,
@@ -239,7 +277,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.IDEALS,
 		dice: [6, 8, 8],
 	},
-	"background-gtg-core-otherworldy": {
+	{
+		id: "core.bg.otherworldy",
+		source: Source.CORE,
 		name: "Otherworldy",
 		page: 54,
 		roll: 19,
@@ -252,7 +292,9 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.ESOTERIC,
 		dice: [6, 6, 10],
 	},
-	"background-gtg-core-created": {
+	{
+		id: "core.bg.created",
+		source: Source.CORE,
 		name: "Created",
 		page: 54,
 		roll: 20,
@@ -266,6 +308,6 @@ const backgrounds: { [key: string]: Background } = {
 		principleCategory: PrincipleCategory.EXPERTISE,
 		dice: [6, 10, 10],
 	},
-};
+];
 
 export default backgrounds;
