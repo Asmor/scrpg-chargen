@@ -1,10 +1,18 @@
 :root {
+  /* general */
+  --accent-dark-base: #300;
+  --accent-dark-base-emph: #600;
+  --accent-light-base: #900;
+  --accent-light-emph: #c00;
+  --supplemental: yellow;
+
   /* dark mode */
   --foreground: #ccc;
   --background: #111;
-  --accent-bg: #300;
-  --accent-bg-emphasized: #600;
-  --supplemental: yellow;
+  --accent-bg: var(--accent-dark-base);
+  --accent-bg-emphasized: var(--accent-dark-base-emph);
+  --accent-fg: var(--accent-light-base);
+  --accent-fg-emphasized: var(--accent-light-base-emph);
 }
 
 @media (prefers-color-scheme: light) {
@@ -12,14 +20,18 @@
     /* light mode */
     --foreground: #333;
     --background: #ccc;
-    --accent-bg: #900;
-    --accent-bg-emphasized: #c00;  }
+    --accent-bg: var(--accent-light-base);
+    --accent-bg-emphasized: var(--accent-light-base-emph);
+    --accent-fg: var(--accent-dark-base);
+    --accent-fg-emphasized: var(--accent-dark-base-emph);
+  }
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  list-style-type: none;
 }
 
 html,

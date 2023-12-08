@@ -1,3 +1,4 @@
+import { Container, SectionHeader, SubHeader } from "@/util/commonElements";
 import { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 
@@ -16,7 +17,8 @@ export interface ChooserProps<T> {
 }
 
 const OptionList = styled.ul<{ $collapsed?: boolean }>`
-	display: ${ p => p.$collapsed ? "none" : "block" };
+	display: ${ p => p.$collapsed ? "none" : "flex" };
+	flex-wrap: wrap;
 `;
 
 const OptionButton = styled.button<{ $selected?: boolean }>`
@@ -38,11 +40,7 @@ const OptionSubtitle = styled.span`
 	margin-left: 5px;
 `;
 
-const SectionTitle = styled.h4`
-	color: grey;
-`;
-
-const ShowMore = styled(SectionTitle)`
+const ShowMore = styled(SectionHeader)`
 	cursor: pointer;
 `;
 
@@ -96,14 +94,14 @@ function Chooser<T>({ options, title, selected, preferred, onSelectOption }: Cho
 	}, [onSelectOption]);
 
 	if ( selectedOption && !editMode ) {
-		return <div>{ title }: {
+		return <Container>{ title }: {
 			makeOptionButton(selectedOption, setEditMode.bind(null, true), selectedOption)
-		}</div>
+		}</Container>
 	}
 
-	return <div>
-		<h3>Choose {title}</h3>
-		<SectionTitle>Recommended</SectionTitle>
+	return <Container>
+		<SubHeader>Choose {title}</SubHeader>
+		<SectionHeader>Recommended</SectionHeader>
 		<OptionList>
 			{preferredOptions.map( (option, index) =>
 				<li key={index}>
@@ -123,7 +121,7 @@ function Chooser<T>({ options, title, selected, preferred, onSelectOption }: Cho
 				)}
 			</OptionList>
 		</> }
-	</div>;
+	</Container>;
 }
 
 export default Chooser;

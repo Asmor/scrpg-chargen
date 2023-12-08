@@ -6,8 +6,7 @@ import { Background, Die } from "@/types/common";
 import { useMemo, useState } from "react";
 import DicePool from "./DicePool";
 import { conjugateDicePoolOptions } from "@/util/dice";
-
-const bgVals = Object.values(backgrounds);
+import { noop } from "@/util/util";
 
 const makeOption = (bg: Background): ChooserOption<Background> => ({
 	title: bg.name,
@@ -30,21 +29,36 @@ const CharacterBuilder = () => {
 	const [selectedBackground, setSelectedBackground] = useState<Background | undefined>();
 	const preferredBackgrounds = conjugateDicePoolOptions(preferredBackgroundRolls);
 
-	return (
-		<>
-			<DicePool
-				title="Background"
-				dice={backgroundDice}
-				onRoll={setPreferredBackgroundRolls}
-			/>
+	const elements = [
+		<DicePool
+			key={0}
+			title="Background"
+			dice={backgroundDice}
+			onRoll={setPreferredBackgroundRolls}
+			/>,
 			<Chooser
-				options={backgroundOptions}
-				title="Background"
-				onSelectOption={setSelectedBackground}
-				selected={selectedBackground}
-				preferred={preferredBackgrounds}
+			key={1}
+			options={backgroundOptions}
+			title="Background"
+			onSelectOption={setSelectedBackground}
+			selected={selectedBackground}
+			preferred={preferredBackgrounds}
 			/>
-		</>
+		];
+
+		if ( selectedBackground ) {
+			elements.push(
+			<DicePool
+				key={elements.length}
+				title="Power Source"
+				dice={selectedBackground.dice}
+				onRoll={noop}
+			/>
+		);
+	}
+
+	return (
+		<>{ elements }</>
 	)
 };
 

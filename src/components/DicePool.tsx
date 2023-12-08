@@ -1,4 +1,5 @@
 import { Die } from "@/types/common";
+import { Container, SubHeader } from "@/util/commonElements";
 import { rollPool } from "@/util/dice";
 import { useEffect, useMemo, useState } from "react";
 
@@ -42,13 +43,13 @@ const DicePool = ({ dice, onRoll, title }: DicePoolProps) => {
 
 	const diceString = useMemo(() => makeDiceString(dice), [dice]);
 
-	return <div>
-		<h3>{title} dice pool: {diceString}</h3>
+	return <Container>
+		<SubHeader>{title} dice pool: {diceString}</SubHeader>
 		<div>
 			Results: {result.join(", ")}
 			<button onClick={roll}>Reroll</button>
 		</div>
-	</div>
+	</Container>
 };
 
 export default DicePool;
