@@ -3,5 +3,6 @@ import { PrincipleCategory } from "./principles.types";
 
 export interface Background extends Entry, Rollable, Assignable {
 	principleCategory: PrincipleCategory;
+	assignableDice: Die[];
 	powerSourceDice: Die[];
 };

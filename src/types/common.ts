@@ -14,7 +14,6 @@ export interface Entry {
 };
 
 export interface Assignable {
-	assignableDice: Die[],
 	assignablePqs: (string | PowerQualitySpecifier)[],
 }
 
