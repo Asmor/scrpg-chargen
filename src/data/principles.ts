@@ -1,5 +1,6 @@
 import { Source } from "@/types/common";
 import { Principle, PrincipleCategory } from "./principles.types";
+import { getByIdFactory } from "@/util/util";
 
 const principles: Principle[] = [
 	{
@@ -515,5 +516,7 @@ const principles: Principle[] = [
 		page: 141,
 	},
 ];
+
+export const getPrincipleById = getByIdFactory(principles);
 
 export default principles;

@@ -11,21 +11,23 @@ export enum PowerQualityType {
 }
 
 export enum PowerCategory {
-	ATHLETIC = "ATHLETIC",
-	ELEMENTAL_ENERGY = "ELEMENTAL_ENERGY",
-	HALLMARK = "HALLMARK",
-	INTELLECTUAL = "INTELLECTUAL",
-	MATERIALS = "MATERIALS",
-	MOBILITY = "MOBILITY",
-	PSYCHIC = "PSYCHIC",
-	SELF_CONTROL = "SELF_CONTROL",
-	TECHNOLOGICAL = "TECHNOLOGICAL",
+	ATHLETIC = "Athletic",
+	ELEMENTAL_ENERGY = "Elemental Energy",
+	HALLMARK = "Hallmark",
+	INTELLECTUAL = "Intellectual",
+	MATERIALS = "Materials",
+	MOBILITY = "Mobility",
+	PSYCHIC = "Psychic",
+	SELF_CONTROL = "Self-Control",
+	TECHNOLOGICAL = "Technological",
 }
 
 export enum QualityCategory {
-	INFORMATION = "INFORMATION",
-	MENTAL = "MENTAL",
-	PHYSICAL = "PHYSICAL",
-	SOCIAL = "SOCIAL",
-	ROLEPLAYING = "ROLEPLAYING",
+	INFORMATION = "Information",
+	MENTAL = "Mental",
+	PHYSICAL = "Physical",
+	SOCIAL = "Social",
+	ROLEPLAYING = "Roleplaying",
 }
+
+export type PowerQualitySpecifier = string | PowerCategory | QualityCategory;

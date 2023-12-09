@@ -11,7 +11,7 @@ export interface ChooserOption<T> {
 
 export interface ChooserProps<T> {
 	title: string;
-	preferred?: number[];
+	rolled?: number[];
 	options: ChooserOption<T>[];
 	selected?: T;
 	onSelectOption: (selected: T) => void;
@@ -56,36 +56,36 @@ const makeOptionButton = <T,>(
 	</OptionButton>
 );
 
-function Chooser<T extends Partial<Rollable>>({ options, title, selected, preferred, onSelectOption }: ChooserProps<T>) {
+function Chooser<T extends Partial<Rollable> & object>({ options, title, selected, rolled, onSelectOption }: ChooserProps<T>) {
 	const [othersCollapsed, setOthersCollapsed] = useState(true);
 
 	const selectedOption = useMemo<ChooserOption<T> | undefined>(() => {
 		return options.find(option => option?.value === selected)
 	}, [options, selected]);
 
-	const { preferredOptions, otherOptions } = useMemo(() => {
-		if ( !preferred?.length ) {
+	const { primaryOptions, otherOptions } = useMemo(() => {
+		if ( !rolled?.length ) {
 			return {
-				preferredOptions: options.filter(option => option),
+				primaryOptions: [...options],
 				otherOptions: null,
 			};
 		}
 
-		const preferredOptions: ChooserOption<T>[] = [];
+		const primaryOptions: ChooserOption<T>[] = [];
 		const otherOptions: ChooserOption<T>[] = [];
 
 		options.forEach((option) => {
 			if ( !option ) return;
 
-			if ( preferred.includes(option.value?.roll || -1) ) {
-				preferredOptions.push(option);
+			if ( rolled.includes(option.value?.roll || -1) ) {
+				primaryOptions.push(option);
 			} else {
 				otherOptions.push(option);
 			}
 		});
 
-		return { preferredOptions, otherOptions};
-	}, [preferred, options]);
+		return { primaryOptions, otherOptions};
+	}, [rolled, options]);
 
 	const [editMode, setEditMode] = useState(false);
 
@@ -102,9 +102,9 @@ function Chooser<T extends Partial<Rollable>>({ options, title, selected, prefer
 
 	return <Container>
 		<SubHeader>Choose {title}</SubHeader>
-		<SectionHeader>Recommended</SectionHeader>
+		{ otherOptions?.length && <SectionHeader>Rolled options</SectionHeader>}
 		<OptionList>
-			{preferredOptions.map( (option, index) =>
+			{primaryOptions.map( (option, index) =>
 				<li key={index}>
 					{ makeOptionButton(option, () => handleSelect(option), selectedOption) }
 				</li>

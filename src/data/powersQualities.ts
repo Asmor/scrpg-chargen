@@ -1,5 +1,6 @@
 import { Source } from "@/types/common";
 import { PowerCategory, PowerQuality, PowerQualityType, QualityCategory } from "./powersQualities.types";
+import { getByIdFactory } from "@/util/util";
 
 const powersAndQualities: PowerQuality[] = [
 	{
@@ -627,5 +628,9 @@ const powersAndQualities: PowerQuality[] = [
 		page: 120,
 	},
 ];
+
+export const getPowerQualityById = getByIdFactory(powersAndQualities);
+export const getAllPowerQualityByCategory =
+	(category: PowerCategory | QualityCategory) => powersAndQualities.filter(pq => pq.category === category);
 
 export default powersAndQualities;
