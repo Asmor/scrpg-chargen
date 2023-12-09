@@ -11,5 +11,4 @@ export enum PrincipleCategory {
 export interface Principle extends Entry {
 	category: PrincipleCategory;
 	abilityId: string;
-	page: number;
 }

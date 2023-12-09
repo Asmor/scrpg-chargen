@@ -2,7 +2,7 @@
 
 import Chooser, { ChooserOption } from "@/components/Chooser";
 import backgrounds from "@/data/backgrounds";
-import { Die } from "@/types/common";
+import { Die, Entry } from "@/types/common";
 import { useCallback, useMemo, useState } from "react";
 import DicePool from "./DicePool";
 import { conjugateDicePoolOptions } from "@/util/dice";
@@ -10,24 +10,28 @@ import { noop } from "@/util/util";
 import { Background } from "@/data/backgrounds.types";
 import PowerQualityPicker from "./PowerQualityPicker";
 import { PowerQuality } from "@/data/powersQualities.types";
+import principles from "@/data/principles";
+import { Principle } from "@/data/principles.types";
 
-const makeOption = (bg: Background): ChooserOption<Background> => ({
-	title: bg.name,
-	subtitle: `pg. ${bg.page}`,
-	value: bg,
+const makeOption = <T extends Entry,>(value: T): ChooserOption<T> => ({
+	title: value.name,
+	subtitle: `pg. ${value.page}`,
+	value,
 });
 
-const backgroundOptions = Object.values(backgrounds).map(makeOption);
+const backgroundOptions = backgrounds.map(makeOption);
+const principleOptions = principles.map(makeOption);
 
 enum ResetPoint {
 	BACKGROUND_ROLL,
 	BACKGROUND_CHOOSE,
 	BACKGROUND_PQ,
+	BACKGROUND_PRINCIPLE,
 	POWER_SOURCE_ROLL,
 }
 
 const CharacterBuilder = () => {
-	// Roll for background options
+	// Background roll
 	const backgroundDice: Die[] = useMemo<Die[]>(() => [10, 10], []);
 	const [preferredBackgroundRolls, setPreferredBackgroundRolls] = useState<number[]>([])
 	const handleBackgroundRoll = useCallback((values: number[]) => {
@@ -35,28 +39,41 @@ const CharacterBuilder = () => {
 		reset(ResetPoint.BACKGROUND_ROLL);
 	}, [setPreferredBackgroundRolls]);
 
-	// Select a background
-	const [selectedBackground, setSelectedBackground] = useState<Background | undefined>();
+	// Background select
+	const [background, setBackground] = useState<Background>();
 	const handleBackgroundSelect = useCallback((bg: Background) => {
-		setSelectedBackground(bg);
+		setBackground(bg);
 		reset(ResetPoint.BACKGROUND_CHOOSE);
-	}, [setSelectedBackground]);
+	}, [setBackground]);
 
-	// Select background powers and qualities
-	const [selectedBgPowerQualities, setSelectedBgPowerQualities] = useState<PowerQuality[]>([]);
+	// Background powers and qualities
+	const [bgPowerQualities, setbgPowerQualities] = useState<PowerQuality[]>([]);
 	const handleBackgroundPQSelect = useCallback((pqs: PowerQuality[]) => {
-		setSelectedBgPowerQualities(pqs);
+		setbgPowerQualities(pqs);
 		reset(ResetPoint.BACKGROUND_PQ);
-	}, [setSelectedBgPowerQualities]);
+	}, [setbgPowerQualities]);
+
+	// Background principle
+	const bgPrincipleOptions = useMemo(
+		() => principleOptions.filter(option => option.value.category === background?.principleCategory),
+		[background]
+	)
+	const [bgPrinciple, setBgPrinciple] = useState<Principle>();
+	const handleBgPrincipleSelect = useCallback((principle: Principle) => {
+		setBgPrinciple(principle);
+		reset(ResetPoint.BACKGROUND_PRINCIPLE);
+	}, [setBgPrinciple])
+
 
 	const preferredBackgrounds = conjugateDicePoolOptions(preferredBackgroundRolls);
 
 	const reset = (from: ResetPoint) => {
 		switch (from) {
 			case ResetPoint.BACKGROUND_ROLL:
-				setSelectedBackground(undefined);
+				setBackground(undefined);
 			case ResetPoint.BACKGROUND_CHOOSE:
-				setSelectedBgPowerQualities([]);
+				setbgPowerQualities([]);
+				setBgPrinciple
 
 		}
 	};
@@ -70,30 +87,39 @@ const CharacterBuilder = () => {
 		/>,
 		<Chooser
 			key={1}
-			options={backgroundOptions}
 			title="Background"
+			options={backgroundOptions}
 			onSelectOption={handleBackgroundSelect}
-			selected={selectedBackground}
+			selected={background}
 			rolled={preferredBackgrounds}
 		/>
 	];
 
-	if ( selectedBackground ) {
+	if ( background ) {
 		elements.push(
 			<PowerQualityPicker
 				key={elements.length}
 				title="Background"
-				dice={selectedBackground.assignableDice}
-				specifiers={selectedBackground.assignable}
-				selected={selectedBgPowerQualities}
+				dice={background.assignableDice}
+				specifiers={background.assignablePqs}
+				selected={bgPowerQualities}
 				onSelect={handleBackgroundPQSelect}
+			/>
+		);
+		elements.push(
+			<Chooser
+				key={elements.length}
+				title="Background Principle"
+				options={bgPrincipleOptions}
+				onSelectOption={handleBgPrincipleSelect}
+				selected={bgPrinciple}
 			/>
 		);
 		elements.push(
 			<DicePool
 				key={elements.length}
 				title="Power Source"
-				dice={selectedBackground.dice}
+				dice={background.powerSourceDice}
 				onRoll={noop}
 			/>
 		);

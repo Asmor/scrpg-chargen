@@ -1,3 +1,5 @@
+import { PowerQualitySpecifier } from "@/data/powersQualities.types";
+
 export type Die = 4 | 6 | 8 | 10 | 12;
 
 export enum Source {
@@ -10,6 +12,11 @@ export interface Entry {
 	source: Source;
 	page: number;
 };
+
+export interface Assignable {
+	assignableDice: Die[],
+	assignablePqs: (string | PowerQualitySpecifier)[],
+}
 
 // Things which can be rolled for
 export interface Rollable {

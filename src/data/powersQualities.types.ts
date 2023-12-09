@@ -30,4 +30,4 @@ export enum QualityCategory {
 	ROLEPLAYING = "Roleplaying",
 }
 
-export type PowerQualitySpecifier = string | PowerCategory | QualityCategory;
+export type PowerQualitySpecifier = PowerCategory | QualityCategory;

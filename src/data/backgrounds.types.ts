@@ -1,10 +1,7 @@
-import { Die, Entry, Rollable } from "../types/common";
-import { PowerCategory, PowerQualitySpecifier, QualityCategory } from "./powersQualities.types";
+import { Assignable, Die, Entry, Rollable } from "../types/common";
 import { PrincipleCategory } from "./principles.types";
 
-export interface Background extends Entry, Rollable {
-	assignableDice: Die[];
-	assignable: PowerQualitySpecifier[];
+export interface Background extends Entry, Rollable, Assignable {
 	principleCategory: PrincipleCategory;
-	dice: Die[];
+	powerSourceDice: Die[];
 };

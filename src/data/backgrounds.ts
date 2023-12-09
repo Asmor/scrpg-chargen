@@ -12,13 +12,13 @@ const backgrounds: Background[] = [
 		page: 49,
 		roll: 1,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.fitness",
 			"core.quality.persuasion",
 			QualityCategory.MENTAL,
 		],
 		principleCategory: PrincipleCategory.RESPONSIBILITY,
-		dice: [8, 8, 10],
+		powerSourceDice: [8, 8, 10],
 	},
 	{
 		id: "core.bg.blank_slate",
@@ -27,12 +27,12 @@ const backgrounds: Background[] = [
 		page: 49,
 		roll: 2,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			QualityCategory.MENTAL,
 			QualityCategory.PHYSICAL,
 		],
 		principleCategory: PrincipleCategory.IDENTITY,
-		dice: [8, 8, 10],
+		powerSourceDice: [8, 8, 10],
 	},
 	{
 		id: "core.bg.struggling",
@@ -41,13 +41,13 @@ const backgrounds: Background[] = [
 		page: 50,
 		roll: 3,
 		assignableDice: [6, 6, 8],
-		assignable: [
+		assignablePqs: [
 			"core.quality.banter",
 			"core.quality.criminalUnderworldInfo",
 			QualityCategory.PHYSICAL,
 		],
 		principleCategory: PrincipleCategory.RESPONSIBILITY,
-		dice: [6, 8, 8],
+		powerSourceDice: [6, 8, 8],
 	},
 	{
 		id: "core.bg.adventurer",
@@ -56,13 +56,13 @@ const backgrounds: Background[] = [
 		page: 50,
 		roll: 4,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.history",
 			"core.quality.leadership",
 			QualityCategory.PHYSICAL,
 		],
 		principleCategory: PrincipleCategory.EXPERTISE,
-		dice: [8, 8, 8],
+		powerSourceDice: [8, 8, 8],
 	},
 	{
 		id: "core.bg.unremarkable",
@@ -71,13 +71,13 @@ const backgrounds: Background[] = [
 		page: 50,
 		roll: 5,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.closeCombat",
 			QualityCategory.MENTAL,
 			QualityCategory.PHYSICAL,
 		],
 		principleCategory: PrincipleCategory.IDENTITY,
-		dice: [6, 8, 10],
+		powerSourceDice: [6, 8, 10],
 	},
 	{
 		id: "core.bg.law_enforcement",
@@ -86,7 +86,7 @@ const backgrounds: Background[] = [
 		page: 50,
 		roll: 6,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.closeCombat",
 			"core.quality.criminalUnderworldInfo",
 			"core.quality.rangedCombat",
@@ -94,7 +94,7 @@ const backgrounds: Background[] = [
 			QualityCategory.SOCIAL,
 		],
 		principleCategory: PrincipleCategory.RESPONSIBILITY,
-		dice: [6, 8, 10],
+		powerSourceDice: [6, 8, 10],
 	},
 	{
 		id: "core.bg.academic",
@@ -103,13 +103,13 @@ const backgrounds: Background[] = [
 		page: 51,
 		roll: 7,
 		assignableDice: [8, 12],
-		assignable: [
+		assignablePqs: [
 			"core.quality.leadership",
 			"core.quality.selfDiscipline",
 			QualityCategory.INFORMATION,
 		],
 		principleCategory: PrincipleCategory.EXPERTISE,
-		dice: [8, 12],
+		powerSourceDice: [8, 12],
 	},
 	{
 		id: "core.bg.tragic",
@@ -118,14 +118,14 @@ const backgrounds: Background[] = [
 		page: 51,
 		roll: 8,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.banter",
 			"core.quality.closeCombat",
 			"core.quality.imposing",
 			QualityCategory.MENTAL,
 		],
 		principleCategory: PrincipleCategory.IDEALS,
-		dice: [6, 10, 10],
+		powerSourceDice: [6, 10, 10],
 	},
 	{
 		id: "core.bg.performer",
@@ -134,14 +134,14 @@ const backgrounds: Background[] = [
 		page: 51,
 		roll: 9,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.acrobatics",
 			"core.quality.creativity",
 			"core.quality.finesse",
 			QualityCategory.SOCIAL,
 		],
 		principleCategory: PrincipleCategory.RESPONSIBILITY,
-		dice: [6, 8, 10],
+		powerSourceDice: [6, 8, 10],
 	},
 	{
 		id: "core.bg.military",
@@ -150,13 +150,13 @@ const backgrounds: Background[] = [
 		page: 52,
 		roll: 10,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.leadership",
 			"core.quality.selfDiscipline",
 			QualityCategory.PHYSICAL,
 		],
 		principleCategory: PrincipleCategory.IDEALS,
-		dice: [8, 8, 10],
+		powerSourceDice: [8, 8, 10],
 	},
 	{
 		id: "core.bg.retired",
@@ -165,12 +165,12 @@ const backgrounds: Background[] = [
 		page: 52,
 		roll: 11,
 		assignableDice: [10, 10],
-		assignable: [
+		assignablePqs: [
 			QualityCategory.INFORMATION,
 			QualityCategory.SOCIAL,
 		],
 		principleCategory: PrincipleCategory.IDENTITY,
-		dice: [6, 6, 12],
+		powerSourceDice: [6, 6, 12],
 	},
 	{
 		id: "core.bg.criminal",
@@ -179,13 +179,13 @@ const backgrounds: Background[] = [
 		page: 52,
 		roll: 12,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.criminalUnderworldInfo",
 			"core.quality.imposing",
 			QualityCategory.PHYSICAL,
 		],
 		principleCategory: PrincipleCategory.EXPERTISE,
-		dice: [8, 8, 8],
+		powerSourceDice: [8, 8, 8],
 	},
 	{
 		id: "core.bg.medical",
@@ -194,14 +194,14 @@ const backgrounds: Background[] = [
 		page: 52,
 		roll: 13,
 		assignableDice: [6, 8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.finesse",
 			"core.quality.science",
 			"core.quality.technology",
 			QualityCategory.MENTAL,
 		],
 		principleCategory: PrincipleCategory.EXPERTISE,
-		dice: [8, 8, 10],
+		powerSourceDice: [8, 8, 10],
 	},
 	{
 		id: "core.bg.anachronistic",
@@ -210,14 +210,14 @@ const backgrounds: Background[] = [
 		page: 53,
 		roll: 14,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.history",
 			"core.quality.magicalLore",
 			"core.quality.technology",
 			QualityCategory.PHYSICAL,
 		],
 		principleCategory: PrincipleCategory.ESOTERIC,
-		dice: [6, 8, 10],
+		powerSourceDice: [6, 8, 10],
 	},
 	{
 		id: "core.bg.exile",
@@ -226,13 +226,13 @@ const backgrounds: Background[] = [
 		page: 53,
 		roll: 15,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.conviction",
 			"core.quality.insight",
 			QualityCategory.INFORMATION,
 		],
 		principleCategory: PrincipleCategory.IDEALS,
-		dice: [8, 8, 8],
+		powerSourceDice: [8, 8, 8],
 	},
 	{
 		id: "core.bg.former_villain",
@@ -241,13 +241,13 @@ const backgrounds: Background[] = [
 		page: 53,
 		roll: 16,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.conviction",
 			QualityCategory.INFORMATION,
 			QualityCategory.SOCIAL,
 		],
 		principleCategory: PrincipleCategory.EXPERTISE,
-		dice: [8, 8, 10],
+		powerSourceDice: [8, 8, 10],
 	},
 	{
 		id: "core.bg.interstellar",
@@ -256,12 +256,12 @@ const backgrounds: Background[] = [
 		page: 53,
 		roll: 17,
 		assignableDice: [6, 12],
-		assignable: [
+		assignablePqs: [
 			QualityCategory.INFORMATION,
 			QualityCategory.MENTAL,
 		],
 		principleCategory: PrincipleCategory.ESOTERIC,
-		dice: [6, 8, 10],
+		powerSourceDice: [6, 8, 10],
 	},
 	{
 		id: "core.bg.dynasty",
@@ -270,14 +270,14 @@ const backgrounds: Background[] = [
 		page: 54,
 		roll: 18,
 		assignableDice: [10, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.closeCombat",
 			"core.quality.fitness",
 			"core.quality.history",
 			QualityCategory.SOCIAL,
 		],
 		principleCategory: PrincipleCategory.IDEALS,
-		dice: [6, 8, 8],
+		powerSourceDice: [6, 8, 8],
 	},
 	{
 		id: "core.bg.otherworldy",
@@ -286,13 +286,13 @@ const backgrounds: Background[] = [
 		page: 54,
 		roll: 19,
 		assignableDice: [8, 10],
-		assignable: [
+		assignablePqs: [
 			"core.quality.magicalLore",
 			"core.quality.otherworldlyMythos",
 			QualityCategory.MENTAL,
 		],
 		principleCategory: PrincipleCategory.ESOTERIC,
-		dice: [6, 6, 10],
+		powerSourceDice: [6, 6, 10],
 	},
 	{
 		id: "core.bg.created",
@@ -301,14 +301,14 @@ const backgrounds: Background[] = [
 		page: 54,
 		roll: 20,
 		assignableDice: [6, 12],
-		assignable: [
+		assignablePqs: [
 			"core.quality.alertness",
 			"core.quality.science",
 			"core.quality.technology",
 			QualityCategory.PHYSICAL,
 		],
 		principleCategory: PrincipleCategory.EXPERTISE,
-		dice: [6, 10, 10],
+		powerSourceDice: [6, 10, 10],
 	},
 ];
 

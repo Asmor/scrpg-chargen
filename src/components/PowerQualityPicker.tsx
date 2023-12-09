@@ -21,7 +21,7 @@ const getOptionsForIndex = (index: number, allOptions: ChooserOption<PowerQualit
 
 interface PowerQualityPickerProps {
 	title: string;
-	specifiers: PowerQualitySpecifier[];
+	specifiers: (string | PowerQualitySpecifier)[];
 	dice: Die[];
 	selected: PowerQuality[];
 	onSelect: (values: PowerQuality[]) => void;
