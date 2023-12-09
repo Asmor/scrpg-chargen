@@ -3,6 +3,14 @@ import { Principle, PrincipleCategory } from "./principles.types";
 
 const principles: Principle[] = [
 	{
+		id: "core.principle.destiny",
+		source: Source.CORE,
+		name: "Principle of Destiny",
+		category: PrincipleCategory.ESOTERIC,
+		abilityId: "core.ability.principle_destiny",
+		page: 124,
+	},
+	{
 		id: "core.principle.energy_element",
 		source: Source.CORE,
 		name: "Principle of [Energy/Element]",
