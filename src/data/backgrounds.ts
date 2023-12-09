@@ -2,7 +2,7 @@ import { Source } from "@/types/common";
 import { Background } from "./backgrounds.types";
 import { PrincipleCategory } from "./principles.types";
 import { getByIdFactory } from "@/util/util";
-import { QualityCategory } from "./powersQualities.types";
+import { PowerCategory, QualityCategory } from "./powersQualities.types";
 
 const backgrounds: Background[] = [
 	{

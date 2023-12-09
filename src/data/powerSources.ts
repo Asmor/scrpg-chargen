@@ -1,10 +1,10 @@
 import { getByIdFactory } from "@/util/util";
 import { PowerSource } from "./powerSourcesTypes";
 import { Source } from "@/types/common";
-import { PowerCategory } from "./powersQualities.types";
+import { PowerCategory, QualityCategory } from "./powersQualities.types";
 
 const powerSources: PowerSource[] = [
-	{
+	{ // Accident
 		name: "Accident",
 		id: "core.powerSource.accident",
 		source: Source.CORE,
@@ -26,9 +26,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.changeInCircumstances",
 			"core.ability.immunity",
 		],
+		yellowPicks: 2,
+		greenPicks: 1,
 		archetypeDice: [12, 6],
 	},
-	{
+	{ // Training
 		name: "Training",
 		id: "core.powerSource.training",
 		source: Source.CORE,
@@ -46,9 +48,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.reactiveField",
 			"core.ability.FlowingFight",
 		],
+		yellowPicks: 2,
 		archetypeDice: [10, 8, 8],
+		extraArchetypeDice: [8],
 	},
-	{
+	{ // Genetic
 		name: "Genetic",
 		id: "core.powerSource.genetic",
 		source: Source.CORE,
@@ -70,9 +74,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.growth",
 			"core.ability.rally",
 		],
+		yellowPicks: 2,
+		greenPicks: 1,
 		archetypeDice: [10, 8, 8],
 	},
-	{
+	{ // Experimentation
 		name: "Experimentation",
 		id: "core.powerSource.experimentation",
 		source: Source.CORE,
@@ -93,9 +99,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.overpower",
 			"core.ability.unflagging",
 		],
+		yellowPicks: 2,
+		greenPicks: 1,
 		archetypeDice: [8, 8, 8],
 	},
-	{
+	{ // Mystical
 		name: "Mystical",
 		id: "core.powerSource.mystical",
 		source: Source.CORE,
@@ -117,9 +125,14 @@ const powerSources: PowerSource[] = [
 			"core.ability.mysticRedirection",
 			"core.ability.severLink",
 		],
+		yellowPicks: 2,
 		archetypeDice: [10, 8, 8],
+		extraAssignables: {
+			dice: [10],
+			assignablePqs: [QualityCategory.INFORMATION],
+		},
 	},
-	{
+	{ // Nature
 		name: "Nature",
 		id: "core.powerSource.nature",
 		source: Source.CORE,
@@ -147,9 +160,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.graspingVines",
 			"core.ability.naturalWeapon",
 		],
+		yellowPicks: 2,
+		greenPicks: 1,
 		archetypeDice: [10, 8, 8],
 	},
-	{
+	{ // Relic
 		name: "Relic",
 		id: "core.powerSource.relic",
 		source: Source.CORE,
@@ -173,9 +188,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.drawPower",
 			"core.ability.punishment",
 		],
+		yellowPicks: 2,
+		greenPicks: 1,
 		archetypeDice: [10, 10, 6],
 	},
-	{
+	{ // Powered Suit
 		name: "Powered Suit",
 		id: "core.powerSource.poweredSuit",
 		source: Source.CORE,
@@ -202,9 +219,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.damageReduction",
 			"core.ability.diagnosticSubroutine",
 		],
+		yellowPicks: 2,
+		greenPicks: 1,
 		archetypeDice: [10, 6, 6],
 	},
-	{
+	{ // Radiation
 		name: "Radiation",
 		id: "core.powerSource.radiation",
 		source: Source.CORE,
@@ -226,9 +245,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.dangerousLash",
 			"core.ability.radioactiveAura",
 		],
+		yellowPicks: 2,
+		greenPicks: 1,
 		archetypeDice: [10, 8, 6],
 	},
-	{
+	{ // Tech Upgrades
 		name: "Tech Upgrades",
 		id: "core.powerSource.techUpgrades",
 		source: Source.CORE,
@@ -251,9 +272,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.indiscriminateFabrication",
 			"core.ability.organiHack",
 		],
+		yellowPicks: 2,
+		greenPicks: 1,
 		archetypeDice: [10, 8, 8],
 	},
-	{
+	{ // Supernatural
 		name: "Supernatural",
 		id: "core.powerSource.supernatural",
 		source: Source.CORE,
@@ -282,9 +305,15 @@ const powerSources: PowerSource[] = [
 			"core.ability.personalUpgrade",
 			"core.ability.reachThroughVeil",
 		],
+		yellowPicks: 2,
 		archetypeDice: [10, 10, 6],
+		extraAssignables: {
+			exclusive: true,
+			dice: [10],
+			assignablePqs: [PowerCategory.ALL],
+		},
 	},
-	{
+	{ // Artificial Being
 		name: "Artificial Being",
 		id: "core.powerSource.artificialBeing",
 		source: Source.CORE,
@@ -308,9 +337,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.createdForm",
 			"core.ability.intentionality",
 		],
+		yellowPicks: 2,
+		greenPicks: 1,
 		archetypeDice: [10, 8, 8],
 	},
-	{
+	{ // Cursed
 		name: "Cursed",
 		id: "core.powerSource.cursed",
 		source: Source.CORE,
@@ -330,9 +361,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.doubleEdgedLuck",
 			"core.ability.extremes",
 		],
+		yellowPicks: 2,
+		greenPicks: 1,
 		archetypeDice: [12, 6],
 	},
-	{
+	{ // Alien
 		name: "Alien",
 		id: "core.powerSource.alien",
 		source: Source.CORE,
@@ -353,9 +386,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.empowerAndRepair",
 			"core.ability.halt",
 		],
+		yellowPicks: 2,
 		archetypeDice: [8, 8, 8],
+		// todo handle its special upgrade
 	},
-	{
+	{ // Genius
 		name: "Genius",
 		id: "core.powerSource.genius",
 		source: Source.CORE,
@@ -373,9 +408,17 @@ const powerSources: PowerSource[] = [
 			"core.ability.expandedMind",
 			"core.ability.overwhelmingVision",
 		],
+		yellowPicks: 2,
 		archetypeDice: [10, 6, 6],
+		extraAssignables: {
+			dice: [10],
+			assignablePqs: [
+				QualityCategory.INFORMATION,
+				QualityCategory.MENTAL,
+			],
+		},
 	},
-	{
+	{ // Cosmos
 		name: "Cosmos",
 		id: "core.powerSource.cosmos",
 		source: Source.CORE,
@@ -396,9 +439,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.encourage",
 			"core.ability.massEffect",
 		],
+		yellowPicks: 2,
 		archetypeDice: [10, 8, 8],
+		// todo handle cosmos upgrade/downgrade
 	},
-	{
+	{ // Extradimensional
 		name: "Extradimensional",
 		id: "core.powerSource.extradimensional",
 		source: Source.CORE,
@@ -425,9 +470,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.attune",
 			"core.ability.extrasensoryAwareness",
 		],
+		yellowPicks: 2,
+		greenPicks: 1,
 		archetypeDice: [12, 6],
 	},
-	{
+	{ // Unknown
 		name: "Unknown",
 		id: "core.powerSource.unknown",
 		source: Source.CORE,
@@ -445,9 +492,14 @@ const powerSources: PowerSource[] = [
 			"core.ability.strangeEnhancement",
 			"core.ability.volatileCreations",
 		],
+		yellowPicks: 2,
 		archetypeDice: [10, 8, 6],
+		extraAssignables: {
+			dice: [8],
+			assignablePqs: [QualityCategory.SOCIAL],
+		},
 	},
-	{
+	{ // Higher Power
 		name: "Higher Power",
 		id: "core.powerSource.higherPower",
 		source: Source.CORE,
@@ -468,9 +520,11 @@ const powerSources: PowerSource[] = [
 			"core.ability.resilience",
 			"core.ability.twistReality",
 		],
+		yellowPicks: 2,
+		greenPicks: 1,
 		archetypeDice: [10, 8, 8],
 	},
-	{
+	{ // The Multiverse
 		name: "The Multiverse",
 		id: "core.powerSource.theMultiverse",
 		source: Source.CORE,
@@ -491,7 +545,12 @@ const powerSources: PowerSource[] = [
 			"core.ability.dreadPallor",
 			"core.ability.realityScorned",
 		],
+		yellowPicks: 2,
 		archetypeDice: [10, 8, 6],
+		extraAssignables: {
+			dice: [6],
+			assignablePqs: [PowerCategory.ALL],
+		},
 	},
 ];
 

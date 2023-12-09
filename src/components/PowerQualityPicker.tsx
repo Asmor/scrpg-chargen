@@ -1,11 +1,14 @@
-import { getAllPowerQualityByCategory, getPowerQualityById } from "@/data/powersQualities";
-import { PowerCategory, PowerQuality, PowerQualitySpecifier, QualityCategory } from "@/data/powersQualities.types";
+import powersAndQualities, { getAllPowerQualityByCategory, getPowerQualityById } from "@/data/powersQualities";
+import { PowerCategory, PowerQuality, PowerQualitySpecifier, PowerQualityType, QualityCategory } from "@/data/powersQualities.types";
 import { Die } from "@/types/common";
 import { useMemo } from "react";
 import Chooser, { ChooserOption } from "./Chooser";
 import { Container, SubHeader } from "@/util/commonElements";
 
 const sortOrder: ("type" | "category")[] = ["type", "category"];
+
+const allPowers = powersAndQualities.filter(pq => pq.type === PowerQualityType.POWER);
+const allQualities = powersAndQualities.filter(pq => pq.type === PowerQualityType.QUALITY);
 
 const makeOption = (value: PowerQuality): ChooserOption<PowerQuality> => ({
 	title: value.name,
@@ -29,21 +32,27 @@ interface PowerQualityPickerProps {
 
 const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect }: PowerQualityPickerProps) => {
 	const options = useMemo(() => {
-		const options: PowerQuality[] = [];
+		const options = new Set<PowerQuality>();
 
 		specifiers.forEach(specifier => {
-			const exactMatch = getPowerQualityById(specifier);
-
-			if ( exactMatch ) {
-				options.push(exactMatch);
+			if ( specifier === PowerCategory.ALL ) {
+				allPowers.forEach(power => options.add(power));
+			} else if ( specifier === QualityCategory.ALL ) {
+				allQualities.forEach(quality => options.add(quality));
 			} else {
-				options.push(...getAllPowerQualityByCategory(
-					specifier as PowerCategory | QualityCategory
-				));
+				const exactMatch = getPowerQualityById(specifier);
+
+				if ( exactMatch ) {
+					options.add(exactMatch);
+				} else {
+					getAllPowerQualityByCategory(
+						specifier as PowerCategory | QualityCategory
+					).forEach(pq => options.add(pq));
+				}
 			}
 		});
 
-		return options.sort((optA, optB) => {
+		return [...options].sort((optA, optB) => {
 			const compareKey = sortOrder.find(
 				key => optA[key] !== optB[key]
 			) || "name";
