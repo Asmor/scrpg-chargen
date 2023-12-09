@@ -1,9 +1,8 @@
-export interface PowerQuality {
-	id: string;
+import { Entry } from "@/types/common";
+
+export interface PowerQuality extends Entry {
 	type: PowerQualityType;
 	category: PowerCategory | QualityCategory;
-	page: number;
-	name: string;
 }
 
 export enum PowerQualityType {

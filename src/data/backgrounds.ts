@@ -1,6 +1,6 @@
-import { Background } from "@/types/background";
 import { Source } from "@/types/common";
-import { PrincipleCategory } from "@/types/principles";
+import { Background } from "./backgrounds.types";
+import { PrincipleCategory } from "./principles.types";
 
 const backgrounds: Background[] = [
 	{
