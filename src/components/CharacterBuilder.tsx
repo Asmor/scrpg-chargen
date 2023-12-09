@@ -82,6 +82,7 @@ const CharacterBuilder = () => {
 		elements.push(
 			<PowerQualityPicker
 				key={elements.length}
+				title="Background"
 				dice={selectedBackground.assignableDice}
 				specifiers={selectedBackground.assignable}
 				selected={selectedBgPowerQualities}
