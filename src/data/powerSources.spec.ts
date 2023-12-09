@@ -1,7 +1,8 @@
-import test, { describe } from "node:test";
+import { expectUniqueIds } from "@/util/test";
+import powerSources from "./powerSources";
 
 describe("Power Sources", () => {
 	test("Have unique IDs", () => {
-		// ass
+		expectUniqueIds(powerSources);
 	});
 });

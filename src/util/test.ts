@@ -15,6 +15,6 @@ export const findDuplicateIds = (values: Entry[]) => {
 	return [...duplicates].sort();
 };
 
-// export const expectUniqueIds = (values: Entry[]) => {
-// 	expect xxy todo
-// };
+export const expectUniqueIds = (values: Entry[]) => {
+	expect(findDuplicateIds(values)).toStrictEqual([]);
+};
