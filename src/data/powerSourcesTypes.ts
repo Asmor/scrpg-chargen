@@ -1,4 +1,4 @@
-import { Assignable, Die, Entry, Rollable } from "@/types/common";
+import { Assignable, Die, Entry, GrantsAbilities, Rollable } from "@/types/common";
 
 interface ExtraAssignables extends Assignable {
 	dice: Die[];
@@ -7,11 +7,8 @@ interface ExtraAssignables extends Assignable {
 	exclusive?: boolean;
 }
 
-export interface PowerSource extends Entry, Rollable, Assignable {
+export interface PowerSource extends Entry, Rollable, Assignable, GrantsAbilities {
 	archetypeDice: Die[];
 	extraArchetypeDice?: Die[];
-	abilities: string[];
 	extraAssignables?: ExtraAssignables;
-	yellowPicks: number;
-	greenPicks?: number;
 }
