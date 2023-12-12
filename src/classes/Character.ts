@@ -5,7 +5,8 @@ export const getNewCharacter = (): Character => {
 	const char: Character = {
 		rolls: {
 			background: [],
-		}
+		},
+		aspects: {},
 	};
 
 	return char;
@@ -15,7 +16,7 @@ const characterCache: CharacterCache = {
 	key: "",
 	cached: getNewCharacter(),
 }
-export const buildCharacter = (stack: DecisionStack): Character => {
+export const getCharacterCache = (stack: DecisionStack): CharacterCache => {
 	const char: Character = getNewCharacter();
 	const cacheParts: string[] = [];
 
@@ -39,5 +40,5 @@ export const buildCharacter = (stack: DecisionStack): Character => {
 		characterCache.cached = char;
 	}
 
-	return characterCache.cached;
+	return characterCache;
 }

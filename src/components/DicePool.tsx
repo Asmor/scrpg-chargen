@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 
 export interface DicePoolProps {
 	dice: Die[];
+	results: number[],
 	onRoll: (results: number[]) => void;
 	title: string;
 }
@@ -32,8 +33,8 @@ const makeDiceString = (dice: Die[]) => {
 		.join(", ");
 };
 
-const DicePool = ({ dice, onRoll, title }: DicePoolProps) => {
-	const [result, setResult] = useState<Number[]>([]);
+const DicePool = ({ dice, onRoll, title, results }: DicePoolProps) => {
+	const [result, setResult] = useState<Number[]>(results);
 
 	const roll = () => {
 		const _result = rollPool(dice);
@@ -41,7 +42,9 @@ const DicePool = ({ dice, onRoll, title }: DicePoolProps) => {
 		onRoll(_result);
 	};
 
-	useEffect(roll, [dice, onRoll]);
+	useEffect(() => {
+		setResult(results);
+	}, [results.join(",")]);
 
 	const diceString = useMemo(() => makeDiceString(dice), [dice]);
 

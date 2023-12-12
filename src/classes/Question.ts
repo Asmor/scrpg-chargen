@@ -1,4 +1,6 @@
-import { DiceRollQuestion, DiceRollQuestionProps, QuestionType } from "./Question.types";
+import { getBackgroundById } from "@/data/backgrounds";
+import { BgChoiceQuestion, BgChoiceQuestionProps, DiceRollQuestion, DiceRollQuestionProps, QuestionType } from "./Question.types";
+import Character from "./Character.types";
 
 export const getDiceRollQuestion = (
 	props: DiceRollQuestionProps,
@@ -9,17 +11,22 @@ export const getDiceRollQuestion = (
 	const drq: DiceRollQuestion = {
 		type: QuestionType.DICE_ROLL,
 		title: props.title,
+		dice: props.dice,
+		results,
+		complete: !!results.length,
+		reset: function () {
+			this.results = [];
+			this.complete = false;
+		},
+		set: function (decisionIndex, results) {
+			this.results = results;
+			this.complete = !!results.length;
+			props.onUpdate(decisionIndex);
+		},
 		update: function (char) {
 			char.rolls.background = this.results;
 			return freezeDiceRuleQuestion(this);
 		},
-		set: function (results) {
-			this.results = results;
-			this.complete = !!results.length;
-		},
-		dice: props.dice,
-		results,
-		complete: !!results.length,
 	};
 
 	return drq;
@@ -42,4 +49,33 @@ const thawDiceRuleQuestionResults = (frozenResults?: string): number[] | undefin
 	if ( thawed?.length ) {
 		return thawed;
 	}
+};
+
+export const getBackgroundChoiceQuestion = (
+	props: BgChoiceQuestionProps,
+	saved?: string
+): BgChoiceQuestion => {
+	const choice = getBackgroundById(saved || "");
+	const bcq: BgChoiceQuestion = {
+		type: QuestionType.BACKGROUND_CHOICE,
+		title: props.title,
+		complete: !!saved,
+		getRolls: (char: Character) => char.rolls.background,
+		choice: choice,
+		reset: function () {
+			this.choice = undefined;
+			this.complete = false;
+		},
+		set: function (decisionIndex, bg) {
+			this.choice = bg;
+			this.complete = true;
+			props.onUpdate(decisionIndex);
+		},
+		update: function (char) {
+			char.aspects.background = choice;
+			return this.choice?.id || "";
+		},
+	};
+
+	return bcq;
 };
