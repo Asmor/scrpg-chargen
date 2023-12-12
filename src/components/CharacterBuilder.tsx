@@ -62,6 +62,9 @@ const getQuestionElements = (stack: DecisionStack): JSX.Element[] => {
 						rolled={conjugateDicePoolOptions(char.rolls.background)}
 					/>;
 				case QuestionType.POWER_QUALITY_CHOICE:
+					// todo pq choices from one picker aren't blocking those
+					// options in other pickers. It seems like the second set of
+					// pickers is getting the same "selected" values
 					const pqq = q as PowerQualityQuestion;
 					return <PowerQualityPicker
 						key={key}
@@ -70,6 +73,7 @@ const getQuestionElements = (stack: DecisionStack): JSX.Element[] => {
 						specifiers={pqq.getSpecifiers(char)}
 						selected={pqq.powerQualities}
 						onSelect={selections => pqq.set(di, char, selections)}
+						used={char.powersAndQualities.map(pqData => pqData.powerQuality)}
 					/>
 				default:
 					return <>Unhandled question type: {q.type}</>
@@ -89,13 +93,11 @@ const CharacterBuilder = () => {
 		[forceUpdate]
 	);
 	const { cached: char, key: charCacheKey } = getCharacterCache(stack);
-	// const cachedCharKey = useState(charCacheKey);
-
-	// if ( charCacheKey !== )
 
 	const questionEls = useMemo(() => {
 		return getQuestionElements(stack);
-	}, [charCacheKey]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [charCacheKey, stack]);
 
 	return <> { questionEls } </>
 };

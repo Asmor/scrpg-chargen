@@ -16,21 +16,27 @@ const makeOption = (value: PowerQuality): ChooserOption<PowerQuality> => ({
 	value,
 });
 
-const getOptionsForIndex = (index: number, allOptions: ChooserOption<PowerQuality>[], selectedPowerQualities: (PowerQuality | undefined)[]) =>
-	allOptions.filter(option =>
-		option.value === selectedPowerQualities[index]
-		|| !selectedPowerQualities.includes(option.value)
-	)
+const getOptionsForIndex = (
+	selectedPq: (PowerQuality | undefined),
+	allOptions: ChooserOption<PowerQuality>[],
+	usedPqs: (PowerQuality | undefined)[]
+) => {
+	return allOptions.filter(option =>
+		option.value.id === selectedPq?.id
+		|| usedPqs.every(pq => option.value.id !== pq?.id)
+	);
+}
 
 interface PowerQualityPickerProps {
 	title: string;
 	specifiers: (string | PowerQualitySpecifier)[];
 	dice: Die[];
 	selected: (PowerQuality | undefined)[];
+	used: (PowerQuality | undefined)[];
 	onSelect: (values: (PowerQuality | undefined)[]) => void;
 }
 
-const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect }: PowerQualityPickerProps) => {
+const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect, used }: PowerQualityPickerProps) => {
 	const options = useMemo(() => {
 		const options = new Set<PowerQuality>();
 
@@ -65,7 +71,7 @@ const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect }: Pow
 		() => dice.map((die, index) => {
 			return ( <Chooser
 				key={index}
-				options={getOptionsForIndex(index, options, selected)}
+				options={getOptionsForIndex(selected[index], options, used)}
 				selected={selected[index]}
 				title={`d${die}`}
 				onSelectOption={(value) => {
@@ -75,7 +81,7 @@ const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect }: Pow
 				}}
 			/> )
 		}),
-		[options, selected, dice, onSelect]
+		[options, selected, dice, onSelect, used]
 	);
 
 	return <Container>

@@ -42,9 +42,12 @@ const DicePool = ({ dice, onRoll, title, results }: DicePoolProps) => {
 		onRoll(_result);
 	};
 
+	const resultsString = results.join(",");
+
 	useEffect(() => {
 		setResult(results);
-	}, [results.join(",")]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [resultsString]);
 
 	const diceString = useMemo(() => makeDiceString(dice), [dice]);
 

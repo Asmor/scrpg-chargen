@@ -12,6 +12,12 @@ export const getBackgroundDetailsDecision: CharacterCreationStep = (stack) => {
 		getSpecifiers: (char) => char.aspects.background?.assignablePqs || [],
 		onUpdate: (decisionIndex) => stack.onUpdate(decisionIndex),
 	}));
+	decision.questions.push(getPowerQualityQuestion({
+		title: "Background",
+		getDice: (char) => char.aspects.background?.assignableDice || [],
+		getSpecifiers: (char) => char.aspects.background?.assignablePqs || [],
+		onUpdate: (decisionIndex) => stack.onUpdate(decisionIndex),
+	}));
 	// Principle
 	// Power Source roll
 	// decision.questions.push()
