@@ -1,22 +1,26 @@
 "use client";
 
-import { getnewDecisionStack, initializeStack } from "@/classes/DecisionStack";
-import { BgChoiceQuestion, DiceRollQuestion, QuestionType } from "@/classes/Question.types";
+import DecisionStack, { getnewDecisionStack, initializeStack } from "@/classes/DecisionStack";
 import DicePool from "./DicePool";
-import { useMemo, useReducer, useState } from "react";
+import { useMemo, useReducer } from "react";
 import { getBackgroundRollDecision } from "@/classes/steps/01-backgroundRoll/BackgroundRollDecision";
-import DecisionStack from "@/classes/DecisionStack.types";
-import { getCharacterCache } from "@/classes/Character";
+import { CharacterCreationStep, getCharacterCache } from "@/classes/Character";
 import { getChooseBackgroundDecision } from "@/classes/steps/02-chooseBackground/ChooseBackgroundDecision";
 import Chooser, { ChooserOption } from "./Chooser";
 import backgrounds from "@/data/backgrounds";
 import { Entry } from "@/types/common";
 import { conjugateDicePoolOptions } from "@/util/dice";
-import { CharacterCreationStep } from "@/classes/Character.types";
+import { QuestionType } from "@/classes/Question";
+import { DiceRollQuestion } from "@/classes/questions/DiceRollQuestion";
+import { BgChoiceQuestion } from "@/classes/questions/BackgroundChoiceQuestion";
+import { PowerQualityQuestion } from "@/classes/questions/PowerQualityQuestion";
+import PowerQualityPicker from "./PowerQualityPicker";
+import { getBackgroundDetailsDecision } from "@/classes/steps/03-backgroundDetails/BackgroundDetailsDecision";
 
 const characterCreationSteps: CharacterCreationStep[] = [
 	getBackgroundRollDecision,
 	getChooseBackgroundDecision,
+	getBackgroundDetailsDecision,
 ];
 
 const makeOption = <T extends Entry,>(value: T): ChooserOption<T> => ({
@@ -28,8 +32,6 @@ const makeOption = <T extends Entry,>(value: T): ChooserOption<T> => ({
 const backgroundOptions = backgrounds.map(makeOption);
 
 const getQuestionElements = (stack: DecisionStack): JSX.Element[] => {
-	console.log("xxy in getQuestionElements", Math.random());
-
 	const { cached: char } = getCharacterCache(stack);
 
 	initializeStack(stack, characterCreationSteps);
@@ -59,6 +61,16 @@ const getQuestionElements = (stack: DecisionStack): JSX.Element[] => {
 						selected={bcq.choice}
 						rolled={conjugateDicePoolOptions(char.rolls.background)}
 					/>;
+				case QuestionType.POWER_QUALITY_CHOICE:
+					const pqq = q as PowerQualityQuestion;
+					return <PowerQualityPicker
+						key={key}
+						title={pqq.title}
+						dice={pqq.getDice(char)}
+						specifiers={pqq.getSpecifiers(char)}
+						selected={pqq.powerQualities}
+						onSelect={selections => pqq.set(di, char, selections)}
+					/>
 				default:
 					return <>Unhandled question type: {q.type}</>
 			}
@@ -81,7 +93,6 @@ const CharacterBuilder = () => {
 
 	// if ( charCacheKey !== )
 
-	console.log("xxy CharacterBuilder beginning", {charCacheKey});
 	const questionEls = useMemo(() => {
 		return getQuestionElements(stack);
 	}, [charCacheKey]);

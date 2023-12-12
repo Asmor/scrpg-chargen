@@ -16,7 +16,7 @@ const makeOption = (value: PowerQuality): ChooserOption<PowerQuality> => ({
 	value,
 });
 
-const getOptionsForIndex = (index: number, allOptions: ChooserOption<PowerQuality>[], selectedPowerQualities: PowerQuality[]) =>
+const getOptionsForIndex = (index: number, allOptions: ChooserOption<PowerQuality>[], selectedPowerQualities: (PowerQuality | undefined)[]) =>
 	allOptions.filter(option =>
 		option.value === selectedPowerQualities[index]
 		|| !selectedPowerQualities.includes(option.value)
@@ -26,8 +26,8 @@ interface PowerQualityPickerProps {
 	title: string;
 	specifiers: (string | PowerQualitySpecifier)[];
 	dice: Die[];
-	selected: PowerQuality[];
-	onSelect: (values: PowerQuality[]) => void;
+	selected: (PowerQuality | undefined)[];
+	onSelect: (values: (PowerQuality | undefined)[]) => void;
 }
 
 const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect }: PowerQualityPickerProps) => {

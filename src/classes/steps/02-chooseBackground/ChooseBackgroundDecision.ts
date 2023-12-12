@@ -1,6 +1,6 @@
-import { CharacterCreationStep } from "@/classes/Character.types";
+import { CharacterCreationStep } from "@/classes/Character";
 import { getNewDecision } from "@/classes/Decision";
-import { getBackgroundChoiceQuestion } from "@/classes/Question";
+import { getBackgroundChoiceQuestion } from "@/classes/questions/BackgroundChoiceQuestion";
 
 export const getChooseBackgroundDecision: CharacterCreationStep = (stack) => {
 	const decision = getNewDecision();

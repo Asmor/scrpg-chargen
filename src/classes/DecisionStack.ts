@@ -1,5 +1,11 @@
-import { CharacterCreationStep } from "./Character.types";
-import DecisionStack from "./DecisionStack.types";
+import { CharacterCreationStep } from "./Character";
+import Decision, { DecisionUpdate } from "./Decision";
+
+export default interface DecisionStack {
+	decisions: Decision[];
+	initialized: boolean;
+	onUpdate: DecisionUpdate;
+}
 
 export const getnewDecisionStack = (onUpdate: Function): DecisionStack => {
 	const stack: DecisionStack = {

@@ -1,5 +1,32 @@
-import Character, { CharacterCache } from "./Character.types";
-import DecisionStack from "./DecisionStack.types";
+import { Archetype } from "@/data/archetypes.types";
+import { Background } from "@/data/backgrounds.types";
+import { PowerSource } from "@/data/powerSourcesTypes";
+import DecisionStack from "./DecisionStack";
+import Decision from "./Decision";
+import { PowerQuality } from "@/data/powersQualities.types";
+import { Die } from "@/types/common";
+
+export default interface Character {
+	rolls: {
+		background: number[];
+	};
+	aspects: {
+		background?: Background;
+		powerSource?: PowerSource;
+		archetype?: Archetype;
+	};
+	powersAndQualities: {
+		powerQuality: PowerQuality;
+		die: Die;
+	}[];
+}
+
+export interface CharacterCache {
+	key: string;
+	cached: Character;
+}
+
+export type CharacterCreationStep = (stack: DecisionStack) => Decision;
 
 export const getNewCharacter = (): Character => {
 	const char: Character = {
@@ -7,6 +34,7 @@ export const getNewCharacter = (): Character => {
 			background: [],
 		},
 		aspects: {},
+		powersAndQualities: [],
 	};
 
 	return char;
@@ -38,6 +66,7 @@ export const getCharacterCache = (stack: DecisionStack): CharacterCache => {
 	if ( cacheKey !== characterCache.key ) {
 		characterCache.key = cacheKey;
 		characterCache.cached = char;
+		console.log("xxy character cache updated", characterCache);
 	}
 
 	return characterCache;

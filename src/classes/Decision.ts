@@ -1,5 +1,12 @@
-import Decision from "./Decision.types";
-import Question from "./Question.types";
+import Question from "./Question";
+
+export default interface Decision {
+	complete: boolean;
+	questions: Question[];
+	reset: Function;
+}
+
+export type DecisionUpdate = (decisionIndex: number) => void;
 
 function reset(this: Decision) {
 	this.questions.forEach(q => q.reset());
