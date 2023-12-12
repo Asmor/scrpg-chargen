@@ -1,6 +1,7 @@
 import { CharacterCreationStep } from "@/classes/Character";
 import { getNewDecision } from "@/classes/Decision";
 import { getPowerQualityQuestion } from "@/classes/questions/PowerQualityQuestion";
+import { getPrincipleQuestion } from "@/classes/questions/PrincipleQuestion";
 
 export const getBackgroundDetailsDecision: CharacterCreationStep = (stack) => {
 	const decision = getNewDecision();
@@ -12,13 +13,12 @@ export const getBackgroundDetailsDecision: CharacterCreationStep = (stack) => {
 		getSpecifiers: (char) => char.aspects.background?.assignablePqs || [],
 		onUpdate: (decisionIndex) => stack.onUpdate(decisionIndex),
 	}));
-	decision.questions.push(getPowerQualityQuestion({
-		title: "Background",
-		getDice: (char) => char.aspects.background?.assignableDice || [],
-		getSpecifiers: (char) => char.aspects.background?.assignablePqs || [],
+	// Principle
+	decision.questions.push(getPrincipleQuestion({
+		title: "Background Principle",
+		getPrincipleCategory: (char) => char.aspects.background!.principleCategory,
 		onUpdate: (decisionIndex) => stack.onUpdate(decisionIndex),
 	}));
-	// Principle
 	// Power Source roll
 	// decision.questions.push()
 

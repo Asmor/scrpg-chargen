@@ -5,6 +5,7 @@ import DecisionStack from "./DecisionStack";
 import Decision from "./Decision";
 import { PowerQuality } from "@/data/powersQualities.types";
 import { Die } from "@/types/common";
+import { Principle } from "@/data/principles.types";
 
 export default interface Character {
 	rolls: {
@@ -14,6 +15,7 @@ export default interface Character {
 		background?: Background;
 		powerSource?: PowerSource;
 		archetype?: Archetype;
+		principles: Principle[];
 	};
 	powersAndQualities: {
 		powerQuality: PowerQuality;
@@ -33,7 +35,9 @@ export const getNewCharacter = (): Character => {
 		rolls: {
 			background: [],
 		},
-		aspects: {},
+		aspects: {
+			principles: [],
+		},
 		powersAndQualities: [],
 	};
 

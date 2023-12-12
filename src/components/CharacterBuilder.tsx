@@ -16,6 +16,10 @@ import { BgChoiceQuestion } from "@/classes/questions/BackgroundChoiceQuestion";
 import { PowerQualityQuestion } from "@/classes/questions/PowerQualityQuestion";
 import PowerQualityPicker from "./PowerQualityPicker";
 import { getBackgroundDetailsDecision } from "@/classes/steps/03-backgroundDetails/BackgroundDetailsDecision";
+import { PrincipleQuestion } from "@/classes/questions/PrincipleQuestion";
+import principles from "@/data/principles";
+import { Principle, PrincipleCategory } from "@/data/principles.types";
+import powerSources from "@/data/powerSources";
 
 const characterCreationSteps: CharacterCreationStep[] = [
 	getBackgroundRollDecision,
@@ -30,6 +34,8 @@ const makeOption = <T extends Entry,>(value: T): ChooserOption<T> => ({
 });
 
 const backgroundOptions = backgrounds.map(makeOption);
+const powerSourceOptions = powerSources.map(makeOption);
+
 
 const getQuestionElements = (stack: DecisionStack): JSX.Element[] => {
 	const { cached: char } = getCharacterCache(stack);
@@ -62,9 +68,6 @@ const getQuestionElements = (stack: DecisionStack): JSX.Element[] => {
 						rolled={conjugateDicePoolOptions(char.rolls.background)}
 					/>;
 				case QuestionType.POWER_QUALITY_CHOICE:
-					// todo pq choices from one picker aren't blocking those
-					// options in other pickers. It seems like the second set of
-					// pickers is getting the same "selected" values
 					const pqq = q as PowerQualityQuestion;
 					return <PowerQualityPicker
 						key={key}
@@ -74,6 +77,15 @@ const getQuestionElements = (stack: DecisionStack): JSX.Element[] => {
 						selected={pqq.powerQualities}
 						onSelect={selections => pqq.set(di, char, selections)}
 						used={char.powersAndQualities.map(pqData => pqData.powerQuality)}
+					/>
+				case QuestionType.PRINCIPLE_CHOICE:
+					const pq = q as PrincipleQuestion;
+					return <Chooser
+						key={key}
+						title={pq.title}
+						options={pq.getOptions(char)}
+						onSelectOption={(principle) => pq.set(di, principle)}
+						selected={pq.principle}
 					/>
 				default:
 					return <>Unhandled question type: {q.type}</>
