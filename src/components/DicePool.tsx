@@ -1,3 +1,5 @@
+"use client";
+
 import { Die } from "@/types/common";
 import { Container, SubHeader } from "@/util/commonElements";
 import { rollPool } from "@/util/dice";
