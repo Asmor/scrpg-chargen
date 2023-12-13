@@ -17,7 +17,7 @@ const makeOption = (value: PowerQuality): ChooserOption<PowerQuality> => ({
 });
 
 const getOptionsForIndex = (
-	selectedPq: (PowerQuality | undefined),
+	selectedPq: PowerQuality | undefined,
 	allOptions: ChooserOption<PowerQuality>[],
 	usedPqs: (PowerQuality | undefined)[]
 ) => {
