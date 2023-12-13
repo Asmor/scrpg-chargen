@@ -17,8 +17,6 @@ import { PowerQualityQuestion } from "@/classes/questions/PowerQualityQuestion";
 import PowerQualityPicker from "./PowerQualityPicker";
 import { getBackgroundDetailsDecision } from "@/classes/steps/03-backgroundDetails/BackgroundDetailsDecision";
 import { PrincipleQuestion } from "@/classes/questions/PrincipleQuestion";
-import principles from "@/data/principles";
-import { Principle, PrincipleCategory } from "@/data/principles.types";
 import powerSources from "@/data/powerSources";
 
 const characterCreationSteps: CharacterCreationStep[] = [
@@ -53,7 +51,7 @@ const getQuestionElements = (stack: DecisionStack): JSX.Element[] => {
 					return <DicePool
 						key={key}
 						title={drq.title}
-						dice={drq.dice}
+						dice={drq.getDice(char)}
 						onRoll={results => drq.set(di, results)}
 						results={drq.results}
 					/>;

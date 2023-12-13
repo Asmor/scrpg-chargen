@@ -1,12 +1,13 @@
 import { Die } from "@/types/common";
 import Question, { QuestionProps, QuestionType } from "../Question";
+import Character from "../Character";
 
 export interface DiceRollQuestionProps extends QuestionProps {
-	dice: Die[];
+	getDice: (char: Character) => Die[];
 }
 export interface DiceRollQuestion extends Question {
-	dice: Die[];
 	results: number[];
+	getDice: (char: Character) => Die[];
 	set: (decisionIndex: number, results: number[]) => void;
 }
 
@@ -19,9 +20,9 @@ export const getDiceRollQuestion = (
 	const drq: DiceRollQuestion = {
 		type: QuestionType.DICE_ROLL,
 		title: props.title,
-		dice: props.dice,
 		results,
 		complete: !!results.length,
+		getDice: props.getDice,
 		reset: function () {
 			this.results = [];
 			this.complete = false;
@@ -33,15 +34,15 @@ export const getDiceRollQuestion = (
 		},
 		update: function (char) {
 			char.rolls.background = this.results;
-			return freezeDiceRuleQuestion(this);
+			return freezeDiceRuleQuestion(this, char);
 		},
 	};
 
 	return drq;
 }
 
-const freezeDiceRuleQuestion = (drq: DiceRollQuestion): string => {
-	const diceString = drq.dice.join(",");
+const freezeDiceRuleQuestion = (drq: DiceRollQuestion, char: Character): string => {
+	const diceString = drq.getDice(char).join(",");
 	const resultsString = drq.results.join(",");
 
 	return [diceString, resultsString].join("@");
