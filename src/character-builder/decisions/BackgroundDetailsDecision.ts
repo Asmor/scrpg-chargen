@@ -1,12 +1,12 @@
-import { getPowerQualityById } from "@/data/powersQualities";
 import { Character } from "../Character";
 import { Decision } from "../Decision";
 import { getDiceRollQuestion } from "../questions/DiceRollQuestion";
 import { getPowerQualityQuestion } from "../questions/PowerQualityQuestion";
 import { getPowerSourceChoiceDecision } from "./PowerSourceDecision";
 import { getPrincipleQuestion } from "../questions/PrincipleQuestion";
-import { getPrincipleById } from "@/data/principles";
 import { Background } from "@/data/backgrounds.types";
+import { PowerQuality } from "@/data/powersQualities.types";
+import { Principle } from "@/data/principles.types";
 
 interface BackgroundDetailsDecisionProps {
 	character: Character;
@@ -37,25 +37,27 @@ export const getBackgroundDetailsDecision = (
 				dice: bg.powerSourceDice,
 			}),
 		],
-		process(character, results) {
-			const [powerQualityids, principleId, powerSourceRolls] = results;
+		process(character, frozenResults) {
+			const thawedResults = frozenResults.map((result, index) => this.questions[index].thaw(result));
+			const powerQualities: (PowerQuality | undefined)[] = thawedResults[0];
+			const principle: Principle = thawedResults[1];
+			const powerSourceRolls: number[] = thawedResults[2] || [];
+
 			const pqDice = character.aspects.background!.assignableDice;
 
 			pqDice.forEach((die, index) => {
-				const powerQualityId = powerQualityids?.[index];
-				const powerQuality = getPowerQualityById(powerQualityId);
+				const powerQuality = powerQualities[index];
 
 				if ( powerQuality ) {
 					character.powersAndQualities.push({ powerQuality, die });
 				}
 			});
 
-			const principle = getPrincipleById(principleId);
 			if ( principle ) {
 				character.aspects.principles.push(principle);
 			}
 
-			character.rolls.powerSource = powerSourceRolls || [];
+			character.rolls.powerSource = powerSourceRolls;
 		},
 		getNext(character) {
 			if ( character.rolls.powerSource.length ) {

@@ -15,7 +15,7 @@ export const getPowerSourceChoiceDecision = (
 			getPowerSourceQuestion({ character: props.character }),
 		],
 		process(character, results) {
-			const ps = getPowerSourceById(results[0] || "");
+			const ps = this.questions[0].thaw(results[0]);
 			character.aspects.powerSource = ps;
 		},
 		getNext(character) {

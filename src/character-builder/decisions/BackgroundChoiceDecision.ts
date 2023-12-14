@@ -18,7 +18,7 @@ export const getBackgroundChoiceDecision = (
 			getBackgroundQuestion({ character: props.character }),
 		],
 		process(character, results) {
-			const bg = getBackgroundById(results[0] || "");
+			const bg = this.questions[0].thaw(results[0]);
 			character.aspects.background = bg;
 		},
 		getNext(character) {

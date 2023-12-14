@@ -1,10 +1,11 @@
 import { Die } from "@/types/common";
-import { Question, QuestionProps, QuestionType } from "../Question";
+import { Question, QuestionType } from "../Question";
+import { freezeArray, thawArray } from "@/util/util";
+import { identity } from "lodash";
 
 export interface DiceRollQuestion extends Question {
 	dice: Die[];
 }
-export type DiceRollQuestionResults = number[];
 
 interface DiceRollQuestionProps {
 	title: string;
@@ -16,5 +17,7 @@ export const getDiceRollQuestion = (props: DiceRollQuestionProps): DiceRollQuest
 		type: QuestionType.DICE_ROLL,
 		dice: props.dice,
 		title: props.title,
+		freeze: freezeArray.bind(null, identity),
+		thaw: thawArray.bind(null, (n) => Number.parseInt(n)),
 	};
 };

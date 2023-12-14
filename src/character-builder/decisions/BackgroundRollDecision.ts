@@ -1,6 +1,5 @@
 import { Die } from "@/types/common";
 import { Decision } from "../Decision";
-import { Results } from "../Question";
 import { getDiceRollQuestion } from "../questions/DiceRollQuestion";
 import { getBackgroundChoiceDecision } from "./BackgroundChoiceDecision";
 
@@ -22,7 +21,7 @@ export const getBackgroundRollDecision = (
 			}),
 		],
 		process(character, results) {
-			character.rolls.background = results[0] || [];
+			character.rolls.background = this.questions[0].thaw(results[0]);
 		},
 		getNext(character) {
 			if (character.rolls.background.length ) {

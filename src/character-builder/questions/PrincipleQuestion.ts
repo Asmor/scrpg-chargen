@@ -1,7 +1,7 @@
 import { ChooserOption, makeOption } from "@/components/Chooser";
 import { Question, QuestionType } from "../Question";
 import { Principle, PrincipleCategory } from "@/data/principles.types";
-import principles from "@/data/principles";
+import principles, { getPrincipleById } from "@/data/principles";
 import { Character } from "../Character";
 
 export interface PrincipleQuestion extends Question {
@@ -23,5 +23,7 @@ export const getPrincipleQuestion = (
 		type: QuestionType.PRINCIPLE_CHOICE,
 		title: props.title,
 		options: principleOptions.filter(option => option.value.category === props.category),
+		freeze: (principle: Principle) => principle.id,
+		thaw: (frozenPrinciple = "") => getPrincipleById(frozenPrinciple),
 	};
 };

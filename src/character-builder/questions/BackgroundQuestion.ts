@@ -1,7 +1,7 @@
 import { ChooserOption, makeOption } from "@/components/Chooser";
 import { Question, QuestionType } from "../Question";
 import { Background } from "@/data/backgrounds.types";
-import backgrounds from "@/data/backgrounds";
+import backgrounds, { getBackgroundById } from "@/data/backgrounds";
 import { conjugateDicePoolOptions } from "@/util/dice";
 import { Character } from "../Character";
 
@@ -24,5 +24,8 @@ export const getBackgroundQuestion = (
 		title: "Background",
 		options: backgroundOptions,
 		rolled: conjugateDicePoolOptions(props.character.rolls.background),
+		freeze: (bg: Background) => bg.id,
+		thaw: ( frozenBg = "" ): Background | undefined =>
+			getBackgroundById(frozenBg),
 	}
 }

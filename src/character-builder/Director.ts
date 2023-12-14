@@ -1,4 +1,4 @@
-import { isEqual, cloneDeep } from "lodash";
+import { isEqual } from "lodash";
 import { Decision } from "./Decision";
 import { Question, Results } from "./Question";
 import { Character, getNewCharacter } from "./Character";

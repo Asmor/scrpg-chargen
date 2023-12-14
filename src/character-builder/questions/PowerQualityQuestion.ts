@@ -3,15 +3,14 @@ import { Question, QuestionType } from "../Question";
 import { PowerCategory, PowerQuality, QualityCategory } from "@/data/powersQualities.types";
 import { Character } from "../Character";
 import { Background } from "@/data/backgrounds.types";
+import { thawArray } from "@/util/util";
+import { getPowerQualityById } from "@/data/powersQualities";
 
 export interface PowerQualityQuestion extends Question {
 	dice: Die[];
 	specifiers: (string | PowerCategory | QualityCategory)[];
 	used: PowerQuality[];
 }
-
-// power/quality IDs
-export type PowerQualityQuestionResults = string[];
 
 interface PowerQualityQuestionProps {
 	title: string;
@@ -31,5 +30,9 @@ export const getPowerQualityQuestion = (
 		dice: bg.assignableDice,
 		specifiers: bg.assignablePqs,
 		used,
+		freeze: (powerQualities: (PowerQuality | undefined)[]) => {
+			return powerQualities.map(pq => pq?.id).join(",");
+		},
+		thaw: thawArray.bind(null, getPowerQualityById),
 	};
 };
