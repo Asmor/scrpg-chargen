@@ -1,29 +1,19 @@
 "use client";
 
-import DicePool from "./DicePool";
-import { useMemo, useReducer, useState } from "react";
-import Character, { CharacterCreationStep, getNewCharacter } from "@/classes/Character";
-import Chooser, { ChooserOption } from "./Chooser";
-import backgrounds from "@/data/backgrounds";
-import { Entry } from "@/types/common";
-import { conjugateDicePoolOptions } from "@/util/dice";
-import Question, { QuestionType } from "@/classes/Question";
-import { DiceRollQuestion } from "@/classes/questions/DiceRollQuestion";
-import { BgChoiceQuestion } from "@/classes/questions/BackgroundChoiceQuestion";
-import { PowerQualityQuestion } from "@/classes/questions/PowerQualityQuestion";
-import PowerQualityPicker from "./PowerQualityPicker";
-import { PrincipleQuestion } from "@/classes/questions/PrincipleQuestion";
+import backgrounds, { getBackgroundById } from "@/data/backgrounds";
+import Chooser, { makeOption } from "./Chooser";
 import powerSources from "@/data/powerSources";
-import { getBackgroundRollDecision } from "@/classes/decisions/BackgroundRollDecision";
-import { Decision } from "@/classes/Decision";
-
-const FIRST_STEP = getBackgroundRollDecision;
-
-const makeOption = <T extends Entry,>(value: T): ChooserOption<T> => ({
-	title: value.name,
-	subtitle: `pg. ${value.page}`,
-	value,
-});
+import DicePool from "./DicePool";
+import scrpgDirector from "@/character-builder/Director";
+import { useCallback, useState } from "react";
+import { isEqual } from "lodash";
+import { Question, QuestionType, Results } from "@/character-builder/Question";
+import { DiceRollQuestion, DiceRollQuestionResults } from "@/character-builder/questions/DiceRollQuestion";
+import { getBackgroundRollDecision } from "@/character-builder/decisions/BackgroundRollDecision";
+import { BackgroundQuestion, BackgroundQuestionResults } from "@/character-builder/questions/BackgroundQuestion";
+import { PowerQualityQuestion, PowerQualityQuestionResults } from "@/character-builder/questions/PowerQualityQuestion";
+import PowerQualityPicker from "./PowerQualityPicker";
+import { getPowerQualityById } from "@/data/powersQualities";
 
 const backgroundOptions = backgrounds.map(makeOption);
 const powerSourceOptions = powerSources.map(makeOption);
@@ -31,108 +21,99 @@ const powerSourceOptions = powerSources.map(makeOption);
 const getElementByQuestionType = (
 	question: Question,
 	key: string,
-	char: Character,
-	forceUpdate: () => void,
+	results: Results,
+	setResults: (results: Results) => void,
 ) => {
 	switch (question.type) {
 		case QuestionType.DICE_ROLL:
 			const drq = question as DiceRollQuestion;
+			const drqResults: DiceRollQuestionResults = results ? results as DiceRollQuestionResults : [];
+
 			return <DicePool
 				key={key}
 				title={drq.title}
-				dice={drq.getDice(char)}
+				dice={drq.dice}
 				onRoll={results => {
-					drq.set(results);
-					forceUpdate();
+					setResults(results);
 				}}
-				results={drq.results}
+				results={drqResults}
 			/>;
 		case QuestionType.BACKGROUND_CHOICE:
-			const bcq = question as BgChoiceQuestion;
+			const bcq = question as BackgroundQuestion;
+			const bcqResults: BackgroundQuestionResults = results ? results as BackgroundQuestionResults : "";
 			return <Chooser
 				key={key}
 				title={bcq.title}
-				options={backgroundOptions}
+				options={bcq.options}
 				onSelectOption={(bg) => {
-					bcq.set(bg);
-					forceUpdate();
+					setResults(bg.id);
 				}}
-				selected={bcq.choice}
-				rolled={conjugateDicePoolOptions(char.rolls.background)}
+				selected={getBackgroundById(bcqResults)}
+				rolled={bcq.rolled}
 			/>;
 		case QuestionType.POWER_QUALITY_CHOICE:
 			const pqq = question as PowerQualityQuestion;
+			const pqqResults: PowerQualityQuestionResults = results ? results as PowerQualityQuestionResults : [];
 			return <PowerQualityPicker
 				key={key}
 				title={pqq.title}
-				dice={pqq.getDice(char)}
-				specifiers={pqq.getSpecifiers(char)}
-				selected={pqq.powerQualities}
+				dice={pqq.dice}
+				specifiers={pqq.specifiers}
+				selected={pqqResults.map(getPowerQualityById)}
 				onSelect={selections => {
-					pqq.set(char, selections);
-					forceUpdate();
+					setResults(selections.map(pqq => pqq?.id));
 				}}
-				used={char.powersAndQualities.map(pqData => pqData.powerQuality)}
+				used={pqq.used}
 			/>
-		case QuestionType.PRINCIPLE_CHOICE:
-			const pq = question as PrincipleQuestion;
-			return <Chooser
-				key={key}
-				title={pq.title}
-				options={pq.getOptions(char)}
-				onSelectOption={(principle) =>{
-					 pq.set(principle);
-					 forceUpdate();
-					}}
-				selected={pq.principle}
-			/>
+		// case QuestionType.PRINCIPLE_CHOICE:
+		// 	const pq = question as PrincipleQuestion;
+		// 	return <Chooser
+		// 		key={key}
+		// 		title={pq.title}
+		// 		options={pq.getOptions(char)}
+		// 		onSelectOption={(principle) =>{
+		// 			 pq.set(principle);
+		// 			 forceUpdate();
+		// 			}}
+		// 		selected={pq.principle}
+		// 	/>
 		default:
 			return <>Unhandled question type: {question.type}</>
 	}
 };
 
-const getQuestionElements = (
-	questions: Question[],
-	char: Character,
-	forceUpdate: () => void
-): JSX.Element[] => {
-	const qEls: JSX.Element[] = questions.map(
-		(question, qIndex) => getElementByQuestionType(question, qIndex.toString(), char, forceUpdate)
+const CharacterBuilder = () => {
+	const [resultsStack, setResultsStack] = useState<Results[]>([]);
+
+	const setResults = useCallback((index: number, incomingResults: Results) => {
+		if (!isEqual(resultsStack[index], incomingResults)) {
+			resultsStack[index] = incomingResults;
+			setResultsStack([...resultsStack]);
+		}
+	}, [resultsStack, setResultsStack]);
+
+	const firstDecision = getBackgroundRollDecision({
+		dice: [10, 10],
+		title: "Background",
+	});
+
+	const { questions, character } = scrpgDirector({
+		startingDecision: firstDecision,
+		results: resultsStack,
+	});
+
+	const questionEls = questions.map(
+		(question, index) => getElementByQuestionType(
+			question,
+			index.toString(),
+			resultsStack[index],
+			(results: Results) => setResults(index, results),
+		)
 	);
 
-	return qEls;
-};
+	// console.log("xxy", questions, character)
 
-const CharacterBuilder = () => {
-	const [, forceUpdate] = useReducer(x => x + 1, 0);
-	// todo update cache key
-	const [charCacheKey, setCharCacheKey] = useState("");
-
-
-	const questions: Question[] = useMemo(() => {
-		const questions: Question[] = [];
-		let currentStep: CharacterCreationStep | null = FIRST_STEP;
-		let lastDecision: Decision | undefined;
-
-		while (currentStep) {
-			const currentDecision = currentStep("todo state string", lastDecision);
-			questions.push(...currentDecision.questions);
-			lastDecision = currentDecision;
-			currentStep = currentDecision.next?.(currentDecision) || null
-		}
-
-		return questions;
-	}, []);
-
-	// todo get actual values for these
-	const char: Character = useMemo(() => getNewCharacter(), []);
-
-	const questionEls = useMemo(() => {
-		return getQuestionElements(questions, char, forceUpdate);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [charCacheKey]);
-
-	return <> { questionEls } </>
+	return <>{ questionEls }</>
 };
 
 export default CharacterBuilder;

@@ -2,29 +2,34 @@ import { Die } from "@/types/common";
 import { Decision } from "../Decision";
 import { Results } from "../Question";
 import { getDiceRollQuestion } from "../questions/DiceRollQuestion";
+import { getBackgroundChoiceDecision } from "./BackgroundChoiceDecision";
 
 interface BackgroundRollDecisionProps {
 	title: string;
 	dice: Die[];
 }
 
-export interface BackgroundRollDecisionResults extends Results {
-	rolls: number[];
-}
+export type BackgroundRollDecisionResults = number[];
 
 export const getBackgroundRollDecision = (
-	props: BackgroundRollDecisionProps,
-	results?: BackgroundRollDecisionResults
+	props: BackgroundRollDecisionProps
 ): Decision => {
 	return {
 		questions: [
-			getDiceRollQuestion({ title: props.title, dice: props.dice }),
+			getDiceRollQuestion({
+				title: props.title,
+				dice: props.dice,
+			}),
 		],
-		process(character, results: BackgroundRollDecisionResults | undefined) {
-			character.rolls.background = results?.rolls || [];
+		process(character, results?: BackgroundRollDecisionResults) {
+			character.rolls.background = results || [];
 		},
-		getNext() {
-			return results?.rolls?.length ? null : null;
+		getNext(character) {
+			if (character.rolls.background.length ) {
+				return getBackgroundChoiceDecision({ character });
+			}
+
+			return null;
 		}
 	};
 };

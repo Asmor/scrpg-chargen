@@ -1,5 +1,5 @@
 import { Die } from "@/types/common";
-import { Question, QuestionType } from "../Question";
+import { Question, QuestionProps, QuestionType } from "../Question";
 
 export interface DiceRollQuestion extends Question {
 	dice: Die[];

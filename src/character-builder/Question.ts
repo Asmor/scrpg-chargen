@@ -1,6 +1,13 @@
+import { Character } from "./Character";
+
 export interface Question {
 	type: QuestionType;
 	title: string;
+}
+
+export interface QuestionProps {
+	character: Character;
+	results: Results;
 }
 
 export enum QuestionType {

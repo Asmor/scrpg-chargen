@@ -7,5 +7,5 @@ export interface Decision {
 		character: Character,
 		results: any,
 	) => void;
-	getNext: () => Decision | null;
+	getNext: (character: Character) => Decision | null;
 }

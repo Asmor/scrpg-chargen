@@ -1,4 +1,4 @@
-import { Rollable } from "@/types/common";
+import { Entry, Rollable } from "@/types/common";
 import { Container, SectionHeader, SubHeader } from "@/util/commonElements";
 import { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
@@ -124,5 +124,11 @@ function Chooser<T extends Partial<Rollable> & object>({ options, title, selecte
 		</> }
 	</Container>;
 }
+
+export const makeOption = <T extends Entry,>(value: T): ChooserOption<T> => ({
+	title: value.name,
+	subtitle: `pg. ${value.page}`,
+	value,
+});
 
 export default Chooser;
