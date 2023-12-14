@@ -128,8 +128,6 @@ const CharacterBuilder = () => {
 		)
 	);
 
-	// console.log("xxy", questions, character)
-
 	return <>{ questionEls }</>
 };
 
