@@ -19,15 +19,18 @@ const scrpgDirector = ({
 	const questions: Question[] = [];
 
 	let decision: Decision | null = startingDecision;
-	let i = 0;
+	let questionCounter = 0;
 
 	while (decision) {
-		console.log("xxy Before process", cloneDeep(character));
-		decision.process(character, results[i]);
-		console.log("xxy After process", cloneDeep(character));
+		const questionCount = decision.questions.length;
+		const decisionResults: Results[] = new Array(questionCount);
+		for ( let i = 0; i < questionCount; i++ ) {
+			decisionResults[i] = results[questionCounter + i];
+		}
+		decision.process(character, decisionResults);
 		questions.push(...decision.questions);
 		decision = decision.getNext(character);
-		i++;
+		questionCounter += questionCount;
 	}
 
 	if ( !isEqual(character, cachedCharacter) ) {

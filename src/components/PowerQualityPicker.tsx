@@ -4,6 +4,7 @@ import { Die } from "@/types/common";
 import { useMemo } from "react";
 import Chooser, { ChooserOption } from "./Chooser";
 import { Container, SubHeader } from "@/util/commonElements";
+import { Character } from "@/character-builder/Character";
 
 const sortOrder: ("type" | "category")[] = ["type", "category"];
 
@@ -32,11 +33,11 @@ interface PowerQualityPickerProps {
 	specifiers: (string | PowerQualitySpecifier)[];
 	dice: Die[];
 	selected: (PowerQuality | undefined)[];
-	used: (PowerQuality | undefined)[];
+	character: Character;
 	onSelect: (values: (PowerQuality | undefined)[]) => void;
 }
 
-const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect, used }: PowerQualityPickerProps) => {
+const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect, character }: PowerQualityPickerProps) => {
 	const options = useMemo(() => {
 		const options = new Set<PowerQuality>();
 
@@ -69,6 +70,8 @@ const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect, used 
 
 	const choosers = useMemo(
 		() => dice.map((die, index) => {
+			const used = character.powersAndQualities.map(pq => pq.powerQuality);
+
 			return ( <Chooser
 				key={index}
 				options={getOptionsForIndex(selected[index], options, used)}
@@ -81,7 +84,7 @@ const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect, used 
 				}}
 			/> )
 		}),
-		[options, selected, dice, onSelect, used]
+		[options, selected, dice, onSelect, character]
 	);
 
 	return <Container>

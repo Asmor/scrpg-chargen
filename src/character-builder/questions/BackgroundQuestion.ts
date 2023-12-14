@@ -10,16 +10,13 @@ export interface BackgroundQuestion extends Question {
 	rolled: number[];
 }
 
-// background ID
-export type BackgroundQuestionResults = string;
-
 interface BackgroundQuestionProps {
 	character: Character;
 }
 
 const backgroundOptions = backgrounds.map(bg => makeOption(bg));
 
-export const getBgChoiceQuestion = (
+export const getBackgroundQuestion = (
 	props: BackgroundQuestionProps
 ): BackgroundQuestion => {
 	return {

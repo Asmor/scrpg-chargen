@@ -15,6 +15,7 @@ export interface ChooserProps<T> {
 	options: ChooserOption<T>[];
 	selected?: T;
 	onSelectOption: (selected: T) => void;
+	unavailable?: T[];
 }
 
 const OptionList = styled.ul<{ $collapsed?: boolean }>`
@@ -56,17 +57,31 @@ const makeOptionButton = <T,>(
 	</OptionButton>
 );
 
-function Chooser<T extends Partial<Rollable> & object>({ options, title, selected, rolled, onSelectOption }: ChooserProps<T>) {
+function Chooser<T extends Partial<Rollable> & object>({ options, unavailable, title, selected, rolled, onSelectOption }: ChooserProps<T>) {
 	const [othersCollapsed, setOthersCollapsed] = useState(true);
 
 	const selectedOption = useMemo<ChooserOption<T> | undefined>(() => {
 		return options.find(option => option?.value === selected)
 	}, [options, selected]);
 
+	const availableOptions = useMemo(() => {
+		return options.filter(option => {
+			if ( !unavailable ) {
+				return true;
+			}
+
+			if ( option.value === selected ) {
+				return true;
+			}
+
+			return unavailable.every(value => option.value !== value);
+		})
+	}, [options, unavailable, selected]);
+
 	const { primaryOptions, otherOptions } = useMemo(() => {
 		if ( !rolled?.length ) {
 			return {
-				primaryOptions: [...options],
+				primaryOptions: [...availableOptions],
 				otherOptions: null,
 			};
 		}
@@ -74,7 +89,7 @@ function Chooser<T extends Partial<Rollable> & object>({ options, title, selecte
 		const primaryOptions: ChooserOption<T>[] = [];
 		const otherOptions: ChooserOption<T>[] = [];
 
-		options.forEach((option) => {
+		availableOptions.forEach((option) => {
 			if ( !option ) return;
 
 			if ( rolled.includes(option.value?.roll || -1) ) {
@@ -85,7 +100,7 @@ function Chooser<T extends Partial<Rollable> & object>({ options, title, selecte
 		});
 
 		return { primaryOptions, otherOptions};
-	}, [rolled, options]);
+	}, [rolled, availableOptions]);
 
 	const [editMode, setEditMode] = useState(false);
 

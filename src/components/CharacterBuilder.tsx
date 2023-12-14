@@ -1,8 +1,7 @@
 "use client";
 
-import backgrounds, { getBackgroundById } from "@/data/backgrounds";
-import Chooser, { makeOption } from "./Chooser";
-import powerSources from "@/data/powerSources";
+import { getBackgroundById } from "@/data/backgrounds";
+import Chooser from "./Chooser";
 import DicePool from "./DicePool";
 import scrpgDirector from "@/character-builder/Director";
 import { useCallback, useState } from "react";
@@ -10,15 +9,18 @@ import { isEqual } from "lodash";
 import { Question, QuestionType, Results } from "@/character-builder/Question";
 import { DiceRollQuestion, DiceRollQuestionResults } from "@/character-builder/questions/DiceRollQuestion";
 import { getBackgroundRollDecision } from "@/character-builder/decisions/BackgroundRollDecision";
-import { BackgroundQuestion, BackgroundQuestionResults } from "@/character-builder/questions/BackgroundQuestion";
+import { BackgroundQuestion } from "@/character-builder/questions/BackgroundQuestion";
 import { PowerQualityQuestion, PowerQualityQuestionResults } from "@/character-builder/questions/PowerQualityQuestion";
 import PowerQualityPicker from "./PowerQualityPicker";
 import { getPowerQualityById } from "@/data/powersQualities";
-
-const backgroundOptions = backgrounds.map(makeOption);
-const powerSourceOptions = powerSources.map(makeOption);
+import { Character } from "@/character-builder/Character";
+import { PowerSourceQuestion } from "@/character-builder/questions/PowerSourceQuestion";
+import { getPowerSourceById } from "@/data/powerSources";
+import { PrincipleQuestion } from "@/character-builder/questions/PrincipleQuestion";
+import { getPrincipleById } from "@/data/principles";
 
 const getElementByQuestionType = (
+	character: Character,
 	question: Question,
 	key: string,
 	results: Results,
@@ -40,7 +42,7 @@ const getElementByQuestionType = (
 			/>;
 		case QuestionType.BACKGROUND_CHOICE:
 			const bcq = question as BackgroundQuestion;
-			const bcqResults: BackgroundQuestionResults = results ? results as BackgroundQuestionResults : "";
+			const bcqResults = results || "";
 			return <Chooser
 				key={key}
 				title={bcq.title}
@@ -51,6 +53,32 @@ const getElementByQuestionType = (
 				selected={getBackgroundById(bcqResults)}
 				rolled={bcq.rolled}
 			/>;
+		case QuestionType.POWER_SOURCE_CHOICE:
+			const psq = question as PowerSourceQuestion;
+			const psqResults = results || "";
+			return <Chooser
+				key={key}
+				title={psq.title}
+				options={psq.options}
+				onSelectOption={(bg) => {
+					setResults(bg.id);
+				}}
+				selected={getPowerSourceById(psqResults)}
+				rolled={psq.rolled}
+			/>;
+		case QuestionType.PRINCIPLE_CHOICE:
+			const pq = question as PrincipleQuestion;
+			const pqResults = results || "";
+			return <Chooser
+				key={key}
+				title={pq.title}
+				options={pq.options}
+				onSelectOption={(principle) => {
+					setResults(principle.id);
+				}}
+				selected={getPrincipleById(pqResults)}
+				unavailable={character.aspects.principles}
+			/>
 		case QuestionType.POWER_QUALITY_CHOICE:
 			const pqq = question as PowerQualityQuestion;
 			const pqqResults: PowerQualityQuestionResults = results ? results as PowerQualityQuestionResults : [];
@@ -63,22 +91,10 @@ const getElementByQuestionType = (
 				onSelect={selections => {
 					setResults(selections.map(pqq => pqq?.id));
 				}}
-				used={pqq.used}
+				character={character}
 			/>
-		// case QuestionType.PRINCIPLE_CHOICE:
-		// 	const pq = question as PrincipleQuestion;
-		// 	return <Chooser
-		// 		key={key}
-		// 		title={pq.title}
-		// 		options={pq.getOptions(char)}
-		// 		onSelectOption={(principle) =>{
-		// 			 pq.set(principle);
-		// 			 forceUpdate();
-		// 			}}
-		// 		selected={pq.principle}
-		// 	/>
 		default:
-			return <>Unhandled question type: {question.type}</>
+			return <div key={key}>Unhandled question type: {question.type}</div>
 	}
 };
 
@@ -104,6 +120,7 @@ const CharacterBuilder = () => {
 
 	const questionEls = questions.map(
 		(question, index) => getElementByQuestionType(
+			character,
 			question,
 			index.toString(),
 			resultsStack[index],

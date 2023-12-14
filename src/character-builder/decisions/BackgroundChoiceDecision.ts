@@ -1,7 +1,8 @@
 import { getBackgroundById } from "@/data/backgrounds";
 import { Character } from "../Character";
 import { Decision } from "../Decision";
-import { getBgChoiceQuestion } from "../questions/BackgroundQuestion";
+import { getBackgroundQuestion } from "../questions/BackgroundQuestion";
+import { getBackgroundDetailsDecision } from "./BackgroundDetailsDecision";
 
 interface BackgroundChoiceDecisionProps {
 	character: Character;
@@ -14,14 +15,17 @@ export const getBackgroundChoiceDecision = (
 ): Decision => {
 	return {
 		questions: [
-			getBgChoiceQuestion({ character: props.character }),
+			getBackgroundQuestion({ character: props.character }),
 		],
-		process(character, results?: BackgroundChoiceDecisionResults) {
-			const bg = getBackgroundById(results || "");
+		process(character, results) {
+			const bg = getBackgroundById(results[0] || "");
 			character.aspects.background = bg;
 		},
-		getNext() {
+		getNext(character) {
+			if ( character.aspects.background ) {
+				return getBackgroundDetailsDecision({ character });
+			}
 			return null;
-		}
+		},
 	};
 }

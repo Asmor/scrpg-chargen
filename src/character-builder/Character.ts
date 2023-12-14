@@ -8,6 +8,7 @@ import { Die } from "@/types/common";
 export interface Character {
 	rolls: {
 		background: number[];
+		powerSource: number[];
 	};
 	aspects: {
 		background?: Background;
@@ -24,6 +25,7 @@ export interface Character {
 export const getNewCharacter = (): Character => ({
 	rolls: {
 		background: [],
+		powerSource: [],
 	},
 	aspects: {
 		principles: [],

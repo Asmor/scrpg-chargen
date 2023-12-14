@@ -5,7 +5,7 @@ export interface Decision {
 	questions: Question[],
 	process: (
 		character: Character,
-		results: any,
+		results: Results[],
 	) => void;
 	getNext: (character: Character) => Decision | null;
 }

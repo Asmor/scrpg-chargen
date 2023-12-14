@@ -21,8 +21,8 @@ export const getBackgroundRollDecision = (
 				dice: props.dice,
 			}),
 		],
-		process(character, results?: BackgroundRollDecisionResults) {
-			character.rolls.background = results || [];
+		process(character, results) {
+			character.rolls.background = results[0] || [];
 		},
 		getNext(character) {
 			if (character.rolls.background.length ) {

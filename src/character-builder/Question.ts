@@ -12,9 +12,12 @@ export interface QuestionProps {
 
 export enum QuestionType {
 	DICE_ROLL = "DICE_ROLL",
+
 	BACKGROUND_CHOICE = "BACKGROUND_CHOICE",
-	POWER_QUALITY_CHOICE = "POWER_QUALITY_CHOICE",
+	POWER_SOURCE_CHOICE = "POWER_SOURCE_CHOICE",
 	PRINCIPLE_CHOICE = "PRINCIPLE_CHOICE",
+
+	POWER_QUALITY_CHOICE = "POWER_QUALITY_CHOICE",
 }
 
-export interface Results {};
+export type Results = any;
