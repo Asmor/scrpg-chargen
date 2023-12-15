@@ -14,6 +14,7 @@ import PowerQualityPicker from "./PowerQualityPicker";
 import { Character } from "@/character-builder/Character";
 import { PowerSourceQuestion } from "@/character-builder/questions/PowerSourceQuestion";
 import { PrincipleQuestion } from "@/character-builder/questions/PrincipleQuestion";
+import IdAudit from "./IdAudit";
 
 const getElementByQuestionType = (
 	character: Character,
@@ -115,7 +116,10 @@ const CharacterBuilder = () => {
 		)
 	);
 
-	return <>{ questionEls }</>
+	return <>
+		<IdAudit/>
+		{ questionEls }
+	</>
 };
 
 export default CharacterBuilder;

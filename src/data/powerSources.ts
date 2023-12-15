@@ -23,7 +23,7 @@ const powerSources: PowerSource[] = [
 			"core.ability.inflict",
 			"core.ability.reflexiveBurst",
 			"core.ability.ambushAwareness",
-			"core.ability.changeInCircumstances",
+			"core.ability.changeInCircumstance",
 			"core.ability.immunity",
 		],
 		yellowPicks: 2,
@@ -36,7 +36,7 @@ const powerSources: PowerSource[] = [
 		source: Source.CORE,
 		page: 58,
 		assignablePqs: [
-			"core.power.gagdgets",
+			"core.power.gadgets",
 			"core.power.signatureVehicle",
 			"core.power.signatureWeaponry",
 			PowerCategory.ATHLETIC,
@@ -46,7 +46,7 @@ const powerSources: PowerSource[] = [
 		abilities: [
 			"core.ability.alwaysBePrepared",
 			"core.ability.reactiveField",
-			"core.ability.FlowingFight",
+			"core.ability.flowingFight",
 		],
 		yellowPicks: 2,
 		archetypeDice: [10, 8, 8],
@@ -93,9 +93,9 @@ const powerSources: PowerSource[] = [
 		],
 		roll: 4,
 		abilities: [
-			"core.ability.personalUpgrade",
+			"core.ability.personalUpgrade.experimentation",
 			"core.ability.misdirection",
-			"core.ability.throwMinion",
+			"core.ability.throwMinion.experimentation",
 			"core.ability.overpower",
 			"core.ability.unflagging",
 		],
@@ -302,7 +302,7 @@ const powerSources: PowerSource[] = [
 		abilities: [
 			"core.ability.areaHealing",
 			"core.ability.massModification",
-			"core.ability.personalUpgrade",
+			"core.ability.personalUpgrade.supernatural",
 			"core.ability.reachThroughVeil",
 		],
 		yellowPicks: 2,
@@ -514,7 +514,7 @@ const powerSources: PowerSource[] = [
 		roll: 19,
 		abilities: [
 			"core.ability.commandPower",
-			"core.ability.dangerousExploaion",
+			"core.ability.dangerousExplosion",
 			"core.ability.embolden",
 			"core.ability.resolve",
 			"core.ability.resilience",

@@ -54,6 +54,7 @@ export const getBackgroundDetailsDecision = (
 			});
 
 			if ( principle ) {
+				// todo also add principle's ability
 				character.aspects.principles.push(principle);
 			}
 

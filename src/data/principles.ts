@@ -9,7 +9,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 124,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_destiny",
+		abilityId: "core.ability.principleDestiny",
 	},
 	{
 		name: "Principle of [Energy/Element]",
@@ -17,7 +17,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 124,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_energy_element",
+		abilityId: "core.ability.principleEnergyElement",
 	},
 	{
 		name: "Principle of Exorcism",
@@ -25,7 +25,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 124,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_exorcism",
+		abilityId: "core.ability.principleExorcism",
 	},
 	{
 		name: "Principle of Fauna",
@@ -33,7 +33,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 124,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_fauna",
+		abilityId: "core.ability.principleFauna",
 	},
 	{
 		name: "Principle of Flora",
@@ -41,7 +41,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 125,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_flora",
+		abilityId: "core.ability.principleFlora",
 	},
 	{
 		name: "Principle of the Future",
@@ -49,7 +49,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 125,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_future",
+		abilityId: "core.ability.principleFuture",
 	},
 	{
 		name: "Principle of Immortality",
@@ -57,7 +57,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 125,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_immortality",
+		abilityId: "core.ability.principleImmortality",
 	},
 	{
 		name: "Principle of the Inner Demon",
@@ -65,7 +65,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 125,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_inner_demon",
+		abilityId: "core.ability.principleInnerDemon",
 	},
 	{
 		name: "Principle of Magic",
@@ -73,7 +73,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 125,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_magic",
+		abilityId: "core.ability.principleMagic",
 	},
 	{
 		name: "Principle of the Sea",
@@ -81,7 +81,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 126,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_sea",
+		abilityId: "core.ability.principleSea",
 	},
 	{
 		name: "Principle of Space",
@@ -89,7 +89,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 126,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_space",
+		abilityId: "core.ability.principleSpace",
 	},
 	{
 		name: "Principle of the Time Traveler",
@@ -97,7 +97,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 126,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_time_traveler",
+		abilityId: "core.ability.principleTimeTraveler",
 	},
 	{
 		name: "Principle of the Undead",
@@ -105,7 +105,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 126,
 		category: PrincipleCategory.ESOTERIC,
-		abilityId: "core.ability.principle_undead",
+		abilityId: "core.ability.principleUndead",
 	},
 	{
 		name: "Principle of Clockwork",
@@ -113,7 +113,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 127,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_clockwork",
+		abilityId: "core.ability.principleClockwork",
 	},
 	{
 		name: "Principle of the Gearhead",
@@ -121,7 +121,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 127,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_gearhead",
+		abilityId: "core.ability.principleGearhead",
 	},
 	{
 		name: "Principle of History",
@@ -129,7 +129,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 127,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_history",
+		abilityId: "core.ability.principleHistory",
 	},
 	{
 		name: "Principle of the Indestructible",
@@ -137,7 +137,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 127,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_indestructible",
+		abilityId: "core.ability.principleIndestructible",
 	},
 	{
 		name: "Principle of the Lab",
@@ -145,7 +145,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 128,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_lab",
+		abilityId: "core.ability.principleLab",
 	},
 	{
 		name: "Principle of Mastery",
@@ -153,7 +153,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 128,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_mastery",
+		abilityId: "core.ability.principleMastery",
 	},
 	{
 		name: "Principle of the Mentor",
@@ -161,7 +161,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 128,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_mentor",
+		abilityId: "core.ability.principleMentor",
 	},
 	{
 		name: "Principle of the Powerless",
@@ -169,7 +169,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 129,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_powerless",
+		abilityId: "core.ability.principlePowerless",
 	},
 	{
 		name: "Principle of Science",
@@ -177,7 +177,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 129,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_science",
+		abilityId: "core.ability.principleScience",
 	},
 	{
 		name: "Principle of Speed",
@@ -185,7 +185,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 129,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_speed",
+		abilityId: "core.ability.principleSpeed",
 	},
 	{
 		name: "Principle of Stealth",
@@ -193,7 +193,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 129,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_stealth",
+		abilityId: "core.ability.principleStealth",
 	},
 	{
 		name: "Principle of Strength",
@@ -201,7 +201,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 129,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_strength",
+		abilityId: "core.ability.principleStrength",
 	},
 	{
 		name: "Principle of the Tactician",
@@ -209,7 +209,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 130,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_tactician",
+		abilityId: "core.ability.principleTactician",
 	},
 	{
 		name: "Principle of Whispers",
@@ -217,7 +217,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 130,
 		category: PrincipleCategory.EXPERTISE,
-		abilityId: "core.ability.principle_whispers",
+		abilityId: "core.ability.principleWhispers",
 	},
 	{
 		name: "Principle of Chaos",
@@ -225,7 +225,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 131,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_chaos",
+		abilityId: "core.ability.principleChaos",
 	},
 	{
 		name: "Principle of Compassion",
@@ -233,7 +233,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 131,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_compassion",
+		abilityId: "core.ability.principleCompassion",
 	},
 	{
 		name: "Principle of the Defender",
@@ -241,7 +241,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 131,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_defender",
+		abilityId: "core.ability.principleDefender",
 	},
 	{
 		name: "Principle of Dependence",
@@ -249,7 +249,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 131,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_dependence",
+		abilityId: "core.ability.principleDependence",
 	},
 	{
 		name: "Principle of Equality",
@@ -257,7 +257,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 132,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_equality",
+		abilityId: "core.ability.principleEquality",
 	},
 	{
 		name: "Principle of Great Power",
@@ -265,7 +265,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 132,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_great_power",
+		abilityId: "core.ability.principleGreatPower",
 	},
 	{
 		name: "Principle of the Hero",
@@ -273,7 +273,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 132,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_hero",
+		abilityId: "core.ability.principleHero",
 	},
 	{
 		name: "Principle of Honor",
@@ -281,7 +281,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 132,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_honor",
+		abilityId: "core.ability.principleHonor",
 	},
 	{
 		name: "Principle of Justice",
@@ -289,7 +289,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 133,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_justice",
+		abilityId: "core.ability.principleJustice",
 	},
 	{
 		name: "Principle of Liberty",
@@ -297,7 +297,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 133,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_liberty",
+		abilityId: "core.ability.principleLiberty",
 	},
 	{
 		name: "Principle of Order",
@@ -305,7 +305,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 133,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_order",
+		abilityId: "core.ability.principleOrder",
 	},
 	{
 		name: "Principle of Self-Preservation",
@@ -313,7 +313,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 134,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_self_preservation",
+		abilityId: "core.ability.principleSelfPreservation",
 	},
 	{
 		name: "Principle of the Zealot",
@@ -321,7 +321,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 134,
 		category: PrincipleCategory.IDEALS,
-		abilityId: "core.ability.principle_zealot",
+		abilityId: "core.ability.principleZealot",
 	},
 	{
 		name: "Principle of Ambition",
@@ -329,7 +329,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 135,
 		category: PrincipleCategory.IDENTITY,
-		abilityId: "core.ability.principle_ambition",
+		abilityId: "core.ability.principleAmbition",
 	},
 	{
 		name: "Principle of Amnesia",
@@ -337,7 +337,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 135,
 		category: PrincipleCategory.IDENTITY,
-		abilityId: "core.ability.principle_amnesia",
+		abilityId: "core.ability.principleAmnesia",
 	},
 	{
 		name: "Principle of Detachment",
@@ -345,7 +345,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 135,
 		category: PrincipleCategory.IDENTITY,
-		abilityId: "core.ability.principle_detachment",
+		abilityId: "core.ability.principleDetachment",
 	},
 	{
 		name: "Principle of Discovery",
@@ -353,7 +353,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 135,
 		category: PrincipleCategory.IDENTITY,
-		abilityId: "core.ability.principle_discovery",
+		abilityId: "core.ability.principleDiscovery",
 	},
 	{
 		name: "Principle of Levity",
@@ -361,7 +361,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 136,
 		category: PrincipleCategory.IDENTITY,
-		abilityId: "core.ability.principle_levity",
+		abilityId: "core.ability.principleLevity",
 	},
 	{
 		name: "Principle of the Loner",
@@ -369,7 +369,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 136,
 		category: PrincipleCategory.IDENTITY,
-		abilityId: "core.ability.principle_loner",
+		abilityId: "core.ability.principleLoner",
 	},
 	{
 		name: "Principle of the Nomad",
@@ -377,7 +377,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 136,
 		category: PrincipleCategory.IDENTITY,
-		abilityId: "core.ability.principle_nomad",
+		abilityId: "core.ability.principleNomad",
 	},
 	{
 		name: "Principle of Peace",
@@ -385,7 +385,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 136,
 		category: PrincipleCategory.IDENTITY,
-		abilityId: "core.ability.principle_peace",
+		abilityId: "core.ability.principlePeace",
 	},
 	{
 		name: "Principle of Rage",
@@ -393,7 +393,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 137,
 		category: PrincipleCategory.IDENTITY,
-		abilityId: "core.ability.principle_rage",
+		abilityId: "core.ability.principleRage",
 	},
 	{
 		name: "Principle of Savagery",
@@ -401,7 +401,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 137,
 		category: PrincipleCategory.IDENTITY,
-		abilityId: "core.ability.principle_savagery",
+		abilityId: "core.ability.principleSavagery",
 	},
 	{
 		name: "Principle of the Split",
@@ -409,7 +409,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 137,
 		category: PrincipleCategory.IDENTITY,
-		abilityId: "core.ability.principle_split",
+		abilityId: "core.ability.principleSplit",
 	},
 	{
 		name: "Principle of the Spotless Mind",
@@ -417,7 +417,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 137,
 		category: PrincipleCategory.IDENTITY,
-		abilityId: "core.ability.principle_spotless_mind",
+		abilityId: "core.ability.principleSpotlessMind",
 	},
 	{
 		name: "Principle of Business",
@@ -425,7 +425,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 138,
 		category: PrincipleCategory.RESPONSIBILITY,
-		abilityId: "core.ability.principle_business",
+		abilityId: "core.ability.principleBusiness",
 	},
 	{
 		name: "Principle of the Debtor",
@@ -433,7 +433,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 138,
 		category: PrincipleCategory.RESPONSIBILITY,
-		abilityId: "core.ability.principle_debtor",
+		abilityId: "core.ability.principleDebtor",
 	},
 	{
 		name: "Principle of the Detective",
@@ -441,7 +441,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 138,
 		category: PrincipleCategory.RESPONSIBILITY,
-		abilityId: "core.ability.principle_detective",
+		abilityId: "core.ability.principleDetective",
 	},
 	{
 		name: "Principle of the Double Agent",
@@ -449,7 +449,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 138,
 		category: PrincipleCategory.RESPONSIBILITY,
-		abilityId: "core.ability.principle_double_agent",
+		abilityId: "core.ability.principleDoubleAgent",
 	},
 	{
 		name: "Principle of the Everyman",
@@ -457,7 +457,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 139,
 		category: PrincipleCategory.RESPONSIBILITY,
-		abilityId: "core.ability.principle_everyman",
+		abilityId: "core.ability.principleEveryman",
 	},
 	{
 		name: "Principle of Family",
@@ -465,7 +465,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 139,
 		category: PrincipleCategory.RESPONSIBILITY,
-		abilityId: "core.ability.principle_family",
+		abilityId: "core.ability.principleFamily",
 	},
 	{
 		name: "Principle of the Mask",
@@ -473,7 +473,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 139,
 		category: PrincipleCategory.RESPONSIBILITY,
-		abilityId: "core.ability.principle_mask",
+		abilityId: "core.ability.principleMask",
 	},
 	{
 		name: "Principle of the Sidekick",
@@ -481,7 +481,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 139,
 		category: PrincipleCategory.RESPONSIBILITY,
-		abilityId: "core.ability.principle_sidekick",
+		abilityId: "core.ability.principleSidekick",
 	},
 	{
 		name: "Principle of the Team",
@@ -489,7 +489,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 140,
 		category: PrincipleCategory.RESPONSIBILITY,
-		abilityId: "core.ability.principle_team",
+		abilityId: "core.ability.principleTeam",
 	},
 	{
 		name: "Principle of the Underworld",
@@ -497,7 +497,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 140,
 		category: PrincipleCategory.RESPONSIBILITY,
-		abilityId: "core.ability.principle_underworld",
+		abilityId: "core.ability.principleUnderworld",
 	},
 	{
 		name: "Principle of the Veteran",
@@ -505,7 +505,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 141,
 		category: PrincipleCategory.RESPONSIBILITY,
-		abilityId: "core.ability.principle_veteran",
+		abilityId: "core.ability.principleVeteran",
 	},
 	{
 		name: "Principle of Youth",
@@ -513,7 +513,7 @@ const principles: Principle[] = [
 		source: Source.CORE,
 		page: 141,
 		category: PrincipleCategory.RESPONSIBILITY,
-		abilityId: "core.ability.principle_youth",
+		abilityId: "core.ability.principleYouth",
 	},
 ];
 

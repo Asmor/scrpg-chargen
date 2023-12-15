@@ -2,6 +2,7 @@ import { Source } from "@/types/common";
 import { Archetype } from "./archetypes.types";
 import { PrincipleCategory } from "./principles.types";
 import { PowerCategory, QualityCategory } from "./powersQualities.types";
+import { getByIdFactory } from "@/util/util";
 
 const archetypes: Archetype[] = [
 	{
@@ -44,7 +45,7 @@ const archetypes: Archetype[] = [
 		page: 74,
 		roll: 2,
 		principleCategory: PrincipleCategory.EXPERTISE,
-		mandatoryPq: ["core.power.stealth"],
+		mandatoryPq: ["core.quality.stealth"],
 		orderedAssignablePqs: [
 			{ assignablePqs: [
 				"core.power.intangibility",
@@ -125,9 +126,9 @@ const archetypes: Archetype[] = [
 		abilities: [
 			"core.ability.dualWielder",
 			"core.ability.load",
-			"core.ability.preciceShot",
+			"core.ability.preciseShot",
 			"core.ability.sniperAim",
-			"core.ability.spinAndShoot",
+			"core.ability.spinShoot",
 			"core.ability.calledShot",
 			"core.ability.explodingAmmo",
 			"core.ability.hairTriggerReflexes",
@@ -195,7 +196,7 @@ const archetypes: Archetype[] = [
 			"core.ability.flexibleStance",
 			"core.ability.offensiveStrike",
 			"core.ability.preciseStrike",
-			"core.ability.throwMinion",
+			"core.ability.throwMinion.closeQuartersCombatant",
 		],
 	},
 	{
@@ -265,11 +266,11 @@ const archetypes: Archetype[] = [
 		pickGreenAsYellow: true,
 		abilities: [
 			"core.ability.aerialBombardment",
-			"core.ability.aerialSurveilance",
+			"core.ability.aerialSurveillance",
 			"core.ability.barrelRoll",
-			"core.ability.diveAndDrop",
+			"core.ability.diveDrop",
 			"core.ability.sonicBoom",
-			"core.ability.strikeAndSwoop",
+			"core.ability.strikeSwoop",
 		],
 	},
 	{
@@ -379,7 +380,7 @@ const archetypes: Archetype[] = [
 		yellowPicks: 1,
 		abilities: [
 			"core.ability.banish",
-			"core.ability.EnergyJaunt",
+			"core.ability.energyJaunt",
 			"core.ability.powerfulBlast",
 			"core.ability.subdue",
 			"core.ability.cordsOfMagic",
@@ -453,7 +454,7 @@ const archetypes: Archetype[] = [
 		pickGreenAsYellow: true,
 		abilities: [
 			"core.ability.displacementAssault",
-			"core.ability.hitAndRun",
+			"core.ability.hitRun",
 			"core.ability.mobileAssist",
 			"core.ability.mobileDodge",
 			"core.ability.runDown",
@@ -527,7 +528,7 @@ const archetypes: Archetype[] = [
 			"core.ability.danger",
 			"core.ability.expectTheUnexpected",
 			"core.ability.imitation",
-			"core.ability.turnTheTables",
+			"core.ability.turnTheTables.wildCard",
 		],
 	},
 	{
@@ -587,9 +588,9 @@ const archetypes: Archetype[] = [
 			"core.ability.analyzeWeakness",
 			"core.ability.equip",
 			"core.ability.helpfulInvention",
-			"core.ability.helpfulAnalysis",
+			"core.ability.helpfulAnalysis.gadgeteer",
 			"core.ability.snapDecision",
-			"core.ability.turnTheTables",
+			"core.ability.turnTheTables.gadgeteer",
 		],
 	},
 	{
@@ -624,7 +625,7 @@ const archetypes: Archetype[] = [
 			"core.ability.probabilityInsight",
 			"core.ability.warpSpace",
 			"core.ability.alternateOutcome",
-			"core.ability.helpfulAnalysis",
+			"core.ability.helpfulAnalysis.realityShaper",
 			"core.ability.neverHappened",
 			"core.ability.retroactiveRewrite",
 		],
@@ -684,5 +685,7 @@ const archetypes: Archetype[] = [
 		complex: true,
 	},
 ];
+
+export const getArchetypeById = getByIdFactory(archetypes);
 
 export default archetypes;
