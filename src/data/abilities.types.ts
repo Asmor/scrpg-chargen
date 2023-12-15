@@ -1,5 +1,5 @@
 import { Entry } from "@/types/common";
-import { PowerCategory, QualityCategory } from "./powersQualities.types";
+import { PowerCategory, PowerQuality, QualityCategory } from "./powersQualities.types";
 
 export enum AbilityColor {
 	GREEN = "GREEN",
@@ -41,3 +41,16 @@ export interface Ability extends Entry {
 	powerQualitySpecifier?: (string | PowerCategory | QualityCategory)[],
 	powerQualitySourceRestrction?: AbilityRestriction,
 }
+
+export interface AbilityConfiguration {
+	chosenPq?: PowerQuality;
+	chosenText?: string;
+	name?: string;
+}
+
+export interface AbilityInstance {
+	base: Ability;
+	chosen: string | PowerQuality;
+	overrides: Partial<Ability>;
+}
+

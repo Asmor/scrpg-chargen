@@ -3,7 +3,7 @@
 import Chooser from "./Chooser";
 import DicePool from "./DicePool";
 import scrpgDirector from "@/character-builder/Director";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { isEqual } from "lodash";
 import { Question, QuestionType, Results } from "@/character-builder/Question";
 import { DiceRollQuestion } from "@/character-builder/questions/DiceRollQuestion";
@@ -15,6 +15,10 @@ import { Character } from "@/character-builder/Character";
 import { PowerSourceQuestion } from "@/character-builder/questions/PowerSourceQuestion";
 import { PrincipleQuestion } from "@/character-builder/questions/PrincipleQuestion";
 import IdAudit from "./IdAudit";
+import AbilityConfigurator, { AbilityConfiguration } from "./AbilityConfigurator";
+import abilities, { getAbilityById } from "@/data/abilities";
+import powersAndQualities from "@/data/powersQualities";
+import { Ability } from "@/data/abilities.types";
 
 const getElementByQuestionType = (
 	character: Character,
@@ -116,8 +120,18 @@ const CharacterBuilder = () => {
 		)
 	);
 
+	const tempAbility = useMemo(() => getAbilityById("core.ability.damageReduction"), []);
+	// const tempAbility = useMemo(() => abilities[0], []);
+	const [tempAbilityConfig, setTempAbilityConfig] = useState<AbilityConfiguration>();
+
 	return <>
 		<IdAudit/>
+		<AbilityConfigurator
+			ability={tempAbility as Ability}
+			configuration={tempAbilityConfig}
+			textOptions={tempAbility?.choice}
+			onUpdateConfig={(config) => setTempAbilityConfig(config)}
+		/>
 		{ questionEls }
 	</>
 };
