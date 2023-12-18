@@ -1,5 +1,6 @@
 import { Entry, Rollable } from "@/types/common";
 import { Container, SectionHeader, SubHeader } from "@/util/commonElements";
+import { identity } from "lodash";
 import { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 
@@ -13,8 +14,9 @@ export interface ChooserProps<T> {
 	title: string;
 	rolled?: number[];
 	options: ChooserOption<T>[];
-	selected?: T;
-	onSelectOption: (selected: T) => void;
+	choices?: number;
+	selected?: T[];
+	onSelectOption: (selected: T[]) => void;
 	unavailable?: T[];
 }
 
@@ -49,19 +51,27 @@ const ShowMore = styled(SectionHeader)`
 const makeOptionButton = <T,>(
 	option: ChooserOption<T>,
 	onClick: () => void,
-	selected?: ChooserOption<T>
+	selected?: boolean,
 ) => (
-	<OptionButton onClick={onClick} $selected={option === selected}>
+	<OptionButton onClick={onClick} $selected={selected}>
 		{ option.title }
 		{ option.subtitle && <OptionSubtitle>{option.subtitle}</OptionSubtitle> }
 	</OptionButton>
 );
 
-function Chooser<T extends Partial<Rollable> & object>({ options, unavailable, title, selected, rolled, onSelectOption }: ChooserProps<T>) {
+function Chooser<T extends Partial<Rollable> & object>({
+	options,
+	unavailable,
+	title,
+	selected,
+	rolled,
+	onSelectOption,
+	choices = 1,
+}: ChooserProps<T>) {
 	const [othersCollapsed, setOthersCollapsed] = useState(true);
 
-	const selectedOption = useMemo<ChooserOption<T> | undefined>(() => {
-		return options.find(option => option?.value === selected)
+	const selectedOptions = useMemo<ChooserOption<T>[]>(() => {
+		return options.filter(option => selected?.includes(option.value))
 	}, [options, selected]);
 
 	const availableOptions = useMemo(() => {
@@ -102,16 +112,26 @@ function Chooser<T extends Partial<Rollable> & object>({ options, unavailable, t
 		return { primaryOptions, otherOptions};
 	}, [rolled, availableOptions]);
 
-	const [editMode, setEditMode] = useState(false);
-
 	const handleSelect = useCallback((option: ChooserOption<T>) => {
-		setEditMode(false);
-		onSelectOption(option.value);
+		const newSelected = [...(selected || [])].filter(identity);
+		const selectedIndex = newSelected.indexOf(option.value);
+		if ( selectedIndex > -1 ) {
+			newSelected.splice(selectedIndex, 1);
+		} else {
+			newSelected.push(option.value);
+		}
+
+		console.log("xxy Updating with new selected", {oldSelected: selected, newSelected, selectedIndex});
+		onSelectOption(newSelected);
 	}, [onSelectOption]);
 
-	if ( selectedOption && !editMode ) {
+	if ( selectedOptions.length === choices ) {
 		return <Container>{ title }: {
-			makeOptionButton(selectedOption, setEditMode.bind(null, true), selectedOption)
+			selectedOptions.map((selectedOption, index) =>
+				<span key={index}>
+					{makeOptionButton(selectedOption, () => handleSelect(selectedOption), true)}
+				</span>
+			)
 		}</Container>
 	}
 
@@ -121,7 +141,7 @@ function Chooser<T extends Partial<Rollable> & object>({ options, unavailable, t
 		<OptionList>
 			{primaryOptions.map( (option, index) =>
 				<li key={index}>
-					{ makeOptionButton(option, () => handleSelect(option), selectedOption) }
+					{ makeOptionButton(option, () => handleSelect(option), selectedOptions.includes(option)) }
 				</li>
 			)}
 		</OptionList>
@@ -132,7 +152,7 @@ function Chooser<T extends Partial<Rollable> & object>({ options, unavailable, t
 			<OptionList $collapsed={othersCollapsed}>
 				{otherOptions.map((option, index) =>
 					<li key={index}>
-						{ makeOptionButton(option, () => handleSelect(option), selectedOption) }
+						{makeOptionButton(option, () => handleSelect(option), selectedOptions.includes(option)) }
 					</li>
 				)}
 			</OptionList>

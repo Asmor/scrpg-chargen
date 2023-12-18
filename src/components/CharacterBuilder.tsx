@@ -1,6 +1,6 @@
 "use client";
 
-import Chooser from "./Chooser";
+import Chooser, { makeOption } from "./Chooser";
 import DicePool from "./DicePool";
 import scrpgDirector from "@/character-builder/Director";
 import { useCallback, useMemo, useState } from "react";
@@ -19,6 +19,8 @@ import AbilityConfigurator, { AbilityConfiguration } from "./AbilityConfigurator
 import abilities, { getAbilityById } from "@/data/abilities";
 import powersAndQualities from "@/data/powersQualities";
 import { Ability } from "@/data/abilities.types";
+import backgrounds from "@/data/backgrounds";
+import { Background } from "@/data/backgrounds.types";
 
 const getElementByQuestionType = (
 	character: Character,
@@ -28,6 +30,7 @@ const getElementByQuestionType = (
 	setResults: (results: Results) => void,
 ) => {
 	const freezeResults = (results: any) => {
+		console.log("xxy freezeResults", results);
 		setResults(
 			question.freeze(results)
 		)
@@ -46,12 +49,13 @@ const getElementByQuestionType = (
 			/>;
 		case QuestionType.BACKGROUND_CHOICE:
 			const bcq = question as BackgroundQuestion;
+			console.log("xxy bcq", {currentResults})
 			return <Chooser
 				key={key}
 				title={bcq.title}
 				options={bcq.options}
-				onSelectOption={freezeResults}
-				selected={currentResults}
+				onSelectOption={results => freezeResults(results[0])}
+				selected={[currentResults]}
 				rolled={bcq.rolled}
 			/>;
 		case QuestionType.POWER_SOURCE_CHOICE:
@@ -60,8 +64,8 @@ const getElementByQuestionType = (
 				key={key}
 				title={psq.title}
 				options={psq.options}
-				onSelectOption={freezeResults}
-				selected={currentResults}
+				onSelectOption={results => freezeResults(results[0])}
+				selected={[currentResults]}
 				rolled={psq.rolled}
 			/>;
 		case QuestionType.PRINCIPLE_CHOICE:
@@ -70,8 +74,8 @@ const getElementByQuestionType = (
 				key={key}
 				title={pq.title}
 				options={pq.options}
-				onSelectOption={freezeResults}
-				selected={currentResults}
+				onSelectOption={results => freezeResults(results[0])}
+				selected={[currentResults]}
 				unavailable={character.aspects.principles}
 			/>
 		case QuestionType.POWER_QUALITY_CHOICE:
@@ -120,17 +124,29 @@ const CharacterBuilder = () => {
 		)
 	);
 
-	const tempAbility = useMemo(() => getAbilityById("core.ability.damageReduction"), []);
+	// const tempAbility = useMemo(() => getAbilityById("core.ability.damageReduction"), []);
 	// const tempAbility = useMemo(() => abilities[0], []);
-	const [tempAbilityConfig, setTempAbilityConfig] = useState<AbilityConfiguration>();
+	// const [tempAbilityConfig, setTempAbilityConfig] = useState<AbilityConfiguration>();
+	const tempOptions = useMemo(() => backgrounds.map(bg => makeOption(bg)), []);
+	const [tempChosen, setTempChosen] = useState<Background[]>([]);
 
 	return <>
 		<IdAudit/>
-		<AbilityConfigurator
+		{/* <AbilityConfigurator
 			ability={tempAbility as Ability}
 			configuration={tempAbilityConfig}
 			textOptions={tempAbility?.choice}
 			onUpdateConfig={(config) => setTempAbilityConfig(config)}
+		/> */}
+		<Chooser
+			title="Testing multi-select"
+			options={tempOptions}
+			choices={3}
+			onSelectOption={vals => {
+				console.log("xxy incoming", {vals, tempChosen});
+				setTempChosen(vals);
+			}}
+			selected={tempChosen}
 		/>
 		{ questionEls }
 	</>

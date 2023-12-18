@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import Chooser, { ChooserOption } from "./Chooser";
 import { Container, SubHeader } from "@/util/commonElements";
 import { Character } from "@/character-builder/Character";
+import { identity } from "lodash";
 
 const sortOrder: ("type" | "category")[] = ["type", "category"];
 
@@ -17,7 +18,7 @@ const makeOption = (value: PowerQuality): ChooserOption<PowerQuality> => ({
 	value,
 });
 
-const getOptionsForIndex = (
+const getOptionsForPicker = (
 	selectedPq: PowerQuality | undefined,
 	allOptions: ChooserOption<PowerQuality>[],
 	usedPqs: (PowerQuality | undefined)[]
@@ -71,13 +72,14 @@ const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect, chara
 	const choosers = useMemo(
 		() => dice.map((die, index) => {
 			const used = character.powersAndQualities.map(pq => pq.powerQuality);
+			const selectedOption = [selected[index]].filter(identity) as PowerQuality[];
 
 			return ( <Chooser
 				key={index}
-				options={getOptionsForIndex(selected[index], options, used)}
-				selected={selected[index]}
+				options={getOptionsForPicker(selected[index], options, used)}
+				selected={selectedOption}
 				title={`d${die}`}
-				onSelectOption={(value) => {
+				onSelectOption={([value]) => {
 					const newSelected = [...selected];
 					newSelected[index] = value;
 					onSelect(newSelected);
