@@ -1,5 +1,6 @@
 import { Entry, Rollable, isRollable } from "@/types/common";
-import { Container, SectionHeader, SubHeader } from "@/util/commonElements";
+import Container from "@/components/widgets/Container";
+import { SectionHeader, SubHeader } from "@/util/commonElements";
 import { identity } from "lodash";
 import { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";

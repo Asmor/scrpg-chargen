@@ -1,4 +1,4 @@
-import { Container } from "@/util/commonElements";
+import Container from "@/components/widgets/Container";
 
 interface MessageProps {
 	children: (JSX.Element | string)[],

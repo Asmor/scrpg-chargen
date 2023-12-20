@@ -1,9 +1,10 @@
 "use client";
 
 import { Die } from "@/types/common";
-import { Container, SubHeader } from "@/util/commonElements";
+import { SubHeader } from "@/util/commonElements";
 import { rollPool } from "@/util/dice";
 import { useEffect, useMemo, useState } from "react";
+import Container from "../widgets/Container";
 
 export interface DicePoolProps {
 	dice: Die[];

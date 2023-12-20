@@ -1,5 +1,5 @@
 import { Ability, AbilityConfiguration } from "@/data/abilities.types";
-import { Container } from "@/util/commonElements";
+import Container from "@/components/widgets/Container";
 import { useMemo } from "react";
 import styled from "styled-components";
 

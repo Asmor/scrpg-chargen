@@ -1,11 +1,12 @@
 import { Ability, AbilityColor, AbilityConfiguration } from "@/data/abilities.types";
-import { Container, SubHeader } from "@/util/commonElements";
+import { SubHeader } from "@/util/commonElements";
 import { useCallback, useMemo } from "react";
 import { cloneDeep, isEqual } from "lodash";
 import { getAbilityById } from "@/data/abilities";
 import AbilityConfigurator from "./AbilityConfigurator";
 import Chooser, { makeOption } from "./Chooser";
 import { Character } from "@/character-builder/Character";
+import Container from "../widgets/Container";
 
 interface AbilityChooserProps {
 	abilities: Ability[];
@@ -15,7 +16,7 @@ interface AbilityChooserProps {
 	greenPicks: number;
 	yellowPicks: number;
 	redPicks: number;
-	chosenAbilities: AbilityChoice[];
+	chosenAbilities?: AbilityChoice[];
 	onUpdate: (choices: AbilityChoice[]) => void;
 	character: Character;
 }
@@ -61,7 +62,7 @@ const AbilityChooser = ({
 	}, [chosenAbilities, onUpdate]);
 
 	const updateChosenPowers = useCallback((abilities: Ability[]) => {
-		const newAbilityChoices = cloneDeep(chosenAbilities)
+		const newAbilityChoices = cloneDeep(chosenAbilities || [])
 			// prune removed abilities
 			.filter(abilityChoice => abilities.some(
 				ability => abilityChoice.id === ability.id
@@ -85,7 +86,7 @@ const AbilityChooser = ({
 	}, [chosenAbilities, update]);
 
 	const updateConfig = useCallback((index: number, config: AbilityConfiguration) => {
-		const newAbilityChoices = cloneDeep(chosenAbilities);
+		const newAbilityChoices = cloneDeep(chosenAbilities || []);
 		newAbilityChoices[index].config = config;
 
 		update(newAbilityChoices);
@@ -97,7 +98,7 @@ const AbilityChooser = ({
 		if ( greenPicks ) {
 			const configurators: JSX.Element[] = [];
 			for ( let i = 0; i < greenPicks; i++ ) {
-				const abilityChoice = chosenAbilities[i];
+				const abilityChoice = chosenAbilities?.[i];
 				if ( abilityChoice?.id ) {
 					console.log("xxy abilityChoice", {abilityChoice})
 					configurators.push(<AbilityConfigurator
@@ -124,7 +125,7 @@ const AbilityChooser = ({
 					onSelectOption={(abilities) => updateChosenPowers(abilities)}
 					unavailable={usedAbilities}
 					choices={greenPicks}
-					selected={ chosenAbilities.map(
+					selected={ chosenAbilities?.map(
 						choice => getAbilityById(choice.id) as Ability
 					) }
 				/>

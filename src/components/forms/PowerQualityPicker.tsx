@@ -3,7 +3,8 @@ import { PowerCategory, PowerQuality, PowerQualitySpecifier, PowerQualityType, Q
 import { Die } from "@/types/common";
 import { useMemo } from "react";
 import Chooser, { ChooserOption } from "./Chooser";
-import { Container, SubHeader } from "@/util/commonElements";
+import Container from "@/components/widgets/Container";
+import { SubHeader } from "@/util/commonElements";
 import { Character } from "@/character-builder/Character";
 import { identity } from "lodash";
 

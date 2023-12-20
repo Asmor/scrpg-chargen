@@ -6,8 +6,9 @@ import powerSources from "@/data/powerSources";
 import powersAndQualities from "@/data/powersQualities";
 import { PowerCategory, QualityCategory } from "@/data/powersQualities.types";
 import principles from "@/data/principles";
-import { Container, PrimaryHeader } from "@/util/commonElements";
+import { PrimaryHeader } from "@/util/commonElements";
 import { useMemo } from "react";
+import Container from "./Container";
 
 const filterPq = (specifiers: (string | PowerCategory | QualityCategory)[]) => {
 	const allPqCats: string[] = [

@@ -1,5 +1,4 @@
 import { Ability, AbilityConfiguration } from "@/data/abilities.types";
-import { Container } from "@/util/commonElements";
 import AbilityDisplay from "./AbilityDisplay";
 import Chooser, { ChooserOption } from "./Chooser";
 import { useCallback, useMemo } from "react";
@@ -7,6 +6,7 @@ import TextInput from "./TextInput";
 import { identity } from "lodash";
 import PowerQualityPicker from "./PowerQualityPicker";
 import { Character } from "@/character-builder/Character";
+import Container from "../widgets/Container";
 
 interface AbilityConfiguratorProps {
 	ability: Ability;

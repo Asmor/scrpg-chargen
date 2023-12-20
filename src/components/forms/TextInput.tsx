@@ -1,4 +1,4 @@
-import { Container } from "@/util/commonElements";
+import Container from "../widgets/Container";
 
 interface TextInputProps {
 	text?: string;

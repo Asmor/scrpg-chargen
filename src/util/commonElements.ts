@@ -11,9 +11,3 @@ export const SubHeader = styled.h2`
 export const SectionHeader = styled.h3`
 	color: var(--accent-fg);
 `;
-
-export const Container = styled.div`
-	margin: 5px;
-	padding: 5px;
-	border: 1px solid var(--accent-fg);
-`;

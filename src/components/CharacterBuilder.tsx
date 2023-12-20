@@ -15,11 +15,11 @@ import { PrincipleQuestion } from "@/character-builder/questions/PrincipleQuesti
 import IdAudit from "./widgets/IdAudit";
 import Message from "./widgets/Message";
 import styled from "styled-components";
-import { Container } from "@/util/commonElements";
 import { AbilityQuestion } from "@/character-builder/questions/AbilityQuestion";
 import AbilityChooser from "./forms/AbilityChooser";
 import Chooser from "./forms/Chooser";
 import PowerQualityPicker from "./forms/PowerQualityPicker";
+import { useRecoilState } from "recoil";
 import OptionButton from "./widgets/OptionButton";
 import backgrounds from "@/data/backgrounds";
 import abilities from "@/data/abilities";
@@ -28,11 +28,11 @@ import personalities from "@/data/personalities";
 import powerSources from "@/data/powerSources";
 import principles from "@/data/principles";
 import powersAndQualities from "@/data/powersQualities";
+import { flattenSide, invertOrder } from "@/atoms/ui";
 
-const QuestionsContainer = styled(Container)`
+const QuestionsContainer = styled.div<{ invert: boolean }>`
 	display: flex;
-	flex-direction: column;
-	/* flex-direction: column-reverse; */
+	flex-direction: ${p => p.invert ? "column-reverse" : "column" };
 `;
 
 const getElementByQuestionType = (
@@ -156,6 +156,10 @@ const CharacterBuilder = () => {
 		)
 	);
 
+	const [flatState, setFlatState] = useRecoilState(flattenSide);
+	const [invertState, setInvertState] = useRecoilState(invertOrder);
+	console.log("xxy", {invertState});
+
 	// const tempAbility = useMemo(() => getAbilityById("core.ability.damageReduction"), []);
 	// const tempAbility = useMemo(() => abilities[0], []);
 	// const [tempAbilityConfig, setTempAbilityConfig] = useState<AbilityConfiguration>();
@@ -163,6 +167,20 @@ const CharacterBuilder = () => {
 	// const [tempChosen, setTempChosen] = useState<Background[]>([]);
 
 	return <>
+		<label>
+			<input
+				type="checkbox"
+				checked={flatState}
+				onChange={() => setFlatState(!flatState)}
+			/> Flatten side
+		</label>
+		<label>
+			<input
+				type="checkbox"
+				checked={invertState}
+				onChange={() => setInvertState(!invertState)}
+			/> Invert question order
+		</label>
 		{/* <OptionButton value={abilities[0]} onClick={() => {}}/>
 		<OptionButton value={archetypes[0]} onClick={() => {}}/>
 		<OptionButton value={backgrounds[0]} onClick={() => {}}/>
@@ -186,7 +204,7 @@ const CharacterBuilder = () => {
 			}}
 			selected={tempChosen}
 		/> */}
-		<QuestionsContainer>{ questionEls }</QuestionsContainer>
+		<QuestionsContainer invert={invertState} id="wtf">{ questionEls }</QuestionsContainer>
 	</>
 };
 
