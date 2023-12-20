@@ -16,15 +16,16 @@ import IdAudit from "./widgets/IdAudit";
 import Message from "./widgets/Message";
 import styled from "styled-components";
 import { AbilityQuestion } from "@/character-builder/questions/AbilityQuestion";
-import AbilityChooser from "./forms/AbilityChooser";
 import Chooser from "./forms/Chooser";
 import PowerQualityPicker from "./forms/PowerQualityPicker";
 import { useRecoilState } from "recoil";
 import { flattenSide, invertOrder } from "@/atoms/ui";
+import ColorAbilityChooser from "./forms/ColorAbilityChooser";
+import AbilityChooser from "./forms/AbilityChooser";
 
-const QuestionsContainer = styled.div<{ invert: boolean }>`
+const QuestionsContainer = styled.div<{ $invert: boolean }>`
 	display: flex;
-	flex-direction: ${p => p.invert ? "column-reverse" : "column" };
+	flex-direction: ${p => p.$invert ? "column-reverse" : "column" };
 `;
 
 const getElementByQuestionType = (
@@ -101,12 +102,10 @@ const getElementByQuestionType = (
 				abilities={aq.availableAbilities}
 				usedAbilities={aq.usedAbilities}
 				availablePqSpecifiers={aq.availablePqSpecifiers}
-				greenPicks={aq.greenPicks}
-				yellowPicks={aq.yellowPicks}
-				redPicks={aq.redPicks}
 				onUpdate={abilityChoices => freezeResults(abilityChoices)}
 				chosenAbilities={currentResults}
 				character={character}
+				colors={aq.colors}
 			/>
 		default:
 			return <Message key={key}>
@@ -117,11 +116,13 @@ const getElementByQuestionType = (
 
 const firstDecision = getBackgroundRollDecision({
 	dice: [10, 10],
-	title: "Background",
 });
 
 const CharacterBuilder = () => {
-	const [resultsStack, setResultsStack] = useState<string[]>([]);
+	// const [resultsStack, setResultsStack] = useState<string[]>([]);
+	const [resultsStack, setResultsStack] = useState<string[]>(
+		["5,6", "core.bg.unremarkable", "core.quality.alertness,core.quality.conviction", "core.principle.ambition", "5,1,9", "core.powerSource.accident", "core.power.agility,core.power.electricity,core.power.toxic"]
+	);
 
 	const { questions, character } = scrpgDirector({
 		startingDecision: firstDecision,
@@ -190,7 +191,7 @@ const CharacterBuilder = () => {
 			}}
 			selected={tempChosen}
 		/> */}
-		<QuestionsContainer invert={invertState} id="wtf">{ questionEls }</QuestionsContainer>
+		<QuestionsContainer $invert={invertState}>{ questionEls }</QuestionsContainer>
 	</>
 };
 

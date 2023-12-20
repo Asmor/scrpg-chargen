@@ -1,9 +1,9 @@
-import { Ability } from "@/data/abilities.types";
+import { Ability, AbilityChoice } from "@/data/abilities.types";
 import { Question, QuestionProps, QuestionType } from "../Question";
 import { getAbilityById } from "@/data/abilities";
 import { identity } from "lodash";
 import { getPowerQualityById } from "@/data/powersQualities";
-import { AbilityChoice } from "@/components/forms/AbilityChooser";
+import { AbilityChooserColorDetails } from "@/components/forms/AbilityChooser";
 
 export interface AbilityQuestion extends Question {
 	greenPicks: number;
@@ -12,6 +12,7 @@ export interface AbilityQuestion extends Question {
 	availableAbilities: Ability[];
 	usedAbilities: Ability[];
 	availablePqSpecifiers: string[];
+	colors: AbilityChooserColorDetails[];
 }
 
 interface AbilityQuestionProps extends QuestionProps {
@@ -22,13 +23,32 @@ interface AbilityQuestionProps extends QuestionProps {
 	availableIds: string[];
 	usedIds?: string[];
 	availablePqSpecifiers: string[];
+	colors: AbilityChooserColorDetails[];
 }
 
 const getAbilitiesById = (ids: string[]) => ids.map((id) => getAbilityById(id))
 	.filter(identity) as Ability[];
 
+const HASH_PLACEHOLDER = "@@HASH@@";
 const COLON_PLACEHOLDER = "@@COLON@@";
 const PIPE_PLACEHOLDER = "@@PIPE@@";
+
+const separators = [
+	{ char: "#", escape: "@@HASH@@" },
+	{ char: ":", escape: "@@COLOR@@" },
+	{ char: "|", escape: "@@PIPE@@" },
+];
+
+const sanitize = (original: string = "") => separators.reduce(
+	(s, {char, escape}) => s.replaceAll(char, escape),
+	original
+);
+
+const desanitize = (original: string = "") => separators.reduce(
+	(s, {char, escape}) => s.replaceAll(escape, char),
+	original
+);
+
 
 export const getAbilityQuestion = (
 	props: AbilityQuestionProps
@@ -42,55 +62,57 @@ export const getAbilityQuestion = (
 		availableAbilities: getAbilitiesById(props.availableIds),
 		usedAbilities: getAbilitiesById(props.usedIds || []),
 		availablePqSpecifiers: props.availablePqSpecifiers,
-		freeze: (choices: AbilityChoice[]) => {
-			if ( !choices ) {
+		colors: props.colors,
+		freeze: (colorChoices: AbilityChoice[][]) => {
+			if ( !colorChoices ) {
 				return "";
 			}
 
-			const choiceStrings = choices.map(choice => [
-				choice.id,
-				choice.config.name
-					?.replace(/:/g, COLON_PLACEHOLDER)
-					.replace(/\|/g, PIPE_PLACEHOLDER)
-					|| "",
-				choice.config.chosenPq?.id || "",
-				choice.config.chosenText || "",
-			].join(":"));
+			return colorChoices.map(choices => {
+				console.log("xxy choices", {choices});
+				const choiceStrings = choices.map(choice => [
+					choice.id,
+					sanitize(choice.config.name),
+					choice.config.chosenPq?.id || "",
+					choice.config.chosenText || "",
+				].join(":"));
 
-			return choiceStrings.join("|");
+				return choiceStrings.join("|");
+			}).join("#");
 		},
-		thaw: (frozenChoices: string = ""): AbilityChoice[] | undefined => {
+		thaw: (frozenChoices: string = ""): AbilityChoice[][] | undefined => {
 			if ( !frozenChoices ) {
 				return undefined;
 			}
 
-			const choiceStrings = frozenChoices.split("|");
+			const colorStrings = frozenChoices.split("#");
 
-			return choiceStrings.map(string => {
-				const [
-					id,
-					name,
-					chosenPqId,
-					chosenText,
-				] = string.split(":");
-				const pq = getPowerQualityById(chosenPqId);
+			return colorStrings.map(colorString => {
+				const choiceStrings = colorString.split("|");
 
-				const retVal: AbilityChoice = { id, config: {} };
+				return choiceStrings.map(string => {
+					const [
+						id,
+						name,
+						chosenPqId,
+						chosenText,
+					] = string.split(":");
+					const pq = getPowerQualityById(chosenPqId);
 
-				if ( name ) {
-					retVal.config.name = name
-						.replaceAll(COLON_PLACEHOLDER, ":")
-						.replaceAll(PIPE_PLACEHOLDER, "|")
-					;
-				}
-				if ( pq ) {
-					retVal.config.chosenPq = pq;
-				}
-				if ( chosenText ) {
-					retVal.config.chosenText = chosenText;
-				}
+					const retVal: AbilityChoice = { id, config: {} };
 
-				return retVal;
+					if ( name ) {
+						retVal.config.name = desanitize(name);
+					}
+					if ( pq ) {
+						retVal.config.chosenPq = pq;
+					}
+					if ( chosenText ) {
+						retVal.config.chosenText = chosenText;
+					}
+
+					return retVal;
+				});
 			});
 		},
 	};

@@ -1,4 +1,4 @@
-import { Ability, AbilityColor, AbilityConfiguration } from "@/data/abilities.types";
+import { Ability, AbilityChoice, AbilityColor, AbilityConfiguration } from "@/data/abilities.types";
 import { SubHeader } from "@/util/commonElements";
 import { useCallback, useMemo } from "react";
 import { cloneDeep, isEqual } from "lodash";
@@ -8,36 +8,29 @@ import Chooser, { makeOption } from "./Chooser";
 import { Character } from "@/character-builder/Character";
 import Container from "../widgets/Container";
 
-interface AbilityChooserProps {
+interface ColorAbilityChooserProps {
 	abilities: Ability[];
 	usedAbilities: Ability[];
 	availablePqSpecifiers?: string[];
 	availableTextOptions?: string[];
-	greenPicks: number;
-	yellowPicks: number;
-	redPicks: number;
+	picks: number;
+	color: AbilityColor;
 	chosenAbilities?: AbilityChoice[];
 	onUpdate: (choices: AbilityChoice[]) => void;
 	character: Character;
 }
 
-export interface AbilityChoice {
-	id: string;
-	config: AbilityConfiguration;
-}
-
-const AbilityChooser = ({
+const ColorAbilityChooser = ({
 	abilities,
 	usedAbilities,
 	availablePqSpecifiers,
 	availableTextOptions,
-	greenPicks,
-	yellowPicks,
-	redPicks,
+	picks,
+	color,
 	chosenAbilities,
 	onUpdate,
 	character,
-}: AbilityChooserProps) => {
+}: ColorAbilityChooserProps) => {
 	const abilitiesByColor = useMemo(() => {
 		const abilitiesByColor = {
 			[AbilityColor.GREEN]: [] as Ability[],
@@ -95,48 +88,48 @@ const AbilityChooser = ({
 	const formEls = useMemo(() => {
 		const formEls: JSX.Element[] = [];
 
-		if ( greenPicks ) {
-			const configurators: JSX.Element[] = [];
-			for ( let i = 0; i < greenPicks; i++ ) {
-				const abilityChoice = chosenAbilities?.[i];
-				if ( abilityChoice?.id ) {
-					console.log("xxy abilityChoice", {abilityChoice})
-					configurators.push(<AbilityConfigurator
-						key={i}
-						ability={getAbilityById(abilityChoice.id) as Ability}
-						configuration={abilityChoice.config}
-						pqSpecifiers={availablePqSpecifiers}
-						textOptions={availableTextOptions}
-						onUpdateConfig={config => updateConfig(i, config)}
-						character={character}
-					/>)
-				} else {
-					configurators.push(<Container key={i}>Select an ability</Container>)
-				}
+		const configurators: JSX.Element[] = [];
+		for ( let i = 0; i < picks; i++ ) {
+			const abilityChoice = chosenAbilities?.[i];
+			if ( abilityChoice?.id ) {
+				console.log("xxy abilityChoice", {abilityChoice})
+				configurators.push(<AbilityConfigurator
+					key={i}
+					ability={getAbilityById(abilityChoice.id) as Ability}
+					configuration={abilityChoice.config}
+					pqSpecifiers={availablePqSpecifiers}
+					textOptions={availableTextOptions}
+					onUpdateConfig={config => updateConfig(i, config)}
+					character={character}
+				/>)
+			} else {
+				configurators.push(<Container key={i}>Select an ability</Container>)
 			}
-
-			formEls.push(<Container key={formEls.length}>
-				<SubHeader>Choose {greenPicks} green abilities</SubHeader>
-				<Chooser
-					title="Todo ability chooser title"
-					options={abilitiesByColor[AbilityColor.GREEN].map(
-						ability => makeOption(ability)
-					)}
-					onSelectOption={(abilities) => updateChosenPowers(abilities)}
-					unavailable={usedAbilities}
-					choices={greenPicks}
-					selected={ chosenAbilities?.map(
-						choice => getAbilityById(choice.id) as Ability
-					) }
-				/>
-				{ configurators }
-			</Container>);
 		}
+
+		formEls.push(<Container key={formEls.length}>
+			<SubHeader>Choose {picks} {color} abilities</SubHeader>
+			<Chooser
+				title={`Choose ${picks} ${color} Abilities`}
+				selectedLabel={`${color} Abilities`}
+				options={abilitiesByColor[color].map(
+					ability => makeOption(ability)
+				)}
+				onSelectOption={(abilities) => updateChosenPowers(abilities)}
+				unavailable={usedAbilities}
+				choices={picks}
+				selected={ chosenAbilities?.map(
+					choice => getAbilityById(choice.id) as Ability
+				) }
+			/>
+			{ configurators }
+		</Container>);
+
 		return formEls;
 	}, [
 		chosenAbilities,
 		abilities,
-		greenPicks,
+		picks,
 		usedAbilities,
 		updateConfig,
 		updateChosenPowers,
@@ -147,4 +140,4 @@ const AbilityChooser = ({
 	</Container>;
 };
 
-export default AbilityChooser;
+export default ColorAbilityChooser;

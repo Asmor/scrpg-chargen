@@ -8,13 +8,13 @@ const flatCss = css`
 	padding-left: 0;
 `;
 
-const ContainerEl = styled.div<{flat: boolean}>`
+const ContainerEl = styled.div<{$flat: boolean}>`
 	margin: 5px;
 	padding: 5px;
 	border: 3px solid var(--accent-fg);
 	border-width: 0 0 0 3px;
 
-	${p => p.flat && flatCss }
+	${p => p.$flat && flatCss }
 `;
 
 interface ContainerProps {
@@ -25,7 +25,7 @@ interface ContainerProps {
 const Container = ({ children, className }: ContainerProps) => {
 	const flatten = useRecoilValue(flattenSide);
 
-	return <ContainerEl flat={flatten} className={className}>{ children }</ContainerEl>
+	return <ContainerEl $flat={flatten} className={className}>{ children }</ContainerEl>
 };
 
 export default Container;

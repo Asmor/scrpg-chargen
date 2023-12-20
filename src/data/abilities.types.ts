@@ -48,9 +48,7 @@ export interface AbilityConfiguration {
 	name?: string;
 }
 
-export interface AbilityInstance {
-	base: Ability;
-	chosen: string | PowerQuality;
-	overrides: Partial<Ability>;
+export interface AbilityChoice {
+	id: string;
+	config: AbilityConfiguration;
 }
-

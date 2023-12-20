@@ -4,6 +4,8 @@ import { getAbilityQuestion } from "../questions/AbilityQuestion";
 import { PowerSource } from "@/data/powerSourcesTypes";
 import { getPowerQualityQuestion } from "../questions/PowerQualityQuestion";
 import { PowerQuality } from "@/data/powersQualities.types";
+import { AbilityChooserColorDetails } from "@/components/forms/AbilityChooser";
+import { AbilityColor } from "@/data/abilities.types";
 
 interface PowerSourceDetailsProps {
 	character: Character;
@@ -16,6 +18,15 @@ export const getPowerSourceDetailsDecision = (
 	props: PowerSourceDetailsProps
 ): Decision => {
 	const ps = props.character.aspects.powerSource as PowerSource;
+	const abilityColors: AbilityChooserColorDetails[] = [];
+	if ( ps.yellowPicks ) {
+		abilityColors.push({ color: AbilityColor.YELLOW, picks: ps.yellowPicks });
+	}
+
+	if ( ps.greenPicks ) {
+		abilityColors.push({ color: AbilityColor.GREEN, picks: ps.greenPicks });
+	}
+
 	return {
 		questions: [
 			getPowerQualityQuestion({
@@ -33,6 +44,7 @@ export const getPowerSourceDetailsDecision = (
 				redPicks: ps.redPicks || 0,
 				availablePqSpecifiers: ps.assignablePqs,
 				character: props.character,
+				colors: abilityColors,
 			}),
 		],
 		process(character, frozenResults) {

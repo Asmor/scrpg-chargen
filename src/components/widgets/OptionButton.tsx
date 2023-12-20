@@ -76,7 +76,7 @@ const StyledOptionButton = styled.button<{
 	}
 `;
 
-const OptionIcon = styled.div<{cat: PowerCategory | QualityCategory}>`
+const OptionIcon = styled.div<{$cat: PowerCategory | QualityCategory}>`
 	grid-area: icon;
 	display: inline-block;
 	height: 100%;
@@ -84,7 +84,7 @@ const OptionIcon = styled.div<{cat: PowerCategory | QualityCategory}>`
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
-	background-image: url(${ p => getPqCatIcon(p.cat) });
+	background-image: url(${ p => getPqCatIcon(p.$cat) });
 	margin-right: 5px;
 `;
 
@@ -135,7 +135,7 @@ const OptionButton = <T,>({
 
 		const title = value.name;
 		const icon = isPowerQuality(value)
-			? <OptionIcon cat={value.category} />
+			? <OptionIcon $cat={value.category} />
 			: null;
 
 		let subtitleText = ``;

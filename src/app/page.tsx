@@ -2,6 +2,8 @@
 
 import { RecoilRoot } from "recoil";
 import CharacterBuilder from "@/components/CharacterBuilder";
+import { useMemo } from "react";
+import Head from "next/head";
 
 import PowerAthleticIcon from "@/assets/svg/power-athletic.svg";
 import PowerElementalEnergyIcon from "@/assets/svg/power-elemental-energy.svg";
@@ -17,8 +19,6 @@ import QualityMentalIcon from "@/assets/svg/quality-mental.svg";
 import QualityPhysicalIcon from "@/assets/svg/quality-physical.svg";
 import QualitySocialIcon from "@/assets/svg/quality-social.svg";
 import QualityRoleplayingIcon from "@/assets/svg/quality-roleplaying.svg";
-import { useMemo } from "react";
-import Head from "next/head";
 
 const icons = [
   PowerAthleticIcon,
@@ -39,7 +39,8 @@ const icons = [
 
 export default function Home() {
   const preloads = useMemo(() => icons.map(
-    icon => <link
+    (icon) => <link
+      key={icon.src}
       rel="preload"
       href={icon.src}
       as="image"
@@ -48,8 +49,10 @@ export default function Home() {
 
   return (
     <RecoilRoot>
-      <Head>{ preloads }</Head>
+      <Head>
+        { preloads }
+      </Head>
       <CharacterBuilder/>
     </RecoilRoot>
-  )
+  );
 }

@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export const flattenSide = atom({
 	key: "flattenSide",
-	default: false,
+	default: true,
 });
 
 export const invertOrder = atom({
