@@ -25,7 +25,6 @@ const getOptionsForPicker = (
 	usedPqs: (PowerQuality | undefined)[],
 	selectChosen: boolean,
 ) => {
-	console.log("xxyzz", {selectedPq, allOptions, usedPqs});
 	return allOptions.filter(option => {
 		const isSelectedOption = option.value.id === selectedPq?.id;
 		const isUsed = usedPqs.some(usedq => option.value.id === usedq?.id);
@@ -73,11 +72,6 @@ const PowerQualityPicker = ({
 					).forEach(pq => options.add(pq));
 				}
 			}
-		});
-
-		console.log("xxyz pqp calculating options", {title}, {
-			options: [...options].map(option => option.id),
-			specifiers,
 		});
 
 		return [...options].sort((optA, optB) => {

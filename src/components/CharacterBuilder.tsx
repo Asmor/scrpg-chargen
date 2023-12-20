@@ -151,7 +151,6 @@ const CharacterBuilder = () => {
 
 	const [flatState, setFlatState] = useRecoilState(flattenSide);
 	const [invertState, setInvertState] = useRecoilState(invertOrder);
-	console.log("xxy", {invertState});
 
 	// const tempAbility = useMemo(() => getAbilityById("core.ability.damageReduction"), []);
 	// const tempAbility = useMemo(() => abilities[0], []);
