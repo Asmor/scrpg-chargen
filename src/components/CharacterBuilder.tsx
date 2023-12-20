@@ -20,14 +20,6 @@ import AbilityChooser from "./forms/AbilityChooser";
 import Chooser from "./forms/Chooser";
 import PowerQualityPicker from "./forms/PowerQualityPicker";
 import { useRecoilState } from "recoil";
-import OptionButton from "./widgets/OptionButton";
-import backgrounds from "@/data/backgrounds";
-import abilities from "@/data/abilities";
-import archetypes from "@/data/archetypes";
-import personalities from "@/data/personalities";
-import powerSources from "@/data/powerSources";
-import principles from "@/data/principles";
-import powersAndQualities from "@/data/powersQualities";
 import { flattenSide, invertOrder } from "@/atoms/ui";
 
 const QuestionsContainer = styled.div<{ invert: boolean }>`
@@ -181,12 +173,6 @@ const CharacterBuilder = () => {
 				onChange={() => setInvertState(!invertState)}
 			/> Invert question order
 		</label>
-		{/* <OptionButton value={abilities[0]} onClick={() => {}}/>
-		<OptionButton value={archetypes[0]} onClick={() => {}}/>
-		<OptionButton value={backgrounds[0]} onClick={() => {}}/>
-		<OptionButton value={powersAndQualities[0]} onClick={() => {}}/>
-		<OptionButton value={powerSources[0]} onClick={() => {}}/>
-		<OptionButton value={principles[0]} onClick={() => {}}/> */}
 		<IdAudit/>
 		{/* <AbilityConfigurator
 			ability={tempAbility as Ability}

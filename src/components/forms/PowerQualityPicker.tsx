@@ -78,7 +78,7 @@ const PowerQualityPicker = ({
 	}, [specifiers]);
 
 	const choosers = useMemo(
-		() => (dice || [{die:""}]).map((die, index) => {
+		() => (dice || [0]).map((die, index) => {
 			const used = character.powersAndQualities.map(pq => pq.powerQuality);
 			const selectedOption = [selected[index]].filter(identity) as PowerQuality[];
 
@@ -98,7 +98,7 @@ const PowerQualityPicker = ({
 	);
 
 	return <Container>
-		<SubHeader>{title} Powers and Qualities</SubHeader>
+		<SubHeader>{title}</SubHeader>
 		{ choosers }
 	</Container>
 };

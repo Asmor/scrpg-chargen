@@ -46,10 +46,16 @@ const AbilityConfigurator = ({
 		];
 
 		if ( pqSpecifiers ) {
+			const availableIds = character.powersAndQualities
+				.filter(pq =>
+					pqSpecifiers.includes(pq.powerQuality.category)
+					|| pqSpecifiers.includes(pq.powerQuality.id)
+				).map(pq => pq.powerQuality.id);
+
 			els.push(<PowerQualityPicker
 				key={els.length}
-				title="todo ability pq picker"
-				specifiers={pqSpecifiers}
+				title={`Choose power or quality for ${ability.name}`}
+				specifiers={availableIds}
 				character={character}
 				selected={[configuration?.chosenPq]}
 				onSelect={([chosenPq]) => update({ chosenPq })}
