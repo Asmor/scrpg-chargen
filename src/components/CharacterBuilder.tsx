@@ -60,6 +60,7 @@ const getElementByQuestionType = (
 				onSelectOption={results => freezeResults(results[0])}
 				selected={[currentResults]}
 				rolled={bcq.rolled}
+				selectedLabel="Background"
 			/>;
 		case QuestionType.POWER_SOURCE_CHOICE:
 			const psq = question as PowerSourceQuestion;
@@ -80,6 +81,7 @@ const getElementByQuestionType = (
 				onSelectOption={results => freezeResults(results[0])}
 				selected={[currentResults]}
 				unavailable={character.aspects.principles}
+				selectedLabel={`${pq.for} Principle`}
 			/>
 		case QuestionType.POWER_QUALITY_CHOICE:
 			const pqq = question as PowerQualityQuestion;
@@ -99,7 +101,6 @@ const getElementByQuestionType = (
 				abilities={aq.availableAbilities}
 				usedAbilities={aq.usedAbilities}
 				availablePqSpecifiers={aq.availablePqSpecifiers}
-				availableTextOptions={aq.availableTextOptions}
 				greenPicks={aq.greenPicks}
 				yellowPicks={aq.yellowPicks}
 				redPicks={aq.redPicks}

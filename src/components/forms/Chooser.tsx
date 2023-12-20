@@ -20,9 +20,21 @@ export interface ChooserProps<T> {
 	selected?: T[];
 	onSelectOption: (selected: T[]) => void;
 	unavailable?: T[];
+	selectedLabel?: string;
 }
 
-const OptionList = styled.ul<{ $collapsed?: boolean }>`
+const SelectedContainer = styled(Container)`
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+`;
+
+const SelectedLabel = styled.span`
+	font-weight: bold;
+	font-size: 1.5rem;
+`;
+
+const OptionList = styled.div<{ $collapsed?: boolean }>`
 	display: ${ p => p.$collapsed ? "none" : "flex" };
 	flex-wrap: wrap;
 `;
@@ -39,6 +51,7 @@ function Chooser<T extends (Partial<Rollable> & object) | string>({
 	rolled,
 	onSelectOption,
 	choices = 1,
+	selectedLabel,
 }: ChooserProps<T>) {
 	const [othersCollapsed, setOthersCollapsed] = useState(true);
 
@@ -97,17 +110,20 @@ function Chooser<T extends (Partial<Rollable> & object) | string>({
 	}, [onSelectOption, selected]);
 
 	if ( selectedOptions.length === choices ) {
-		return <Container>{ title }: {
-			selectedOptions.map((selectedOption, index) =>
-				<span key={index}>
+		return <SelectedContainer>
+			<SelectedLabel>{selectedLabel || title}:</SelectedLabel>
+			{
+				selectedOptions.map((selectedOption, index) =>
 					<OptionButton
+						key={index}
 						value={ selectedOption.value }
 						selected={true}
 						onClick={() => handleSelect(selectedOption)}
+						collapse={true}
 					/>
-				</span>
-			)
-		}</Container>
+				)
+			}
+		</SelectedContainer>
 	}
 
 	return <Container>
@@ -115,13 +131,12 @@ function Chooser<T extends (Partial<Rollable> & object) | string>({
 		{ otherOptions?.length && <SectionHeader>Rolled options</SectionHeader>}
 		<OptionList>
 			{primaryOptions.map( (option, index) =>
-				<li key={index}>
-					<OptionButton
-						value={option.value}
-						selected={selectedOptions.includes(option)}
-						onClick={() => handleSelect(option)}
-					/>
-				</li>
+				<OptionButton
+					key={index}
+					value={option.value}
+					selected={selectedOptions.includes(option)}
+					onClick={() => handleSelect(option)}
+				/>
 			)}
 		</OptionList>
 		{ otherOptions?.length && <>
@@ -130,13 +145,12 @@ function Chooser<T extends (Partial<Rollable> & object) | string>({
 			</ShowMore>
 			<OptionList $collapsed={othersCollapsed}>
 				{otherOptions.map((option, index) =>
-					<li key={index}>
-						<OptionButton
-							value={option.value}
-							selected={selectedOptions.includes(option)}
-							onClick={() => handleSelect(option)}
-						/>
-					</li>
+					<OptionButton
+						key={index}
+						value={option.value}
+						selected={selectedOptions.includes(option)}
+						onClick={() => handleSelect(option)}
+					/>
 				)}
 			</OptionList>
 		</> }

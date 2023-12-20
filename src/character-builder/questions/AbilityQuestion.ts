@@ -12,7 +12,6 @@ export interface AbilityQuestion extends Question {
 	availableAbilities: Ability[];
 	usedAbilities: Ability[];
 	availablePqSpecifiers: string[];
-	availableTextOptions: string[];
 }
 
 interface AbilityQuestionProps extends QuestionProps {
@@ -23,7 +22,6 @@ interface AbilityQuestionProps extends QuestionProps {
 	availableIds: string[];
 	usedIds?: string[];
 	availablePqSpecifiers: string[];
-	availableTextOptions: string[];
 }
 
 const getAbilitiesById = (ids: string[]) => ids.map((id) => getAbilityById(id))
@@ -44,7 +42,6 @@ export const getAbilityQuestion = (
 		availableAbilities: getAbilitiesById(props.availableIds),
 		usedAbilities: getAbilitiesById(props.usedIds || []),
 		availablePqSpecifiers: props.availablePqSpecifiers,
-		availableTextOptions: props.availableTextOptions,
 		freeze: (choices: AbilityChoice[]) => {
 			if ( !choices ) {
 				return "";

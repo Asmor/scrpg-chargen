@@ -53,7 +53,7 @@ const DicePool = ({ dice, onRoll, title, results }: DicePoolProps) => {
 	const diceString = useMemo(() => makeDiceString(dice), [dice]);
 
 	return <Container>
-		<SubHeader>{title} dice pool: {diceString}</SubHeader>
+		<SubHeader>{title}: {diceString}</SubHeader>
 		<div>
 			Results: {result.join(", ")}
 			<button onClick={roll}>

@@ -22,7 +22,7 @@ export const getPowerSourceQuestion = (
 	return {
 		type: QuestionType.POWER_SOURCE_CHOICE,
 		critical: true,
-		title: "Power Source",
+		title: "Select a Power Source",
 		options: powerSourceOptions,
 		rolled: conjugateDicePoolOptions(props.character.rolls.powerSource),
 		freeze: (ps: PowerSource) => ps?.id || "",

@@ -22,11 +22,16 @@ const makeOption = (value: PowerQuality): ChooserOption<PowerQuality> => ({
 const getOptionsForPicker = (
 	selectedPq: PowerQuality | undefined,
 	allOptions: ChooserOption<PowerQuality>[],
-	usedPqs: (PowerQuality | undefined)[]
+	usedPqs: (PowerQuality | undefined)[],
+	selectChosen: boolean,
 ) => {
-	return allOptions.filter(option =>
-		option.value.id === selectedPq?.id
-		|| usedPqs.every(pq => option.value.id !== pq?.id)
+	console.log("xxyzz", {selectedPq, allOptions, usedPqs});
+	return allOptions.filter(option => {
+		const isSelectedOption = option.value.id === selectedPq?.id;
+		const isUsed = usedPqs.some(usedq => option.value.id === usedq?.id);
+
+		return isSelectedOption || (selectChosen === isUsed);
+	}
 	);
 }
 
@@ -37,6 +42,7 @@ interface PowerQualityPickerProps {
 	selected: (PowerQuality | undefined)[];
 	character: Character;
 	onSelect: (values: (PowerQuality | undefined)[]) => void;
+	selectChosen?: boolean;
 }
 
 const PowerQualityPicker = ({
@@ -45,7 +51,8 @@ const PowerQualityPicker = ({
 	specifiers,
 	dice,
 	onSelect,
-	character
+	character,
+	selectChosen,
 }: PowerQualityPickerProps) => {
 	const options = useMemo(() => {
 		const options = new Set<PowerQuality>();
@@ -68,6 +75,11 @@ const PowerQualityPicker = ({
 			}
 		});
 
+		console.log("xxyz pqp calculating options", {title}, {
+			options: [...options].map(option => option.id),
+			specifiers,
+		});
+
 		return [...options].sort((optA, optB) => {
 			const compareKey = sortOrder.find(
 				key => optA[key] !== optB[key]
@@ -84,7 +96,7 @@ const PowerQualityPicker = ({
 
 			return ( <Chooser
 				key={index}
-				options={getOptionsForPicker(selected[index], options, used)}
+				options={getOptionsForPicker(selected[index], options, used, !!selectChosen)}
 				selected={selectedOption}
 				title={die ? `d${die}` : "todo title without die"}
 				onSelectOption={([value]) => {

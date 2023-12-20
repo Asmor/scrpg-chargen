@@ -59,7 +59,8 @@ const AbilityConfigurator = ({
 				character={character}
 				selected={[configuration?.chosenPq]}
 				onSelect={([chosenPq]) => update({ chosenPq })}
-			/>)
+				selectChosen={true}
+			/>);
 		}
 
 		if ( textOptions ) {

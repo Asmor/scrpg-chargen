@@ -14,14 +14,16 @@ import QualitySocialIcon from "@/assets/svg/quality-social.svg";
 import QualityRoleplayingIcon from "@/assets/svg/quality-roleplaying.svg";
 
 import { isEntry } from "@/types/common";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { PowerCategory, QualityCategory } from "@/data/powersQualities.types";
 import { useMemo } from "react";
 import { isPower, isPowerQuality } from "@/data/powersQualities";
+import { isAbility } from "@/data/abilities";
 
 interface OptionButtonProps<T> {
 	value: T;
 	selected?: boolean;
+	collapse?: boolean;
 	onClick: (value: T) => void;
 };
 
@@ -46,7 +48,9 @@ const pqCatToIconSrc = {
 
 const getPqCatIcon = (cat: PowerCategory | QualityCategory) => pqCatToIconSrc[cat];
 
-const StyledOptionButton = styled.button<{ $selected?: boolean }>`
+const StyledOptionButton = styled.button<{
+	$selected?: boolean,
+}>`
 	cursor: pointer;
 	padding: 5px;
 	margin: 5px;
@@ -54,11 +58,15 @@ const StyledOptionButton = styled.button<{ $selected?: boolean }>`
 	});
 	color: var(--foreground);
 	display: grid;
+	grid-template-columns: auto 1fr auto;
 	grid-template-areas:
-		"icon title"
-		"icon subtitle"
+		"icon title page"
+		"icon subtitle subtitle"
+		"icon full-text full-text"
 	;
-	gap: 5px;
+	 // don't use gap, it will leave spacing even if other columns or rows are
+	 // empty
+	gap: 0 !important;
 	text-align: left;
 	border: 3px solid var(--accent-fg);
 	border-radius: 10px;
@@ -71,31 +79,51 @@ const StyledOptionButton = styled.button<{ $selected?: boolean }>`
 const OptionIcon = styled.div<{cat: PowerCategory | QualityCategory}>`
 	grid-area: icon;
 	display: inline-block;
-	height: 40px;
+	height: 100%;
 	width: 40px;
 	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
 	background-image: url(${ p => getPqCatIcon(p.cat) });
+	margin-right: 5px;
 `;
 
 const OptionTitle = styled.span`
 	grid-area: title;
 	font-weight: bold;
+	font-size: 1.2rem;
 `;
 
 const OptionSubtitle = styled.span`
 	grid-area: subtitle;
 	font-size: 0.8rem;
+	margin-top: 5px;
+`;
+
+const OptionPage = styled.span`
+	grid-area: page;
+	font-size: 0.8rem;
+	line-height: 1.2rem;
+	margin-left: 5px;
+`;
+
+const OptionFullText = styled.span`
+	grid-area: full-text;
+	margin-top: 5px;
 `;
 
 const OptionButton = <T,>({
 	value,
 	selected,
+	collapse,
 	onClick,
 }: OptionButtonProps<T>) => {
 	const {
 		icon,
 		title,
 		subtitle,
+		fullText,
+		page,
 	} = useMemo(() => {
 		if ( !isEntry(value) ) {
 			return {
@@ -110,26 +138,41 @@ const OptionButton = <T,>({
 			? <OptionIcon cat={value.category} />
 			: null;
 
-		const subtitleParts = [`pg. ${value.page}`];
+		let subtitleText = ``;
 
 		if ( isPowerQuality(value) ) {
-			subtitleParts.unshift(
+			subtitleText = [
 				value.category,
 				isPower(value) ? "Power" : "Quality"
-			)
+			].join(" ");
 		}
+
+		const valueIsAbility = isAbility(value);
+
+		const fullText = !collapse && valueIsAbility
+			? <OptionFullText>{ value.text }</OptionFullText>
+			: null;
 
 		return {
 			icon,
 			title,
-			subtitle: subtitleParts.join(" "),
+			page: `pg. ${value.page}`,
+			subtitle: subtitleText
+				? <OptionSubtitle>{subtitleText}</OptionSubtitle>
+				: null,
+			fullText,
 		};
-	}, [value]);
+	}, [value, collapse]);
 
-	return <StyledOptionButton onClick={() => onClick(value)} $selected={selected}>
+	return <StyledOptionButton
+		onClick={() => onClick(value)}
+		$selected={selected}
+	>
 		{ icon }
 		<OptionTitle>{ title }</OptionTitle>
-		<OptionSubtitle>{ subtitle }</OptionSubtitle>
+		<OptionPage>{page}</OptionPage>
+		{ subtitle }
+		{ fullText }
 	</StyledOptionButton>
 };
 

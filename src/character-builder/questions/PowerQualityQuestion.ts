@@ -15,20 +15,21 @@ export interface PowerQualityQuestion extends Question {
 interface PowerQualityQuestionProps {
 	title: string;
 	character: Character;
+	assignableDice: Die[];
+	assignablePqs: string[];
 }
 
 export const getPowerQualityQuestion = (
 	props: PowerQualityQuestionProps
 ): PowerQualityQuestion => {
-	const bg = props.character.aspects.background as Background;
 	const used = props.character.powersAndQualities.map(
 		pq => pq.powerQuality
 	);
 	return {
 		type: QuestionType.POWER_QUALITY_CHOICE,
 		title: props.title,
-		dice: bg.assignableDice,
-		specifiers: bg.assignablePqs,
+		dice: props.assignableDice,
+		specifiers: props.assignablePqs,
 		used,
 		freeze: (powerQualities: (PowerQuality | undefined)[]) => {
 			return powerQualities.map(pq => pq?.id).join(",");

@@ -6,8 +6,7 @@ import { getPowerSourceChoiceDecision } from "./PowerSourceDecision";
 import { getPrincipleQuestion } from "../questions/PrincipleQuestion";
 import { Background } from "@/data/backgrounds.types";
 import { PowerQuality } from "@/data/powersQualities.types";
-import { Principle } from "@/data/principles.types";
-import { getAbilityQuestion } from "../questions/AbilityQuestion";
+import { Principle, PrincipleCategory } from "@/data/principles.types";
 
 interface BackgroundDetailsDecisionProps {
 	character: Character;
@@ -22,24 +21,30 @@ export const getBackgroundDetailsDecision = (
 	props: BackgroundDetailsDecisionProps
 ): Decision => {
 	const bg = props.character.aspects.background as Background;
+	const article = bg.principleCategory === PrincipleCategory.RESPONSIBILITY ? "a" : "an";
 	return {
 		questions: [
 			getPowerQualityQuestion({
-				title: "Background",
+				title: "Select Background Powers & Qualities",
 				character: props.character,
+				assignableDice: props.character.aspects.background!.assignableDice,
+				assignablePqs: props.character.aspects.background!.assignablePqs,
 			}),
 			getPrincipleQuestion({
-				title: `${bg.principleCategory} Principle`,
+				title: `Select ${article} ${bg.principleCategory} Principle`,
 				character: props.character,
 				category: bg.principleCategory,
+				for: "Background",
 			}),
 			getDiceRollQuestion({
-				title: "Power Source",
+				title: "Roll for your Power Source",
 				dice: bg.powerSourceDice,
 			}),
 		],
 		process(character, frozenResults) {
-			const thawedResults = frozenResults.map((result, index) => this.questions[index].thaw(result));
+			const thawedResults = frozenResults.map(
+				(result, index) => this.questions[index].thaw(result)
+			);
 			const powerQualities: (PowerQuality | undefined)[] = thawedResults[0];
 			const principle: Principle = thawedResults[1];
 			const powerSourceRolls: number[] = thawedResults[2] || [];

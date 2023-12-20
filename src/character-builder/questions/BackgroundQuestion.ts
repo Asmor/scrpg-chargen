@@ -22,7 +22,7 @@ export const getBackgroundQuestion = (
 	return {
 		type: QuestionType.BACKGROUND_CHOICE,
 		critical: true,
-		title: "Background",
+		title: "Select a Background",
 		options: backgroundOptions,
 		rolled: conjugateDicePoolOptions(props.character.rolls.background),
 		freeze: (bg: Background) => bg?.id || "",

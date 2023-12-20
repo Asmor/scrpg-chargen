@@ -19,12 +19,13 @@ const ContainerEl = styled.div<{flat: boolean}>`
 
 interface ContainerProps {
 	children: any;
+	className?: string;
 }
 
-const Container = ({ children }: ContainerProps) => {
+const Container = ({ children, className }: ContainerProps) => {
 	const flatten = useRecoilValue(flattenSide);
 
-	return <ContainerEl flat={flatten}>{ children }</ContainerEl>
+	return <ContainerEl flat={flatten} className={className}>{ children }</ContainerEl>
 };
 
 export default Container;

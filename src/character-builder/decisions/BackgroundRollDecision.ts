@@ -4,7 +4,6 @@ import { getDiceRollQuestion } from "../questions/DiceRollQuestion";
 import { getBackgroundChoiceDecision } from "./BackgroundChoiceDecision";
 
 interface BackgroundRollDecisionProps {
-	title: string;
 	dice: Die[];
 }
 
@@ -16,7 +15,7 @@ export const getBackgroundRollDecision = (
 	return {
 		questions: [
 			getDiceRollQuestion({
-				title: props.title,
+				title: "Roll for your Background",
 				dice: props.dice,
 			}),
 		],
