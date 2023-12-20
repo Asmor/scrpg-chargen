@@ -34,15 +34,15 @@ const AbilityChooser = ({
 		onUpdate(newChoices);
 	};
 
-	const choosers = colors.map(({ color, picks }) => <ColorAbilityChooser
+	const choosers = colors.map(({ color, picks }, index) => <ColorAbilityChooser
 		key={color}
 		color={color}
 		abilities={abilities}
 		character={character}
 		usedAbilities={usedAbilities}
 		availablePqSpecifiers={availablePqSpecifiers}
-		chosenAbilities={chosenAbilities?.[0]}
-		onUpdate={(abiltityChoices) => onUpdate([abiltityChoices])}
+		chosenAbilities={chosenAbilities?.[index]}
+		onUpdate={(abiltityChoices) => update(index, abiltityChoices)}
 		picks={picks}
 	/>)
 

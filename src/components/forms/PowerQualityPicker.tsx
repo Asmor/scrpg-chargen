@@ -92,7 +92,7 @@ const PowerQualityPicker = ({
 				key={index}
 				options={getOptionsForPicker(selected[index], options, used, !!selectChosen)}
 				selected={selectedOption}
-				title={die ? `d${die}` : "todo title without die"}
+				title={die ? `d${die}` : ""}
 				onSelectOption={([value]) => {
 					const newSelected = [...selected];
 					newSelected[index] = value;

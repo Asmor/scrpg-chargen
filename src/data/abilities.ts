@@ -2105,6 +2105,8 @@ const abilities: Ability[] = [
 		powerQualitySpecifier: [
 			PowerCategory.ALL,
 		],
+		choice: ["Boost", "Hinder"],
+		// todo this needs both choosers!
 	},
 	{
 		name: "Inflict",
