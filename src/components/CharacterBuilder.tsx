@@ -1,36 +1,48 @@
 "use client";
 
-import Chooser, { makeOption } from "./Chooser";
-import DicePool from "./DicePool";
+import DicePool from "./forms/DicePool";
 import scrpgDirector from "@/character-builder/Director";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { isEqual } from "lodash";
-import { Question, QuestionType, Results } from "@/character-builder/Question";
+import { Question, QuestionType } from "@/character-builder/Question";
 import { DiceRollQuestion } from "@/character-builder/questions/DiceRollQuestion";
 import { getBackgroundRollDecision } from "@/character-builder/decisions/BackgroundRollDecision";
 import { BackgroundQuestion } from "@/character-builder/questions/BackgroundQuestion";
 import { PowerQualityQuestion } from "@/character-builder/questions/PowerQualityQuestion";
-import PowerQualityPicker from "./PowerQualityPicker";
 import { Character } from "@/character-builder/Character";
 import { PowerSourceQuestion } from "@/character-builder/questions/PowerSourceQuestion";
 import { PrincipleQuestion } from "@/character-builder/questions/PrincipleQuestion";
-import IdAudit from "./IdAudit";
-import AbilityConfigurator, { AbilityConfiguration } from "./AbilityConfigurator";
-import abilities, { getAbilityById } from "@/data/abilities";
-import powersAndQualities from "@/data/powersQualities";
-import { Ability } from "@/data/abilities.types";
+import IdAudit from "./widgets/IdAudit";
+import Message from "./widgets/Message";
+import styled from "styled-components";
+import { Container } from "@/util/commonElements";
+import { AbilityQuestion } from "@/character-builder/questions/AbilityQuestion";
+import AbilityChooser from "./forms/AbilityChooser";
+import Chooser from "./forms/Chooser";
+import PowerQualityPicker from "./forms/PowerQualityPicker";
+import OptionButton from "./widgets/OptionButton";
 import backgrounds from "@/data/backgrounds";
-import { Background } from "@/data/backgrounds.types";
+import abilities from "@/data/abilities";
+import archetypes from "@/data/archetypes";
+import personalities from "@/data/personalities";
+import powerSources from "@/data/powerSources";
+import principles from "@/data/principles";
+import powersAndQualities from "@/data/powersQualities";
+
+const QuestionsContainer = styled(Container)`
+	display: flex;
+	flex-direction: column;
+	/* flex-direction: column-reverse; */
+`;
 
 const getElementByQuestionType = (
 	character: Character,
 	question: Question,
 	key: string,
-	results: Results,
-	setResults: (results: Results) => void,
+	results: string,
+	setResults: (results: string) => void,
 ) => {
 	const freezeResults = (results: any) => {
-		console.log("xxy freezeResults", results);
 		setResults(
 			question.freeze(results)
 		)
@@ -49,7 +61,6 @@ const getElementByQuestionType = (
 			/>;
 		case QuestionType.BACKGROUND_CHOICE:
 			const bcq = question as BackgroundQuestion;
-			console.log("xxy bcq", {currentResults})
 			return <Chooser
 				key={key}
 				title={bcq.title}
@@ -89,30 +100,51 @@ const getElementByQuestionType = (
 				onSelect={freezeResults}
 				character={character}
 			/>
+		case QuestionType.ABILITY_SELECTION:
+			const aq = question as AbilityQuestion;
+			return <AbilityChooser
+				key={key}
+				abilities={aq.availableAbilities}
+				usedAbilities={aq.usedAbilities}
+				availablePqSpecifiers={aq.availablePqSpecifiers}
+				availableTextOptions={aq.availableTextOptions}
+				greenPicks={aq.greenPicks}
+				yellowPicks={aq.yellowPicks}
+				redPicks={aq.redPicks}
+				onUpdate={abilityChoices => freezeResults(abilityChoices)}
+				chosenAbilities={currentResults}
+				character={character}
+			/>
 		default:
-			return <div key={key}>Unhandled question type: {question.type}</div>
+			return <Message key={key}>
+				Unhandled question type: {question.type}
+			</Message>
 	}
 };
 
+const firstDecision = getBackgroundRollDecision({
+	dice: [10, 10],
+	title: "Background",
+});
+
 const CharacterBuilder = () => {
-	const [resultsStack, setResultsStack] = useState<Results[]>([]);
-
-	const setResults = useCallback((index: number, incomingResults: Results) => {
-		if (!isEqual(resultsStack[index], incomingResults)) {
-			resultsStack[index] = incomingResults;
-			setResultsStack([...resultsStack]);
-		}
-	}, [resultsStack, setResultsStack]);
-
-	const firstDecision = getBackgroundRollDecision({
-		dice: [10, 10],
-		title: "Background",
-	});
+	const [resultsStack, setResultsStack] = useState<string[]>([]);
 
 	const { questions, character } = scrpgDirector({
 		startingDecision: firstDecision,
 		results: resultsStack,
 	});
+
+	const setResults = useCallback((index: number, incomingResults: string) => {
+		if (!isEqual(resultsStack[index], incomingResults)) {
+			resultsStack[index] = incomingResults;
+			if (questions[index].critical ) {
+				// if we change a critical question, truncate the stack at that point
+				resultsStack.length = index + 1;
+			}
+			setResultsStack([...resultsStack]);
+		}
+	}, [resultsStack, setResultsStack]);
 
 	const questionEls = questions.map(
 		(question, index) => getElementByQuestionType(
@@ -120,17 +152,23 @@ const CharacterBuilder = () => {
 			question,
 			index.toString(),
 			resultsStack[index],
-			(results: Results) => setResults(index, results),
+			(results: string) => setResults(index, results),
 		)
 	);
 
 	// const tempAbility = useMemo(() => getAbilityById("core.ability.damageReduction"), []);
 	// const tempAbility = useMemo(() => abilities[0], []);
 	// const [tempAbilityConfig, setTempAbilityConfig] = useState<AbilityConfiguration>();
-	const tempOptions = useMemo(() => backgrounds.map(bg => makeOption(bg)), []);
-	const [tempChosen, setTempChosen] = useState<Background[]>([]);
+	// const tempOptions = useMemo(() => backgrounds.map(bg => makeOption(bg)), []);
+	// const [tempChosen, setTempChosen] = useState<Background[]>([]);
 
 	return <>
+		{/* <OptionButton value={abilities[0]} onClick={() => {}}/>
+		<OptionButton value={archetypes[0]} onClick={() => {}}/>
+		<OptionButton value={backgrounds[0]} onClick={() => {}}/>
+		<OptionButton value={powersAndQualities[0]} onClick={() => {}}/>
+		<OptionButton value={powerSources[0]} onClick={() => {}}/>
+		<OptionButton value={principles[0]} onClick={() => {}}/> */}
 		<IdAudit/>
 		{/* <AbilityConfigurator
 			ability={tempAbility as Ability}
@@ -138,7 +176,7 @@ const CharacterBuilder = () => {
 			textOptions={tempAbility?.choice}
 			onUpdateConfig={(config) => setTempAbilityConfig(config)}
 		/> */}
-		<Chooser
+		{/* <Chooser
 			title="Testing multi-select"
 			options={tempOptions}
 			choices={3}
@@ -147,8 +185,8 @@ const CharacterBuilder = () => {
 				setTempChosen(vals);
 			}}
 			selected={tempChosen}
-		/>
-		{ questionEls }
+		/> */}
+		<QuestionsContainer>{ questionEls }</QuestionsContainer>
 	</>
 };
 

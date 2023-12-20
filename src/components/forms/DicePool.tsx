@@ -55,7 +55,9 @@ const DicePool = ({ dice, onRoll, title, results }: DicePoolProps) => {
 		<SubHeader>{title} dice pool: {diceString}</SubHeader>
 		<div>
 			Results: {result.join(", ")}
-			<button onClick={roll}>Reroll</button>
+			<button onClick={roll}>
+				{ results.length ? "Reroll" : "Roll" }
+			</button>
 		</div>
 	</Container>
 };

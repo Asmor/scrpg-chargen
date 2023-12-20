@@ -32,13 +32,20 @@ const getOptionsForPicker = (
 interface PowerQualityPickerProps {
 	title: string;
 	specifiers: (string | PowerQualitySpecifier)[];
-	dice: Die[];
+	dice?: Die[];
 	selected: (PowerQuality | undefined)[];
 	character: Character;
 	onSelect: (values: (PowerQuality | undefined)[]) => void;
 }
 
-const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect, character }: PowerQualityPickerProps) => {
+const PowerQualityPicker = ({
+	title,
+	selected,
+	specifiers,
+	dice,
+	onSelect,
+	character
+}: PowerQualityPickerProps) => {
 	const options = useMemo(() => {
 		const options = new Set<PowerQuality>();
 
@@ -70,7 +77,7 @@ const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect, chara
 	}, [specifiers]);
 
 	const choosers = useMemo(
-		() => dice.map((die, index) => {
+		() => (dice || [{die:""}]).map((die, index) => {
 			const used = character.powersAndQualities.map(pq => pq.powerQuality);
 			const selectedOption = [selected[index]].filter(identity) as PowerQuality[];
 
@@ -78,7 +85,7 @@ const PowerQualityPicker = ({ title, selected, specifiers, dice, onSelect, chara
 				key={index}
 				options={getOptionsForPicker(selected[index], options, used)}
 				selected={selectedOption}
-				title={`d${die}`}
+				title={die ? `d${die}` : "todo title without die"}
 				onSelectOption={([value]) => {
 					const newSelected = [...selected];
 					newSelected[index] = value;

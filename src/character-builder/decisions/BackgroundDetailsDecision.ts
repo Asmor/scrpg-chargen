@@ -7,12 +7,13 @@ import { getPrincipleQuestion } from "../questions/PrincipleQuestion";
 import { Background } from "@/data/backgrounds.types";
 import { PowerQuality } from "@/data/powersQualities.types";
 import { Principle } from "@/data/principles.types";
+import { getAbilityQuestion } from "../questions/AbilityQuestion";
 
 interface BackgroundDetailsDecisionProps {
 	character: Character;
 }
 
-export interface BackgroundDetailsDecisionResults {
+export interface BackgroundDetailsResults {
 	powerQualityIds: string[],
 	powerSourceRolls: number[],
 }

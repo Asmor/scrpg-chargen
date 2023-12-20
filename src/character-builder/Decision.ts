@@ -1,11 +1,11 @@
 import { Character } from "./Character";
-import { Question, Results } from "./Question";
+import { Question } from "./Question";
 
 export interface Decision {
 	questions: Question[],
 	process: (
 		character: Character,
-		results: Results[],
+		frozenResults: string[],
 	) => void;
 	getNext: (character: Character) => Decision | null;
 }

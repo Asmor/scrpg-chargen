@@ -1,6 +1,6 @@
 import { Source } from "@/types/common";
 import { Principle, PrincipleCategory } from "./principles.types";
-import { getByIdFactory } from "@/util/util";
+import { getByIdFactory, isAFactory } from "@/util/util";
 
 const principles: Principle[] = [
 	{
@@ -518,5 +518,6 @@ const principles: Principle[] = [
 ];
 
 export const getPrincipleById = getByIdFactory(principles);
+export const isPrinciple = isAFactory(principles);
 
 export default principles;

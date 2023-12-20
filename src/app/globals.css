@@ -13,6 +13,10 @@
   --accent-bg-emphasized: var(--accent-dark-base-emph);
   --accent-fg: var(--accent-light-base);
   --accent-fg-emphasized: var(--accent-light-base-emph);
+
+  /* special */
+  --power-color: #7EC8EF;
+  --quality-color: #B9A4CE;
 }
 
 @media (prefers-color-scheme: light) {

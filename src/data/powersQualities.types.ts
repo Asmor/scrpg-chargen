@@ -11,7 +11,7 @@ export enum PowerQualityType {
 }
 
 export enum PowerCategory {
-	ALL = "All",
+	ALL = "AllPowers",
 	ATHLETIC = "Athletic",
 	ELEMENTAL_ENERGY = "Elemental Energy",
 	HALLMARK = "Hallmark",
@@ -24,7 +24,7 @@ export enum PowerCategory {
 }
 
 export enum QualityCategory {
-	ALL = "All",
+	ALL = "AllQualities",
 	INFORMATION = "Information",
 	MENTAL = "Mental",
 	PHYSICAL = "Physical",

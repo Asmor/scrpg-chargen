@@ -1,6 +1,6 @@
 import { Source } from "@/types/common";
 import { PowerCategory, PowerQuality, PowerQualityType, QualityCategory } from "./powersQualities.types";
-import { getByIdFactory } from "@/util/util";
+import { getByIdFactory, isAFactory } from "@/util/util";
 
 const powersAndQualities: PowerQuality[] = [
 	{
@@ -629,8 +629,13 @@ const powersAndQualities: PowerQuality[] = [
 	},
 ];
 
-export const getPowerQualityById = getByIdFactory(powersAndQualities);
 export const getAllPowerQualityByCategory =
 	(category: PowerCategory | QualityCategory) => powersAndQualities.filter(pq => pq.category === category);
+export const getPowerQualityById = getByIdFactory(powersAndQualities);
+export const isPowerQuality = isAFactory<PowerQuality>(powersAndQualities);
+export const isPower = (val: any) => isPowerQuality(val)
+	&& Object.values(PowerCategory).includes( (val as PowerQuality).category as PowerCategory );
+export const isQuality = (val: any) => isPowerQuality(val)
+	&& Object.values(QualityCategory).includes( (val as PowerQuality).category as QualityCategory );
 
 export default powersAndQualities;

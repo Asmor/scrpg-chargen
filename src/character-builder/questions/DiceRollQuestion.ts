@@ -15,6 +15,7 @@ interface DiceRollQuestionProps {
 export const getDiceRollQuestion = (props: DiceRollQuestionProps): DiceRollQuestion => {
 	return {
 		type: QuestionType.DICE_ROLL,
+		critical: true,
 		dice: props.dice,
 		title: props.title,
 		freeze: freezeArray.bind(null, identity),

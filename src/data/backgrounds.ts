@@ -1,7 +1,7 @@
 import { Source } from "@/types/common";
 import { Background } from "./backgrounds.types";
 import { PrincipleCategory } from "./principles.types";
-import { getByIdFactory } from "@/util/util";
+import { getByIdFactory, isAFactory } from "@/util/util";
 import { PowerCategory, QualityCategory } from "./powersQualities.types";
 
 const backgrounds: Background[] = [
@@ -313,5 +313,6 @@ const backgrounds: Background[] = [
 ];
 
 export const getBackgroundById = getByIdFactory(backgrounds);
+export const isBackground = isAFactory(backgrounds);
 
 export default backgrounds;

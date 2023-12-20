@@ -1,6 +1,12 @@
+import { Entry } from "@/types/common";
 import { identity } from "lodash";
 
 export const noop = () => {};
+
+export const isAFactory = <T,>(haystack: T[]) =>
+	(needle: any): needle is T => haystack.some(
+		candidate => (candidate as {id: string}).id === needle.id,
+	);
 
 export const getByIdFactory = <T extends {id: string}>(values: T[]) => {
 	return (id: string) => values.find(value => value.id === id);

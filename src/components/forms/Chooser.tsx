@@ -1,8 +1,9 @@
-import { Entry, Rollable } from "@/types/common";
+import { Entry, Rollable, isRollable } from "@/types/common";
 import { Container, SectionHeader, SubHeader } from "@/util/commonElements";
 import { identity } from "lodash";
 import { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
+import OptionButton from "../widgets/OptionButton";
 
 export interface ChooserOption<T> {
 	title: string;
@@ -25,41 +26,11 @@ const OptionList = styled.ul<{ $collapsed?: boolean }>`
 	flex-wrap: wrap;
 `;
 
-const OptionButton = styled.button<{ $selected?: boolean }>`
-	font-weight: bold;
-	cursor: pointer;
-	padding: 5px;
-	margin: 5px;
-	background-color: var(${
-		p => p.$selected ? "--accent-bg-emphasized" : "--accent-bg"
-	});
-	color: var(--foreground);
-`;
-
-const OptionSubtitle = styled.span`
-	font-size: 0.8em;
-	font-style: italic;
-	font-weight: normal;
-	color: var(--supplemental);
-	margin-left: 5px;
-`;
-
 const ShowMore = styled(SectionHeader)`
 	cursor: pointer;
 `;
 
-const makeOptionButton = <T,>(
-	option: ChooserOption<T>,
-	onClick: () => void,
-	selected?: boolean,
-) => (
-	<OptionButton onClick={onClick} $selected={selected}>
-		{ option.title }
-		{ option.subtitle && <OptionSubtitle>{option.subtitle}</OptionSubtitle> }
-	</OptionButton>
-);
-
-function Chooser<T extends Partial<Rollable> & object>({
+function Chooser<T extends (Partial<Rollable> & object) | string>({
 	options,
 	unavailable,
 	title,
@@ -102,7 +73,7 @@ function Chooser<T extends Partial<Rollable> & object>({
 		availableOptions.forEach((option) => {
 			if ( !option ) return;
 
-			if ( rolled.includes(option.value?.roll || -1) ) {
+			if ( isRollable(option.value) && rolled.includes(option.value.roll) ) {
 				primaryOptions.push(option);
 			} else {
 				otherOptions.push(option);
@@ -121,15 +92,18 @@ function Chooser<T extends Partial<Rollable> & object>({
 			newSelected.push(option.value);
 		}
 
-		console.log("xxy Updating with new selected", {oldSelected: selected, newSelected, selectedIndex});
 		onSelectOption(newSelected);
-	}, [onSelectOption]);
+	}, [onSelectOption, selected]);
 
 	if ( selectedOptions.length === choices ) {
 		return <Container>{ title }: {
 			selectedOptions.map((selectedOption, index) =>
 				<span key={index}>
-					{makeOptionButton(selectedOption, () => handleSelect(selectedOption), true)}
+					<OptionButton
+						value={ selectedOption.value }
+						selected={true}
+						onClick={() => handleSelect(selectedOption)}
+					/>
 				</span>
 			)
 		}</Container>
@@ -141,7 +115,11 @@ function Chooser<T extends Partial<Rollable> & object>({
 		<OptionList>
 			{primaryOptions.map( (option, index) =>
 				<li key={index}>
-					{ makeOptionButton(option, () => handleSelect(option), selectedOptions.includes(option)) }
+					<OptionButton
+						value={option.value}
+						selected={selectedOptions.includes(option)}
+						onClick={() => handleSelect(option)}
+					/>
 				</li>
 			)}
 		</OptionList>
@@ -152,7 +130,11 @@ function Chooser<T extends Partial<Rollable> & object>({
 			<OptionList $collapsed={othersCollapsed}>
 				{otherOptions.map((option, index) =>
 					<li key={index}>
-						{makeOptionButton(option, () => handleSelect(option), selectedOptions.includes(option)) }
+						<OptionButton
+							value={option.value}
+							selected={selectedOptions.includes(option)}
+							onClick={() => handleSelect(option)}
+						/>
 					</li>
 				)}
 			</OptionList>

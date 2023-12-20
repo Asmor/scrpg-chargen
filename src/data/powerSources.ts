@@ -1,4 +1,4 @@
-import { getByIdFactory } from "@/util/util";
+import { getByIdFactory, isAFactory } from "@/util/util";
 import { PowerSource } from "./powerSourcesTypes";
 import { Source } from "@/types/common";
 import { PowerCategory, QualityCategory } from "./powersQualities.types";
@@ -555,5 +555,6 @@ const powerSources: PowerSource[] = [
 ];
 
 export const getPowerSourceById = getByIdFactory(powerSources);
+export const isPowerSource = isAFactory(powerSources);
 
 export default powerSources;

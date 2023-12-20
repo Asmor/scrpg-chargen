@@ -13,6 +13,8 @@ export interface Entry {
 	page: number;
 };
 
+export const isEntry = (val: any): val is Entry => val?.id && val.name && val.source && val.page;
+
 export interface Assignable {
 	assignablePqs: (string | PowerQualitySpecifier)[],
 }
@@ -22,8 +24,12 @@ export interface Rollable {
 	roll: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;
 }
 
+export const isRollable = (val: any): val is Rollable => !!val.roll;
+
 export interface GrantsAbilities {
 	abilities: string[];
 	yellowPicks?: number;
 	greenPicks?: number;
+	redPicks?: number;
+	outPicks?: number;
 }

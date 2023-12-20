@@ -27,13 +27,13 @@ const AbilityDisplay = (props: AbilityDisplayProps) => {
 		const textParts = props.ability.text.split(/[\[\]]/);
 		const choice = props.configuration?.chosenPq?.name || props.configuration?.chosenText || "";
 
-		const text = [<>{textParts[0]}</>];
+		const text = [<span key={0}>{textParts[0]}</span>];
 		if ( textParts.length > 1 ) {
 			textParts[1] = choice || `[${textParts[1]}]`
 
 			text.push(
-				<b>{textParts[1]}</b>,
-				<>{textParts[2]}</>
+				<b key={1}>{textParts[1]}</b>,
+				<span key={2}>{textParts[2]}</span>
 			);
 		}
 

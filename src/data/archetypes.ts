@@ -2,7 +2,7 @@ import { Source } from "@/types/common";
 import { Archetype } from "./archetypes.types";
 import { PrincipleCategory } from "./principles.types";
 import { PowerCategory, QualityCategory } from "./powersQualities.types";
-import { getByIdFactory } from "@/util/util";
+import { getByIdFactory, isAFactory } from "@/util/util";
 
 const archetypes: Archetype[] = [
 	{
@@ -687,5 +687,6 @@ const archetypes: Archetype[] = [
 ];
 
 export const getArchetypeById = getByIdFactory(archetypes);
+export const isArchetype = isAFactory(archetypes);
 
 export default archetypes;

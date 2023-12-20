@@ -1,11 +1,11 @@
 import { isEqual } from "lodash";
 import { Decision } from "./Decision";
-import { Question, Results } from "./Question";
+import { Question } from "./Question";
 import { Character, getNewCharacter } from "./Character";
 
 interface ScrpgDirectorProps {
 	startingDecision: Decision,
-	results: Results[],
+	results: string[],
 }
 
 let cachedCharacter: Character = {} as Character;
@@ -23,7 +23,7 @@ const scrpgDirector = ({
 
 	while (decision) {
 		const questionCount = decision.questions.length;
-		const decisionResults: Results[] = new Array(questionCount);
+		const decisionResults: string[] = new Array(questionCount);
 		for ( let i = 0; i < questionCount; i++ ) {
 			decisionResults[i] = results[questionCounter + i];
 		}

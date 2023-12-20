@@ -1,5 +1,5 @@
 import { Source } from "@/types/common";
-import { getByIdFactory } from "@/util/util";
+import { getByIdFactory, isAFactory } from "@/util/util";
 import { Ability, AbilityColor, AbilityIcon, AbilityRestriction, AbilityType } from "./abilities.types";
 import { PowerCategory, QualityCategory } from "./powersQualities.types";
 
@@ -4201,5 +4201,6 @@ const abilities: Ability[] = [
 ];
 
 export const getAbilityById = getByIdFactory(abilities);
+export const isAbility = isAFactory(abilities);
 
 export default abilities;
